@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <AppProvider>
           <Header />
-          <main className="min-h-[85dvh] max-w-3xl mx-auto py-0 sm:py-16">
+          <main className="min-h-[85dvh] max-w-3xl mx-auto py-18 sm:py-16">
             {children}
           </main>
           <Footer />
