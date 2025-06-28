@@ -13,8 +13,11 @@ function SetLocation() {
   const selectedRegion =
     formData.region && CAMEROON.find((item) => item.region === formData.region);
 
-  function cancelForm() {
+  function clearForm() {
     setFormData({ region: "", city: "" });
+  }
+  function cancelForm() {
+    clearForm();
     redirect("/purpose");
   }
   function handleRegionForm(event: FormEvent) {
@@ -24,6 +27,10 @@ function SetLocation() {
   function handleFormSubmit(event: FormEvent) {
     event.preventDefault();
     setIndex(3);
+    clearForm();
+  }
+  async function fetchPharmacies() {
+    redirect("/pharmacies");
   }
 
   return (
@@ -145,7 +152,7 @@ function SetLocation() {
                 Back
               </button>
               <button
-                type="submit"
+                onClick={fetchPharmacies}
                 className="bg-black px-4 py-1 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
               >
                 Confirm
