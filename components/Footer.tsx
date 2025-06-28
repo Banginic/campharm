@@ -22,7 +22,7 @@ function Footer() {
         <p>Resources</p>
         <p>Privacy Policy</p>
       </section>
-      <div className="container mx-auto flex justify-between  py-4">
+      <div className="container mx-auto flex-col md:flex-row gap-2 flex justify-between  py-4">
         <p className="text-sm text-gray-600">
           &copy; {new Date().getFullYear()} {MY_DATA.appName}. All rights
           reserved.

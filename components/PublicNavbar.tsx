@@ -1,10 +1,15 @@
 import React from 'react'
+import { Logo, Navlinks, User } from '@/components/index'
 
 function PublicNavbar() {
   return (
-    <div>
-      Public navbar
-    </div>
+    <nav className='h-[13dvh] flex items-center'>
+      <div className='flex items-center justify-around w-full'>
+        <Logo/>
+        <Navlinks />
+        <User />
+      </div>
+    </nav>
   )
 }
 
