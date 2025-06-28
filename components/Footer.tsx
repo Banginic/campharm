@@ -26,17 +26,24 @@ function Footer() {
         <p className="text-sm text-gray-600">
           &copy; {new Date().getFullYear()} {MY_DATA.appName}. All rights
           reserved.
-          </p>
-          <div className="flex items-center gap-4 text-sm text-gray-600 pr-8">
-            Developed by
-            <a href={MY_DATA.developer_link} target="blank" className="flex items-center gap-1 cursor-pointer">
-              
-                <Image src={banginic_logo} width={20} height={20} alt="" />
-              
-              <p>Banginic</p>
-            </a>
-          </div>
-        
+        </p>
+        <div className="flex items-center gap-4 text-sm text-gray-600 pr-8">
+          Developed by
+          <a
+            href={MY_DATA.developer_link}
+            target="blank"
+            className="flex items-center gap-1 cursor-pointer"
+          >
+            <Image
+              src={banginic_logo}
+              width={20}
+              height={20}
+              alt={"./placeholder.png"}
+            />
+
+            <p>Banginic</p>
+          </a>
+        </div>
       </div>
     </footer>
   );

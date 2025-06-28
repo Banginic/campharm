@@ -6,7 +6,7 @@ import React from "react";
 function Logo() {
   return (
     <div className="flex items-center gap-2">
-      <Image src={banginic_logo} width={30} height={30} alt="" />
+      <Image src={banginic_logo} width={30} height={30} alt={'./placeholder.png'} />
       <p className="font-semibold text-lg">{MY_DATA.appName}</p>
     </div>
   );

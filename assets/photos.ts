@@ -16,8 +16,10 @@ import at from './photos/@.png'
 import instagram from './photos/instagram.png'
 import twitter from './photos/twitter.png'
 import facebook from './photos/facebook.png'
+import place_holder_img from './photos/@.png'
+import menu_open from './photos/menu_icon.png'
 
 export {
-    apple_logo, banginic_logo, close_menu, doctor, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
+    apple_logo, banginic_logo, close_menu, doctor, menu_open, place_holder_img, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
     facebook, instagram, twitter, start, at
 }

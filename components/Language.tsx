@@ -22,7 +22,7 @@ function Language() {
           src={lang === "en" ? uk_flag : france_flag}
           width={25}
           height={30}
-          alt=""
+          alt={'./placeholder.png'}
         />
       </button>
 
@@ -33,7 +33,7 @@ function Language() {
             src={lang !== "en" ? uk_flag : france_flag}
             width={25}
             height={30}
-            alt=""
+            alt={'./placeholder.png'}
           />
         </button>
       </div>
