@@ -4,7 +4,7 @@ import Link from "next/link";
 function User() {
   const truthy = false;
   return (
-    <section>
+    <section className="hidden lg:flex">
       {truthy ? (
         <Link href="/login" className="cursor-pointer">
           <button className="font-semibold">Sign In</button>

@@ -1,11 +1,12 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react'
 import AppContext from './AppContext'
 
 function AppProvider( { children }: { children: React.ReactNode }) {
+ const [ lang, setLang ] = useState<'en' | 'fr'>('en')
 
     const values = {
-        // Define your context values here
+        lang, setLang
     }
   return (
     <AppContext value= { values}>
