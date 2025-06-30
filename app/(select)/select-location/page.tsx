@@ -1,9 +1,11 @@
 "use client";
-import React, { type FormEvent, useState } from "react";
+import React, { type FormEvent, useContext, useState } from "react";
 import { CAMEROON } from "@/assets/data";
 import { redirect } from "next/navigation";
+import AppContext from "@/context/AppContext";
 
 function SetLocation() {
+  const { setPreferedTown } = useContext(AppContext)!
   const [index, setIndex] = useState(1);
   const [formData, setFormData] = useState({
     region: "",
@@ -27,9 +29,12 @@ function SetLocation() {
   function handleFormSubmit(event: FormEvent) {
     event.preventDefault();
     setIndex(3);
-    clearForm();
   }
   async function fetchPharmacies() {
+    localStorage.removeItem("preferedTown");
+    localStorage.setItem("preferedTown", JSON.stringify(formData));
+    setPreferedTown(formData)
+    clearForm();
     redirect("/pharmacies");
   }
 
