@@ -1,11 +1,11 @@
 import { password } from "@/assets/photos";
 import { integer, pgTable, serial, varchar, boolean, jsonb } from "drizzle-orm/pg-core";
 
-const pharmacyTable = pgTable('pharmacy_table', {
+export const pharmacyTable = pgTable('pharmacy_table', {
     id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
     pharmacyName: varchar('pharmacy_name', { length: 255}).notNull().unique(),
     email: varchar('email', {length:25}).notNull().unique(),
-    phamacistName: varchar('pharmacist_name', { length: 50}).notNull(). default('No Verified'),
+    pharmacistName: varchar('pharmacist_name', { length: 50}).notNull(). default('No Verified'),
     phoneNumber: varchar('phone_number', { length: 15 }).notNull(),
     region: varchar('region', { length: 15 }).notNull(),
     town: varchar('town', { length: 50 }).notNull(),
@@ -18,10 +18,15 @@ const pharmacyTable = pgTable('pharmacy_table', {
 
 })
 
-const drugTable = pgTable('drug_table', {
+export const drugTable = pgTable('drug_table', {
      id: serial("id").primaryKey(),
      tradeName: varchar('trade_name',{ length: 255 }),
      genericName: varchar('generic_name',{ length: 255 }),
      price: integer('price'),
      pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()
+})
+
+export const users = pgTable('users', {
+    id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+    name: varchar('name', { length: 50 }).notNull(),
 })

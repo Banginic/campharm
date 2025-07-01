@@ -1,23 +1,19 @@
 "use client";
-import { password, phone, email, doctor, pharmacy, region, town_logo } from "@/assets/photos";
+import {
+  password,
+  phone,
+  email,
+  doctor,
+  pharmacy,
+  region,
+  town_logo,
+} from "@/assets/photos";
 import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import type { FormEvent } from "react";
 import { CAMEROON } from "@/assets/data";
-
-// await db.insert(pharmacies).values({
-//   name: "Green Pharmacy",
-//   weeklySchedule: {
-//     monday:    { open: "08:00", close: "18:00" },
-//     tuesday:   { open: "08:00", close: "18:00" },
-//     wednesday: { open: "08:00", close: "18:00" },
-//     thursday:  { open: "08:00", close: "18:00" },
-//     friday:    { open: "08:00", close: "18:00" },
-//     saturday:  { open: "09:00", close: "13:00" },
-//     sunday:    null // closed
-//   }
-// });
+import { toast } from "react-toastify";
 
 
 function Signup() {
@@ -37,6 +33,32 @@ function Signup() {
   async function handleFormSumbit(event: FormEvent) {
     event.preventDefault();
     setFormState({ isLoading: true, error: "" });
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      console.log(data.error)
+      if (data.success) {
+        toast.success(data.message);
+        localStorage.setItem("token", data.token);
+        return;
+      }
+      toast.error(data.error)
+      setFormState({ ...formState, error: data.error });
+      
+    } catch (ex: unknown) {
+      if (ex instanceof Error) {
+        setFormState({ ...formState, error: ex.message });
+      }
+      setFormState({ ...formState, error: "Error occured during regitration" });
+    } finally {
+      setFormState({ ...formState, isLoading: false });
+    }
   }
   return (
     <div className="grid place-items-center">
@@ -52,8 +74,8 @@ function Signup() {
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={pharmacy}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <input
@@ -75,12 +97,7 @@ function Signup() {
             Email
           </label>
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
-            <Image
-              src={email}
-              width={20}
-              height={20}
-              alt="./placeholder.png"
-            />
+            <Image src={email} width={25} height={25} alt="./placeholder.png" />
             <input
               type="email"
               placeholder="example@email.com"
@@ -102,8 +119,8 @@ function Signup() {
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={doctor}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <input
@@ -125,12 +142,7 @@ function Signup() {
             Phone number
           </label>
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
-            <Image
-              src={phone}
-              width={20}
-              height={20}
-              alt="./placeholder.png"
-            />
+            <Image src={phone} width={25} height={25} alt="./placeholder.png" />
             <input
               type="text"
               placeholder="+ 237 653 774 159"
@@ -153,8 +165,8 @@ function Signup() {
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={region}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <select
@@ -175,20 +187,20 @@ function Signup() {
             </select>
           </div>
         </div>
-        <div className={`mb-4 ${ formData.region === '' && 'opacity-50'}`}>
+        <div className={`mb-4 ${formData.region === "" && "opacity-50"}`}>
           <label htmlFor="town" className="block">
             Town
           </label>
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={town_logo}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <select
-              required 
-              disabled={formData.region === ''}
+              required
+              disabled={formData.region === ""}
               value={formData.town}
               onChange={(e) =>
                 setFormData({ ...formData, town: e.target.value })
@@ -237,7 +249,7 @@ function Signup() {
         >
           {formState.isLoading ? "Loading..." : "Create account"}
         </button>
-        <p className="text-red-500 h-4 text-center mt-1">{formState.error}</p>
+        <p className="text-red-500  text-center mt-1">{formState.error}</p>
         <div className="flex items-center gap-4 justify-center mt-2 text-sm">
           <p>Already have an account?</p>
           <Link
