@@ -14,7 +14,7 @@ export const NAVLINKS = [
     { name: "Updates", href: "/updates", icon: "contact" },
 
 ];
-
+ export   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 export const CAMEROON = [
   {
     region: "Adamawa",

@@ -1,0 +1,63 @@
+import { daysOfWeek } from "@/assets/data";
+
+function WeekDays() {
+  const openingTime = "07:30";
+  const closingTime = "19:30";
+  const onCallDays = [0, 4];
+  const today = new Date();
+  const calendar = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const dayIndex = date.getDay();
+
+    // Convert JS getDay (0–6, Sun–Sat) to 1–7 (Mon–Sun)
+    let jsDay = date.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    let weekDayIndex = jsDay === 0 ? 6 : jsDay - 1; // Shift so Mon=0, Sun=6
+
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      month: "long",
+      day: "numeric",
+      timeZone: "Africa/Douala",
+    });
+    calendar.push({
+      day: daysOfWeek[weekDayIndex],
+      date: formattedDate,
+      openingTime,
+      closingTime,
+      onCall: onCallDays.includes(jsDay), // match original JS day number for on-call logic
+    });
+  }
+
+
+  return (
+    <section className="w-sm border mt-8 border-gray-300 bg-gray-300/20 backdrop:blur-sm mx-auto rounded p-4 shadow">
+      {calendar.map((day) => (
+        <div className="grid grid-cols-3 text-sm my-0.5 bg-white border px-4 py-2 rounded justify-between border-gray-50">
+          <p>{day.date}</p>
+          <p>{day.day}</p>
+          <div>
+            {day.day !== "Sunday" ? (
+              <div>
+                <p className="flex text-xs lg:text-sm gap-2">
+                  <span className="text-gray-600 w-14">Opening:</span>
+                  <span>{openingTime}</span>
+                </p>
+                <p className="flex text-xs lg:text-sm gap-2">
+                  <span className="text-gray-600 w-14">Closing:</span>
+                  <span className="">{closingTime}</span>
+                </p>
+              </div>
+            ) : (
+              <p className="text-red-500">Closed</p>
+            )}
+          </div>
+          {/* <p className="text-sm lg:text-[16px] text-green-500">Oncall</p> */}
+        </div>
+      ))}
+    </section>
+  );
+}
+
+export default WeekDays;

@@ -7,7 +7,6 @@ function Pharmacies() {
         PHARMACIES
       </h1>
       <Searchbar />
-      
       <PreferedTown />
       <PharmacyGrid />
     </div>

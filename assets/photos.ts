@@ -2,7 +2,7 @@ import apple_logo from './photos/apple_logo.png'
 import banginic_logo from './photos/banginic_logo.png'
 import close_menu from './photos/close_menu.png'
 import doctor from './photos/doctor.png'
-import email from './photos/doctor.png'
+import email from './photos/email.png'
 import france_flag from './photos/france_flag.png'
 import google_logo from './photos/google_logo.png'
 import location from './photos/location.png'
@@ -19,8 +19,13 @@ import facebook from './photos/facebook.png'
 import place_holder_img from './photos/@.png'
 import menu_open from './photos/menu_icon.png'
 import search_icon from './photos/search_icon.png'
+import back from './photos/back.png'
+import direction from './photos/direction.png'
+import verified from './photos/verified.png'
+import no_message from './photos/no_message.png'
+import offline from './photos/offline.png'
 
 export {
     apple_logo, banginic_logo, close_menu, doctor, menu_open, place_holder_img, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
-    facebook, instagram, twitter, start, at, search_icon
+    facebook, instagram, twitter, start, at, search_icon, back, direction, verified, no_message, offline
 }
