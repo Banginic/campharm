@@ -4,14 +4,42 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import type { FormEvent } from "react";
+import { toast } from "react-toastify";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
-
+  function clearForm() {
+    setFormData({ email: "", password: "" });
+  }
   async function handleFormSumbit(event: FormEvent) {
     event.preventDefault();
     setFormState({ isLoading: true, error: "" });
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      console.log(data.error);
+      if (data.success) {
+        toast.success(data.message);
+        localStorage.setItem("token", data.token);
+        return;
+      }
+
+      setFormState({ ...formState, error: data.error });
+    } catch (ex: unknown) {
+      if (ex instanceof Error) {
+        setFormState({ ...formState, error: ex.message });
+      }
+      setFormState({ ...formState, error: "Error occoured logging in" });
+    } finally {
+      // setFormState({...formState, isLoading: false})
+      clearForm();
+    }
   }
   return (
     <div className="grid place-items-center">
@@ -27,8 +55,8 @@ function Login() {
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={person}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <input
@@ -51,8 +79,8 @@ function Login() {
           <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
             <Image
               src={password}
-              width={20}
-              height={20}
+              width={25}
+              height={25}
               alt="./placeholder.png"
             />
             <input
