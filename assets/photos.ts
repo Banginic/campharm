@@ -24,8 +24,12 @@ import direction from './photos/direction.png'
 import verified from './photos/verified.png'
 import no_message from './photos/no_message.png'
 import offline from './photos/offline.png'
+import pharmacy from './photos/pharmacy.png'
+import about from './photos/about.png'
+import update from './photos/update.png'
+import blog from './photos/blog.png'
 
-export {
+export { pharmacy, about, update, blog ,
     apple_logo, banginic_logo, close_menu, doctor, menu_open, place_holder_img, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
     facebook, instagram, twitter, start, at, search_icon, back, direction, verified, no_message, offline
 }

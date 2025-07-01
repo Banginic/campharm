@@ -1,4 +1,4 @@
-
+import { pharmacy, about, update, blog } from './photos';
 export const MY_DATA = {
     appName: "Campharm", 
     socialLinks: {
@@ -8,10 +8,10 @@ export const MY_DATA = {
     developer_link: "https://banginic-1.orender.com",
 }
 export const NAVLINKS = [
-    { name: "Pharmacies", href: "/services", icon: "pharmacy" },
-    { name: "Help", href: "/help", icon: "info" },
-    { name: "Blogs", href: "/blogs", icon: "home" },
-    { name: "Updates", href: "/updates", icon: "contact" },
+    { name: "Pharmacies", href: "/pharmacies", icon: pharmacy },
+    { name: "Help", href: "/help", icon: about },
+    { name: "Blogs", href: "/blogs", icon: blog },
+    { name: "Updates", href: "/updates", icon: update },
 
 ];
  export   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

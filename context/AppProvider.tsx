@@ -16,7 +16,8 @@ function AppProvider( { children }: { children: React.ReactNode }) {
     const values = {
         lang, setLang,
         isSidebarOpen, toggleSidebar,
-        preferedTown, setPreferedTown
+        preferedTown, setPreferedTown,
+     
     }
     useEffect(() =>{
       function checkStorage(){
