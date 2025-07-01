@@ -16,7 +16,7 @@ function PharmacyCard({ pharmacy }: { pharmacy: PharmacyType }) {
         )}
       </div>
       <p className="font-semibold lg:text-lg text-nowrap flex-1">
-        {pharmacy.name}
+        {pharmacy.pharmacyName}
       </p>
       <div className="flex-1">
         <p className="flex text-xs lg:text-sm gap-2">

@@ -37,7 +37,6 @@ function Footer() {
             <Image
               src={banginic_logo}
               width={20}
-              height={20}
               alt={"./placeholder.png"}
             />
 

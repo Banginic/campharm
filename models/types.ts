@@ -10,14 +10,15 @@ export interface AppContextType {
 
 export interface PharmacyType {
   id: string;
-  name:string;
-  pharmacist: string; 
+  pharmacyName:string;
+  pharmacistName: string; 
   isOpen: boolean;
   isOnCall: boolean;
   region: string;
   town: string;
-  phone:string;
-  email:string
+  phoneNumber: string;
+  email: string;
+  isVerified: boolean;
 }
 
    

@@ -21,7 +21,6 @@ function Language() {
         <Image
           src={lang === "en" ? uk_flag : france_flag}
           width={25}
-          height={30}
           alt={'./placeholder.png'}
         />
       </button>
@@ -32,7 +31,6 @@ function Language() {
           <Image
             src={lang !== "en" ? uk_flag : france_flag}
             width={25}
-            height={30}
             alt={'./placeholder.png'}
           />
         </button>

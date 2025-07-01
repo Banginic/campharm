@@ -14,7 +14,6 @@ function Hamburger() {
           <Image
             src={close_menu}
             width={35}
-            height={35}
             alt="./placholder.png"
           />
         </button>
@@ -23,7 +22,6 @@ function Hamburger() {
           <Image
             src={menu_open}
             width={30}
-            height={30}
             alt="./placholder.png"
           />
         </button>

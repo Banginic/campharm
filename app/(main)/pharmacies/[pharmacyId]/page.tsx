@@ -1,3 +1,4 @@
+"use client";
 import {
   at,
   direction,
@@ -10,17 +11,56 @@ import {
 import { PHARMACIES } from "@/assets/data";
 import Image from "next/image";
 import { Back, WeekDays } from "@/components/index";
+import { useEffect, useState } from "react";
+import type { PharmacyType } from "@/models/types";
+import { Loading } from "@/components/index";
 
-async function PharmacyDetails({
-  params,
-}: {
-  params: Promise<{ pharmacyId: string }>;
-}) {
-  const pharmacy = {
+function PharmacyDetails({ params }: { params: { pharmacyId: string } }) {
+  const [pharmacy, setPharmacy] = useState<PharmacyType | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { pharmacyId } = params;
+
+  const pharmacyLocation = {
     latitude: "",
     longitude: "",
   };
-  const { pharmacyId } = await params;
+
+  useEffect(() => {
+    async function fetchPharmacies() {
+      setLoading(true);
+      setError("");
+      try {
+        if (pharmacyId) {
+          const res = await fetch(
+            `/api/pharmacy?pharmacyId=${encodeURIComponent(pharmacyId)}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const data = await res.json();
+          console.log(data.data);
+          if (data.success) {
+            setPharmacy(data.data[0]);
+            return;
+          }
+          setError(data.error);
+        }
+      } catch (ex: unknown) {
+        if (ex instanceof Error) {
+          setError(ex.message);
+        }
+        setError("Error fetching data");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPharmacies();
+    return () => {};
+  }, []);
+
+  if (isLoading) return <Loading />;
   return (
     <div className="relative">
       <div className="absolute">
@@ -36,9 +76,11 @@ async function PharmacyDetails({
               src={verified}
               alt="./placeholder.png"
               width={25}
-              height={25}
+              className={`${!pharmacy?.isVerified && "hidden"}`}
             />
-            <p className="text-lg lg:text-2xl font-bold">Karen Pharmacy</p>
+            <p className="text-lg lg:text-2xl font-bold">
+              {pharmacy?.pharmacyName}
+            </p>
           </div>
           <div className="mt-4 text-gray-900">
             <div className="flex items-center gap-4 mb-1">
@@ -48,7 +90,7 @@ async function PharmacyDetails({
                 width={20}
                 height={20}
               />
-              <p className="">Dr. Manjon Ngwanyam</p>
+              <p className="">{pharmacy?.pharmacistName}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -57,7 +99,7 @@ async function PharmacyDetails({
                 width={20}
                 height={20}
               />
-              <p className="">+237 653 775 159</p>
+              <p className="">{pharmacy?.phoneNumber}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -66,7 +108,7 @@ async function PharmacyDetails({
                 width={20}
                 height={20}
               />
-              <p className="">contact@email.com</p>
+              <p className="">{pharmacy?.email}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -75,11 +117,13 @@ async function PharmacyDetails({
                 width={20}
                 height={20}
               />
-              <p className="">Douala, Littoral</p>
+              <p className="">
+                {pharmacy?.town}, {pharmacy?.region} Region
+              </p>
             </div>
           </div>
           <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacy.latitude},${pharmacy.longitude}`}
+            href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacyLocation.latitude},${pharmacyLocation.longitude}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded w-full justify-center mt-4 cursor-pointer"
