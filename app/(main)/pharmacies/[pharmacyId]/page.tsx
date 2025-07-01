@@ -11,13 +11,20 @@ import { PHARMACIES } from "@/assets/data";
 import Image from "next/image";
 import { Back, WeekDays } from "@/components/index";
 
-async function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string}>}) {
-
-  const { pharmacyId } = await params
+async function PharmacyDetails({
+  params,
+}: {
+  params: Promise<{ pharmacyId: string }>;
+}) {
+  const pharmacy = {
+    latitude: "",
+    longitude: "",
+  };
+  const { pharmacyId } = await params;
   return (
     <div className="relative">
       <div className="absolute">
-        <Back link="/pharmacies"/>
+        <Back link="/pharmacies" />
       </div>
       <h1 className="text-xl lg:text-4xl font-bold text-center">
         PHARMACY DETAILS
@@ -71,7 +78,12 @@ async function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: strin
               <p className="">Douala, Littoral</p>
             </div>
           </div>
-          <button className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded w-full justify-center mt-4 cursor-pointer">
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacy.latitude},${pharmacy.longitude}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded w-full justify-center mt-4 cursor-pointer"
+          >
             <Image
               src={direction}
               alt="./placeholder.png"
@@ -79,7 +91,7 @@ async function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: strin
               height={25}
             />
             <p>Direction</p>
-          </button>
+          </a>
         </section>
         <WeekDays />
       </div>

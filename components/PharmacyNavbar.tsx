@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PrivateNavbar() {
+function PharmacyNavbar() {
   return (
     <div>
       Private navbar
@@ -8,4 +8,4 @@ function PrivateNavbar() {
   )
 }
 
-export default PrivateNavbar
+export default PharmacyNavbar

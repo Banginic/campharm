@@ -9,9 +9,11 @@ function page() {
             Pharmacy / Drug
           </button>
         </Link>
-        <button className="border-2 mt-4 w-full rounded cursor-pointer hover:scale-x-105 py-2 trans font-semibold">
-          Login / Create Pharmacy Account
-        </button>
+        <Link href={"/pharmacy/login"}>
+          <button className="border-2 mt-4 w-full rounded cursor-pointer hover:scale-x-105 py-2 trans font-semibold">
+            Login / Create Pharmacy Account
+          </button>
+        </Link>
       </div>
     </div>
   );

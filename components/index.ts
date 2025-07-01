@@ -1,7 +1,7 @@
 
 //Components index file to export all components
 export { default as Footer } from './Footer'
-export { default as PrivateNavbar } from './PrivateNavbar'
+export { default as PrivateNavbar } from './PharmacyNavbar'
 export { default as PublicNavbar } from './PublicNavbar'
 export { default as Hero } from './Hero'
 export { default as HeroCTA } from './HeroCTA'
