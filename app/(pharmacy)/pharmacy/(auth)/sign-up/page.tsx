@@ -6,6 +6,20 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 import { CAMEROON } from "@/assets/data";
 
+// await db.insert(pharmacies).values({
+//   name: "Green Pharmacy",
+//   weeklySchedule: {
+//     monday:    { open: "08:00", close: "18:00" },
+//     tuesday:   { open: "08:00", close: "18:00" },
+//     wednesday: { open: "08:00", close: "18:00" },
+//     thursday:  { open: "08:00", close: "18:00" },
+//     friday:    { open: "08:00", close: "18:00" },
+//     saturday:  { open: "09:00", close: "13:00" },
+//     sunday:    null // closed
+//   }
+// });
+
+
 function Signup() {
   const [formData, setFormData] = useState({
     email: "",
