@@ -10,7 +10,7 @@ function PharmacyNavbar() {
   return (
     <header className="h-[13dvh] flex items-center relative">
       <nav className="flex items-center justify-between px-6 lg:justify-around w-full">
-        <Logo />
+        <Logo link="/pharmacy" />
         <Navlinks navlinks={PHARMACY_NAVLINKS} />
         <div className="flex items-center gap-4">
           <Language />

@@ -17,7 +17,7 @@ function Footer() {
           <Image src={instagram} width={30} height={30} alt="" />
         </a>
       </div>
-      <section className="mt-8 text-[16px] text-gray-900">
+      <section className="mt-8 text-[18px] text-gray-900">
         <p>Blogs</p>
         <p>Resources</p>
         <p>Privacy Policy</p>

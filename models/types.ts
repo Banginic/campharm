@@ -21,6 +21,15 @@ export interface WeeklyScheduleType {
 
 }
 
+export interface DrugType {
+  id: string;
+  genericName: string;
+  tradeName?: string;
+  dosageForm: string;
+  dosageStrength: string;
+  price?: number;
+  pharmacyId: string;
+}
 export interface PharmacyType {
   id: string;
   pharmacyName:string;
@@ -35,5 +44,12 @@ export interface PharmacyType {
   weeklySchedule?: WeeklyScheduleType;
 
 }
-
+export interface PharmacyContextType {
+  showOnCall: boolean;
+  setOnCall: React.Dispatch<React.SetStateAction<boolean>>;
+  showAddDrugForm: boolean;
+  setDrugForm: React.Dispatch<React.SetStateAction<boolean>>;
+  showWorkingDaysForm: boolean;
+  setWorkingDays: React.Dispatch<React.SetStateAction<boolean>>;
+}
    

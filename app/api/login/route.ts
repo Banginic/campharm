@@ -29,6 +29,12 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
+    if (!user) {
+      return NextResponse.json(
+        { error: "Pharmacy not found. Please register.", success: false },
+        { status: 404 }
+      );
+    }
 
     const isPasswordValid = await comparePassword(password, user[0].password);
     if (!isPasswordValid) {

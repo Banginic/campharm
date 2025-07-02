@@ -1,3 +1,7 @@
+import { PharmacyHero } from '@/components/index'
+
 export default function PharmacyDashboard() {
-  return <h1 className="text-2xl font-bold">Admin Dashboard</h1>;
+  return <div className="text-2xl font-bold max-w-2xl mx-auto">
+    <PharmacyHero />
+  </div>;
 }

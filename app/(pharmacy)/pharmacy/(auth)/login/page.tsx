@@ -5,8 +5,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import type { FormEvent } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 function Login() {
+  const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
   function clearForm() {
@@ -23,11 +25,10 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log(data.error);
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        return;
+        router.push("/pharmacy");
       }
 
       setFormState({ ...formState, error: data.error });
@@ -35,6 +36,7 @@ function Login() {
       if (ex instanceof Error) {
         setFormState({ ...formState, error: ex.message });
       }
+      console.log(ex);
       setFormState({ ...formState, error: "Error occoured logging in" });
     } finally {
       // setFormState({...formState, isLoading: false})

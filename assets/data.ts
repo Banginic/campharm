@@ -15,9 +15,9 @@ export const PUBLIC_NAVLINKS = [
 
 ];
 export const PHARMACY_NAVLINKS = [
-    { name: "Drugs", href: "/pharmacies", icon: pharmacy },
-    { name: "Working Days", href: "/help", icon: about },
-    { name: "On Call", href: "/blogs", icon: blog },
+    { name: "Drugs", href: "/pharmacy/drugs", icon: pharmacy },
+    { name: "Working Days", href: "/pharmacy/working-days", icon: about },
+    { name: "On Call", href: "/pharmacy/on-call", icon: blog },
 
 ];
  export   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
