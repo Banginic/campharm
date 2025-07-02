@@ -137,7 +137,9 @@ function PharmacyDetails({ params }: { params: { pharmacyId: string } }) {
             <p>Direction</p>
           </a>
         </section>
-        <WeekDays />
+        {pharmacy?.weeklySchedule && (
+          <WeekDays weeklySchedule={pharmacy.weeklySchedule} isOnCall={pharmacy.isOnCall} />
+        )}
       </div>
     </div>
   );

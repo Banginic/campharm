@@ -1,21 +1,42 @@
-import React from "react";
-import { Logo, Navlinks, User, Hamburger, Language } from "@/components/index";
+"use client";
+import React, { useContext } from "react";
+import {
+  Logo,
+  Navlinks,
+  User,
+  Hamburger,
+  Language,
+  Sidebar,
+} from "@/components/index";
+import { PUBLIC_NAVLINKS } from "@/assets/data";
+import AppContext from "@/context/AppContext";
 
 function PublicNavbar() {
+  const { isMainSidebarOpen, toggleMainSidebar } = useContext(AppContext)!;
   return (
-    <nav className="h-[13dvh] flex items-center">
-      <div className="flex items-center justify-between px-6 lg:justify-around w-full">
+    <header className="h-[13dvh] flex items-center relative">
+      <nav className="flex items-center justify-between px-6 lg:justify-around w-full">
         <Logo />
-        <Navlinks />
+        <Navlinks navlinks={PUBLIC_NAVLINKS} />
         <div className="flex items-center gap-4">
           <Language />
           <div className="hidden lg:block">
             <User />
           </div>
-          <Hamburger />
+          <Hamburger
+            isSidebarOpen={isMainSidebarOpen}
+            toggleSidebar={toggleMainSidebar}
+          />
         </div>
-      </div>
-    </nav>
+      </nav>
+      <aside>
+        <Sidebar
+          isSidebarOpen={isMainSidebarOpen}
+          toggleSidebar={toggleMainSidebar}
+          navlinks={PUBLIC_NAVLINKS}
+        />
+      </aside>
+    </header>
   );
 }
 

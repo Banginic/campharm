@@ -1,6 +1,13 @@
 import { daysOfWeek } from "@/assets/data";
+import { WeeklyScheduleType } from "@/models/types";
 
-function WeekDays() {
+function WeekDays({
+  weeklySchedule,
+  isOnCall,
+}: {
+  weeklySchedule: WeeklyScheduleType;
+  isOnCall: boolean;
+}) {
   const openingTime = "07:30";
   const closingTime = "19:30";
   const onCallDays = [0, 4];
@@ -29,7 +36,10 @@ function WeekDays() {
       onCall: onCallDays.includes(jsDay), // match original JS day number for on-call logic
     });
   }
-
+  const weekArray = Object.entries(weeklySchedule).map(([day, times]) => ({
+    day,
+    ...times,
+  }));
 
   return (
     <section className="w-sm border mt-8 border-gray-300 bg-gray-300/20 backdrop:blur-sm mx-auto rounded p-4 shadow">
@@ -42,18 +52,40 @@ function WeekDays() {
               <div>
                 <p className="flex text-xs lg:text-sm gap-2">
                   <span className="text-gray-600 w-14">Opening:</span>
-                  <span>{openingTime}</span>
+                  <span>
+                    {weekArray &&
+                      weekArray.map((item) => {
+                        if (item.day === day.day.toLowerCase()) {
+                          return item.open;
+                        }
+                      })}
+                  </span>
                 </p>
                 <p className="flex text-xs lg:text-sm gap-2">
                   <span className="text-gray-600 w-14">Closing:</span>
-                  <span className="">{closingTime}</span>
+                  <span>
+                    {weekArray &&
+                      weekArray.map((item) => {
+                        if (item.day === day.day.toLowerCase()) {
+                          return item.close;
+                        }
+                      })}
+                  </span>
                 </p>
               </div>
             ) : (
               <p className="text-red-500">Closed</p>
             )}
           </div>
-          {/* <p className="text-sm lg:text-[16px] text-green-500">Oncall</p> */}
+          <p className={` text-sm lg:text-[16px] text-green-500`}>
+            {" "}
+            {weekArray &&
+              weekArray.map((item) => {
+                if (item.day === day.day.toLowerCase() && item.isOnCall) {
+                  return "On Call";
+                }
+              })}
+          </p>
         </div>
       ))}
     </section>

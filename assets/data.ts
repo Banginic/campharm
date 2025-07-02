@@ -7,7 +7,7 @@ export const MY_DATA = {
         instagram: "https://instagram.com"},
     developer_link: "https://banginic-1.orender.com",
 }
-export const NAVLINKS = [
+export const PUBLIC_NAVLINKS = [
     { name: "Pharmacies", href: "/pharmacies", icon: pharmacy },
     { name: "Help", href: "/help", icon: about },
     { name: "Blogs", href: "/blogs", icon: blog },

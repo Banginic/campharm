@@ -10,6 +10,17 @@ export interface AppContextType {
   togglePharmacySidebar: () => void;
 }
 
+export interface WeeklyScheduleType {
+  monday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  tuesday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  wednesday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  thursday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  friday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  saturday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  sunday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+
+}
+
 export interface PharmacyType {
   id: string;
   pharmacyName:string;
@@ -21,6 +32,8 @@ export interface PharmacyType {
   phoneNumber: string;
   email: string;
   isVerified: boolean;
+  weeklySchedule?: WeeklyScheduleType;
+
 }
 
    
