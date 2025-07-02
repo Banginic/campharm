@@ -14,6 +14,12 @@ export const NAVLINKS = [
     { name: "Updates", href: "/updates", icon: update },
 
 ];
+export const PHARMACY_NAVLINKS = [
+    { name: "Drugs", href: "/pharmacies", icon: pharmacy },
+    { name: "Working Days", href: "/help", icon: about },
+    { name: "On Call", href: "/blogs", icon: blog },
+
+];
  export   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 export const CAMEROON = [
   {

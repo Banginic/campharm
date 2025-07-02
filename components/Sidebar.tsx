@@ -1,14 +1,25 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { NAVLINKS } from "@/assets/data";
 import { User } from "./index";
 import { close_menu } from "@/assets/photos";
-import { useContext } from "react";
-import AppContext from "@/context/AppContext";
 
-function Sidebar() {
-  const { toggleSidebar, isSidebarOpen } = useContext(AppContext)!;
+interface NavlinkTypes {
+  name: string;
+  icon: StaticImageData;
+  href: string
+}
+
+function Sidebar({
+  isSidebarOpen,
+  toggleSidebar,
+  navlinks
+}: {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  navlinks: NavlinkTypes[]
+}) {
   return (
     <div
       className={` ${
@@ -31,7 +42,7 @@ function Sidebar() {
           <div className="px-8">
             <User />
           </div>
-          {NAVLINKS.map((item) => (
+          {navlinks.map((item) => (
             <Link
               href={item.href}
               key={item.name}
