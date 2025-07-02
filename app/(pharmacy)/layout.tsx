@@ -1,5 +1,6 @@
 import PharmacyNavbar from "@/components/PharmacyNavbar";
 import React from "react";
+import PharmacyProvider from "@/context/PharmacyProvider";
 export default function PharmacyLayout({
   children,
 }: {
@@ -8,8 +9,10 @@ export default function PharmacyLayout({
   return (
     <html>
       <body>
-        <PharmacyNavbar />
+        <PharmacyProvider>
+          <PharmacyNavbar />
         <main className="p-4">{children}</main>
+        </PharmacyProvider>
       </body>
     </html>
   );

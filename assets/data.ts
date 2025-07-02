@@ -20,6 +20,8 @@ export const PHARMACY_NAVLINKS = [
     { name: "On Call", href: "/pharmacy/on-call", icon: blog },
 
 ];
+export  const dosageForms = [ 'Tablet', 'Syrup', 'Capsule', 'Suspension', 'Powder','Onitment', 'Cream', 'Inhaling']
+
  export   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 export const CAMEROON = [
   {
