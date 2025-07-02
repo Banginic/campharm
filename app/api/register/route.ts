@@ -9,13 +9,13 @@ import { eq, or } from "drizzle-orm";
 export async function POST(req: Request) {
      
      const weeklySchedule = {
-        monday:    { open: "08:00", close: "18:00" },
-        tuesday:   { open: "08:00", close: "18:00" },
-        wednesday: { open: "08:00", close: "18:00" },
-        thursday:  { open: "08:00", close: "18:00" },
-        friday:    { open: "08:00", close: "18:00" },
-        saturday:  { open: "09:00", close: "13:00" },
-        sunday:    null 
+        monday:    { open: "08:00", close: "18:00", isOnCall: false },
+        tuesday:   { open: "08:00", close: "18:00", isOnCall: true },
+        wednesday: { open: "08:00", close: "18:00", isOnCall: false },
+        thursday:  { open: "08:00", close: "18:00", isOnCall: true },
+        friday:    { open: "08:00", close: "18:00", isOnCall: false },
+        saturday:  { open: "09:00", close: "13:00", isOnCall: false },
+        sunday:    null
       }
     
     const body = await req.json();
