@@ -51,5 +51,7 @@ export interface PharmacyContextType {
   setDrugForm: React.Dispatch<React.SetStateAction<boolean>>;
   showWorkingDaysForm: boolean;
   setWorkingDays: React.Dispatch<React.SetStateAction<boolean>>;
+  pharmacyDetails: PharmacyType | null;
+  setPharmacyDetails: React.Dispatch<React.SetStateAction<PharmacyType | null>>;
 }
    

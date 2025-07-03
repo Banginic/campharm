@@ -1,13 +1,16 @@
 "use client";
 import { person, password } from "@/assets/photos";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import type { FormEvent } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { PharmacyContext } from "@/context/PharmacyProvider";
 
 function Login() {
+  const { setPharmacyDetails } = useContext(PharmacyContext)!;
+
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
@@ -27,6 +30,8 @@ function Login() {
       const data = await res.json();
       if (data.success) {
         toast.success(data.message);
+        setPharmacyDetails(data.data);
+        localStorage.setItem("pharmacyDetails", JSON.stringify(data.data));
         localStorage.setItem("token", data.token);
         router.push("/pharmacy");
       }

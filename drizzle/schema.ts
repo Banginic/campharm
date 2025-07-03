@@ -21,6 +21,8 @@ export const pharmacyTable = pgTable('pharmacy_table', {
 export const drugTable = pgTable('drug_table', {
      id: serial("id").primaryKey(),
      tradeName: varchar('trade_name',{ length: 255 }),
+     dosageForm: varchar('dosage_form',{ length: 255 }),
+     dosageStrength: varchar('dosage_strength',{ length: 255 }),
      genericName: varchar('generic_name',{ length: 255 }),
      price: integer('price'),
      pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()

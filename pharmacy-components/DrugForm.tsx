@@ -7,6 +7,7 @@ import { PharmacyContext } from "@/context/PharmacyProvider";
 import type { ChangeEvent, FormEvent } from "react";
 
 function DrugForm() {
+  const { pharmacyDetails } = useContext(PharmacyContext)!;
   const { setDrugForm } = useContext(PharmacyContext)!;
   const [formState, setFormState] = useState({ error: "", isLoading: false });
   const [formData, setFormData] = useState({
@@ -14,7 +15,8 @@ function DrugForm() {
     tradeName: "",
     dosageForm: "",
     dosageStrength: "",
-    price: 0,
+    price: "",
+    pharmacyId: pharmacyDetails?.id,
   });
   function clearForm() {
     setFormData({
@@ -22,7 +24,8 @@ function DrugForm() {
       tradeName: "",
       dosageForm: "",
       dosageStrength: "",
-      price: 0,
+      price: "",
+      pharmacyId: pharmacyDetails?.id,
     });
   }
   const handleChange = (
@@ -36,10 +39,19 @@ function DrugForm() {
   };
 
   async function handleFormSubmit(event: FormEvent) {
-    event.preventDefault()
+    event.preventDefault();
     setFormState({ error: "", isLoading: true });
     try {
-      console.log(formData);
+      const res = await fetch("/api/add-drug", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
     } catch (ex: unknown) {
       if (ex instanceof Error) {
         setFormState({ ...formState, error: ex.message });
@@ -63,9 +75,7 @@ function DrugForm() {
           className="hover:scale-110"
         />
       </button>
-      <form
-      onSubmit={handleFormSubmit}
-      >
+      <form onSubmit={handleFormSubmit} className="text-sm 2xl:text-[16px]">
         <h1 className="text-center text-lg lg:text-2xl font-bold mt-4">
           Add Drug
         </h1>
