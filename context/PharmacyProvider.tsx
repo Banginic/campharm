@@ -12,7 +12,7 @@ function PharmacyProvider({ children }: { children: React.ReactNode }) {
   const [pharmacyDetails, setPharmacyDetails] = useState<PharmacyType | null>(
     null
   );
-
+ 
   useEffect(() => {
     function checkStoredDetails() {
       const pharmacyDetails = localStorage.getItem("pharmacyDetails");

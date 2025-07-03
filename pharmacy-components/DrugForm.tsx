@@ -5,6 +5,7 @@ import Image from "next/image";
 import { dosageForms } from "@/assets/data";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import type { ChangeEvent, FormEvent } from "react";
+import { toast } from "react-toastify";
 
 function DrugForm() {
   const { pharmacyDetails } = useContext(PharmacyContext)!;
@@ -51,7 +52,12 @@ function DrugForm() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      if (data.success) {
+        toast.success(data.message);
+        clearForm();
+        return 
+      }
+      setFormState({...formState, error: data.error})
     } catch (ex: unknown) {
       if (ex instanceof Error) {
         setFormState({ ...formState, error: ex.message });
@@ -155,13 +161,18 @@ function DrugForm() {
             onChange={handleChange}
           />
         </div>
-        <button className="bg-black font-extrabold text-white w-full py-2 px-4 rounded mt-4 cursor-pointer hover:bg-black/70 trans">
-          Submit
+        <button
+          disabled={formState.isLoading}
+          className="bg-black disabled:bg-gray-700 font-extrabold text-white w-full py-2 px-4 rounded mt-4 cursor-pointer hover:bg-black/70 trans"
+        >
+          {formState.isLoading ? "Submiting..." : "Submit"}
         </button>
         <p
           aria-label="error message"
           className="text-center text-red-500 mb-3 h-5 mt-1"
-        ></p>
+        >
+          {formState.error}
+        </p>
       </form>
     </div>
   );

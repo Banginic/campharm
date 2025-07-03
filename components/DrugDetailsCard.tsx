@@ -7,23 +7,23 @@ function DrugDetailsCard({ drug }: { drug: DrugType }) {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <p className="text-gray-600">Generic name</p>
-          <p>{"Paracetamol"}</p>
+          <p>{drug.genericName}</p>
         </div>
         <div>
           <p className="text-gray-600">Trade name</p>
-          <p>{"Panadol"}</p>
+          <p>{drug.tradeName}</p>
         </div>
         <div>
           <p className="text-gray-600">Dosage strength</p>
-          <p className="text-green-600">500mg</p>
+          <p className="text-green-600">{drug.dosageStrength}</p>
         </div>
         <div>
           <p className="text-gray-600">Dosage form</p>
-          <p className="text-yellow-800">{"Tablet"}</p>
+          <p className="text-yellow-800">{drug.dosageForm}</p>
         </div>
         <div>
           <p className="text-gray-600">Price</p>
-          <p className="font-semibold">{"2,500"} xaf</p>
+          <p className="font-semibold">{drug.price} xaf</p>
         </div>
       </div>
     </article>
