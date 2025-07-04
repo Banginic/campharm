@@ -25,6 +25,7 @@ function Login() {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
+        credentials: 'include'
       });
 
       const data = await res.json();
@@ -32,7 +33,6 @@ function Login() {
         toast.success(data.message);
         setPharmacyDetails(data.data);
         localStorage.setItem("pharmacyDetails", JSON.stringify(data.data));
-        localStorage.setItem("token", data.token);
         router.push("/pharmacy");
       }
 

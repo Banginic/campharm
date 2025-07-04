@@ -45,11 +45,13 @@ export async function POST(req: Request) {
     }
     const token = signToken(user[0].email);
 
-    (await cookies()).set("token", token, {
-      httpOnly: true,
-      secure: true,
-      path: "/",
-    });
+ (await cookies()).set('token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production'? 'lax': 'strict',
+  maxAge: 1 * 24 * 60 * 60,
+  path: '/'
+ })
 
     return NextResponse.json(
       { success: true, message: "Login successful", token, data: user[0] },

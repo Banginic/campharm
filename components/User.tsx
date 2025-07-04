@@ -1,8 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import LogoutPharmacyButton from "@/pharmacy-components/LogoutPharmacyButton";
+
 
 function User() {
   const truthy = false;
+
   return (
     <section className="lg:flex">
       {truthy ? (
@@ -18,7 +21,7 @@ function User() {
             </li>
             <li className="px-2 cursor-pointer hover:bg-gray-50">Verify</li>
             <li className="px-2 pb-1 cursor-pointer hover:bg-red-50">
-              Log out
+              <LogoutPharmacyButton />
             </li>
           </ul>
         </div>

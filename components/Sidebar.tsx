@@ -8,17 +8,17 @@ import { close_menu } from "@/assets/photos";
 interface NavlinkTypes {
   name: string;
   icon: StaticImageData;
-  href: string
+  href: string;
 }
 
 function Sidebar({
   isSidebarOpen,
   toggleSidebar,
-  navlinks
+  navlinks,
 }: {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
-  navlinks: NavlinkTypes[]
+  navlinks: NavlinkTypes[];
 }) {
   return (
     <div
@@ -39,11 +39,12 @@ function Sidebar({
           />
         </button>
         <div className=" p-4 flex flex-col gap-2 pt-12">
-          <div className="px-8">
+          <div onClick={toggleSidebar} className="px-8">
             <User />
           </div>
           {navlinks.map((item) => (
             <Link
+              onClick={toggleSidebar}
               href={item.href}
               key={item.name}
               className="flex gap-2 items-center w-1/2 p-2 rounded hover:bg-gray-300/20 backdrop:blur-lg"
