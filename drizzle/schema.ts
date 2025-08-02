@@ -29,6 +29,7 @@ export const drugTable = pgTable('drug_table', {
      dosageStrength: varchar('dosage_strength',{ length: 255 }),
      genericName: varchar('generic_name',{ length: 255 }),
      price: integer('price').default(0).notNull(),
+     inStock: boolean('in_stock').default(true).notNull(),
      pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()
 })
 

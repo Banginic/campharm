@@ -24,6 +24,15 @@
   position: relative;
   overflow: hidden;
 }
+.liquid-glass-red {
+  background: rgba(255, 000, 000, 0.12); /* semi-transparent background */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 000, 000, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
 
 /* Adds a "liquid shine" moving animation */
 .liquid-glass::before {

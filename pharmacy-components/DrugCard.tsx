@@ -4,8 +4,8 @@ import { DrugType } from "@/models/types";
 
 function DrugCard({ drug }: { drug: DrugType }) {
   return (
-    <Link href={`/pharmacy/drugs/${drug.id}`}>
-      <article className="min-w-sm my-2 shadow-md liquid-glass-effect hover:bg-green-50 border text-sm mx-auto justify-between flex gap-2 items-center border-neutral-300 p-4 rounded-xl cursor-pointer">
+    <Link href={`/pharmacy/drugs/${drug.id}`} className=" bg-red-500">
+      <article className={`min-w-sm my-2 shadow-md ${drug.inStock ? 'liquid-glass-effect' : 'liquid-glass-red'}  hover:bg-green-50 border text-sm mx-auto justify-between flex gap-2 items-center border-neutral-300 p-4 rounded-xl cursor-pointer`}>
         <div>
           <p className="text-neutral-600 text-xs">Generic name</p>
           <p>{drug?.genericName}</p>

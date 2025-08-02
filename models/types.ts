@@ -31,7 +31,8 @@ export interface DrugType {
   dosageStrength: string;
   price?: number;
   pharmacyId: string;
-  description?: string
+  description?: string;
+  inStock: boolean
 }
 export interface PharmacyType {
   id: string;

@@ -15,6 +15,13 @@
       "when": 1754163339734,
       "tag": "0001_spooky_fat_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1754165617787,
+      "tag": "0002_rainy_gambit",
+      "breakpoints": true
     }
   ]
 }

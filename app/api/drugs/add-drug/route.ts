@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
     if (existingDrug.length === 1) {
       return NextResponse.json(
-        { error: "Drug item already exist.", success: false },
+        { message: "Drug item already exist.", success: false },
         { status: 400 }
       );
     }

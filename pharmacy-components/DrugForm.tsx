@@ -10,16 +10,36 @@ import { DrugSchema, DrugSchemaType } from "@/schemas/drugSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { queryClient } from "@/app/(pharmacy)/layout";
+import { useMutation } from "@tanstack/react-query";
+import { Spiner } from "@/components";
 
 function DrugForm() {
-  const router = useRouter()
+  const router = useRouter();
   const { pharmacyDetails } = useContext(PharmacyContext)!;
   const { setDrugForm } = useContext(PharmacyContext)!;
   const [formState, setFormState] = useState({ error: "", isLoading: false });
 
-  if(!pharmacyDetails){
-    localStorage.clear()
-    router.push('/pharmacy/login')
+  async function postDrug(drugData: DrugSchemaType) {
+    const res = await fetch(
+      `/api/drugs/add-drug?pharmacyId=${pharmacyDetails?.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${
+            localStorage.getItem("pharmacy-token") ?? ""
+          }`,
+        },
+        body: JSON.stringify(drugData),
+      }
+    );
+    const data = await res.json();
+  }
+  function useAddDrugMutation() {
+    return useMutation({
+      mutationFn: (drugData: DrugSchemaType) => postDrug(drugData),
+    });
   }
 
   const {
@@ -29,34 +49,23 @@ function DrugForm() {
     formState: { errors },
   } = useForm<DrugSchemaType>({ resolver: zodResolver(DrugSchema) });
 
+  const { isPending, mutate, isError } = useAddDrugMutation();
+
   const onSubmit = async (formaData: DrugSchemaType) => {
-    setFormState({ error: "", isLoading: true });
-    try {
-      const res = await fetch(`/api/drugs/add-drug?pharmacyId=${pharmacyDetails?.id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("pharmacy-token") ?? ""}`,
-        },
-        body: JSON.stringify(formaData),
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success(data.message);
+  const data =   mutate(formaData, {
+      onSuccess: () => {
         reset();
-        return;
-      }
-      setFormState({ ...formState, error: data.error });
-    } catch (ex: unknown) {
-      if (ex instanceof Error) {
-        setFormState({ ...formState, error: ex.message });
-      }
-      setFormState({ ...formState, error: "Error occoured submiting form" });
-    } finally {
-      setFormState({ ...formState, isLoading: false });
-    }
+        toast.success('Drug added successfully'),
+          queryClient.invalidateQueries({ queryKey: ["drugs"] });
+        setDrugForm(false);
+      },
+      onError: (errors: any) => {
+        toast.error("Error posting drug.");
+        console.log(errors)
+      },
+    });
+
   };
- 
 
   return (
     <div className="liquid-glass p-2 ">
@@ -72,7 +81,10 @@ function DrugForm() {
             className="hover:scale-110"
           />
         </button>
-        <form onSubmit={handleSubmit(onSubmit)} className="text-sm 2xl:text-[16px]">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="text-sm 2xl:text-[16px]"
+        >
           <h1 className="text-center text-lg lg:text-2xl font-bold mt-4">
             Add New Drug
           </h1>
@@ -175,22 +187,23 @@ function DrugForm() {
               </span>
             </label>
             <textarea
-             
               id="description"
               placeholder="Description"
               className="w-full py-2 px-4 border border-gray-400 rounded"
               {...register("description")}
             ></textarea>
             {errors.description && (
-              <p className="text-red-400 mt-1">{errors?.description?.message}</p>
+              <p className="text-red-400 mt-1">
+                {errors?.description?.message}
+              </p>
             )}
           </div>
           <button
             disabled={formState.isLoading}
             className="bg-black disabled:bg-gray-700 flex items-center justify-center font-semibold text-white w-full py-2 px-4 rounded mt-4 cursor-pointer hover:bg-black/70 trans"
           >
-            {formState.isLoading ? (
-              "Submiting..."
+            {isPending ? (
+              <Spiner height="size-5" color="white" />
             ) : (
               <span className=" flex items-center gap-2">
                 <Send size={18} />

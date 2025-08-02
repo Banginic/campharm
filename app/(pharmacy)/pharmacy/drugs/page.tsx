@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { DrugCard, DrugForm } from "@/pharmacy-components/index";
 import { NoData, ErrorFetching, Loading, Title } from "@/components/index";
 import { PharmacyContext } from "@/context/PharmacyProvider";
-import myFetch from "@/libs/myFetch";
 import { useQuery } from "@tanstack/react-query";
 import { DrugType } from "@/models/types";
 import { CirclePlus } from "lucide-react";
@@ -33,7 +32,7 @@ function Drug() {
     queryKey: ["drugs"],
     queryFn: returnFn,
   });
-  console.log(data)
+ 
 
   return (
     <section className="relative max-w-2xl mx-auto ">

@@ -3,10 +3,11 @@ import { db } from "@/drizzle/index";
 import { drugTable } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
-export async function DELETE(request: Request) {
+export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const pharmacyId = searchParams.get("pharmacyId");
   const drugId = searchParams.get("drugId");
+
 
   if (!pharmacyId) {
     return NextResponse.json(
@@ -30,26 +31,30 @@ export async function DELETE(request: Request) {
   }
 
   try {
-    const drugs = await db
+    const existingDrugs = await db
       .select()
       .from(drugTable)
-      .where(
-        and(
-          eq(drugTable.pharmacyId, pharmacyIdNumber),
-          eq(drugTable.id, Number(drugId))
-        )
-      )
-      .limit(1);
+      .where(and (
+        eq(drugTable.pharmacyId, pharmacyIdNumber),
+        eq(drugTable.id, Number(drugId))
+    ))
+      .limit(1)
 
-    if (drugs.length === 0) {
+    if (existingDrugs.length === 0) {
       return NextResponse.json(
         { message: "No drug with this pharmacy", success: true },
         { status: 404 }
       );
     }
-    await db.delete(drugTable).where(eq(drugTable.id, Number(drugId)));
+    const drug = await db.update(drugTable)
+    .set({inStock: !existingDrugs[0].inStock})
+     .where(and (
+        eq(drugTable.pharmacyId, pharmacyIdNumber),
+        eq(drugTable.id, Number(drugId))
+    ))
 
-    return NextResponse.json({ success: true }, { status: 203 });
+
+    return NextResponse.json({ data: drug, success: true }, { status: 202 });
   } catch (error) {
     return NextResponse.error();
   }
