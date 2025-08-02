@@ -13,9 +13,9 @@ function ChangeCity() {
   return (
     <button
       onClick={handleChangeCity}
-      className="bg-black text-white hover:bg-black/70 trans px-4 py-2 rounded text-sm cursor-pointer font-semibold"
+      className="bg-black text-white flex hover:bg-black/70 gap-1 shadow-md items-center trans px-4 py-2 rounded text-xs cursor-pointer font-semibold"
     >
-      Change Town
+      <span className="text-nowrap">Change Town</span>
     </button>
   );
 }

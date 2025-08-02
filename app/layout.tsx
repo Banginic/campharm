@@ -28,6 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+       style={{
+          backgroundImage: "url('/bg_image.jpg')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          minHeight: "100vh",
+        }}
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <ToastContainer />

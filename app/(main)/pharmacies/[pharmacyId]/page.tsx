@@ -70,7 +70,7 @@ function PharmacyDetails({ params }: { params: { pharmacyId: string } }) {
         PHARMACY DETAILS
       </h1>
       <div className="flex gap-4 items-cente flex-col lg:flex-row">
-        <section className="mt-8 border border-gray-300 h-66 shadow-md rounded gap-4 p-4 w-sm mx-auto">
+        <section className="mt-8 border border-gray-300 h-66 liquid-glass-effect rounded-xl shadow-md gap-4 p-4 w-sm mx-auto">
           <div className="flex items-center gap-4">
             <Image
               src={verified}

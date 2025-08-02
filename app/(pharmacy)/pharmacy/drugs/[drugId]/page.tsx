@@ -11,6 +11,9 @@ import { useQuery } from "@tanstack/react-query";
 import myFetch from "@/libs/myFetch";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import { DrugType } from "@/models/types";
+import { drugs } from "@/assets/data";
+import { no_drug } from "@/assets/photos";
+import { Trash } from "lucide-react";
 
 interface DataType {
   error?: string;
@@ -45,19 +48,20 @@ function DrugDetails({ params }: { params: { drugId: string } }) {
       <h1 className="text-lg font-bold lg:text-3xl text-center">
         Drug Details
       </h1>
-      <div className="mt-12 border shadow-lg rounded p-8 w-sm mx-auto border-gray-300 ">
+      <div className="mt-12 border   w-[90%] lg:w-lg  mx-auto border-gray-300 ">
         <div>
           <div>
             {isLoading ? (
               <Loading />
-            ) : isError ? (
+            ) : isError && !drugs ? (
               <ErrorFetching message={"Drugs"} refetch={refetch} />
-            ) : !data?.data ? (
-              <NoData message={"Drug"} />
+            ) : !data?.data && !drugs ? (
+              <NoData message={"Drug"} photo={no_drug} />
             ) : (
-              <div>
-                <DrugDetailsCard drug={data?.data[0]} />
-                <button className="border rounded py-2 px-4 mt-8 flex  hover:bg-red-500 text-red-500 hover:text-white border-red-600  cursor-pointer">
+              <div className="p-2 liquid-glass-effect rounded-2xl">
+                <DrugDetailsCard drug={drugs[0]} />
+                <button className="border rounded py-2 px-4 mt-8 flex gap-2 items-center  hover:bg-red-400 text-red-400 hover:text-white border-red-400  cursor-pointer">
+                  <Trash size={18} />
                   Delete drug
                 </button>
               </div>

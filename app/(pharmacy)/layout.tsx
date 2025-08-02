@@ -12,7 +12,15 @@ export default function PharmacyLayout({
 }) {
   return (
     <html>
-      <body>
+      <body 
+        
+        style={{
+          backgroundImage: "url('/bg_image.jpeg')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          minHeight: "100vh",
+        }}>
         <QueryClientProvider client={queryClient}>
           <PharmacyProvider>
             <PharmacyNavbar />

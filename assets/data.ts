@@ -66,6 +66,7 @@ export const CAMEROON = [
   }
 ];
 export const PHARMACIES = [
+
   // Yaoundé - Centre
   {
     region: 'Centre',
@@ -236,4 +237,46 @@ export const PHARMACIES = [
 ]
   },
  
+];
+export const drugs = [
+  {
+    genericName: "Paracetamol",
+    tradeName: "Panadol",
+    dosageStrength: "500 mg",
+    dosageForm: "Tablet",
+    price: 1500, // in FCFA
+    description: "Used to relieve mild to moderate pain and reduce fever."
+  },
+  {
+    genericName: "Amoxicillin",
+    tradeName: "Amoxil",
+    dosageStrength: "250 mg/5 ml",
+    dosageForm: "Oral Suspension",
+    price: 3500,
+    description: "An antibiotic effective for treating bacterial infections of the respiratory tract, ear, and urinary system."
+  },
+  {
+    genericName: "Ibuprofen",
+    tradeName: "Brufen",
+    dosageStrength: "400 mg",
+    dosageForm: "Tablet",
+    price: 2000,
+    description: "Non-steroidal anti-inflammatory drug (NSAID) used to reduce inflammation, pain, and fever."
+  },
+  {
+    genericName: "Cetirizine Hydrochloride",
+    tradeName: "Zyrtec",
+    dosageStrength: "10 mg",
+    dosageForm: "Tablet",
+    price: 2500,
+    description: "An antihistamine used to relieve allergy symptoms such as runny nose, sneezing, and itching."
+  },
+  {
+    genericName: "Metformin Hydrochloride",
+    tradeName: "Glucophage",
+    dosageStrength: "500 mg",
+    dosageForm: "Tablet",
+    price: 3000,
+    description: "Used to control high blood sugar in patients with type 2 diabetes."
+  }
 ];

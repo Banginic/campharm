@@ -6,6 +6,8 @@ import { dosageForms } from "@/assets/data";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import type { ChangeEvent, FormEvent } from "react";
 import { toast } from "react-toastify";
+import { Span } from "next/dist/trace";
+import { Send } from "lucide-react";
 
 function DrugForm() {
   const { pharmacyDetails } = useContext(PharmacyContext)!;
@@ -69,7 +71,8 @@ function DrugForm() {
   }
 
   return (
-    <div className="bg-white p-4 w-sm rounded relative">
+    <div className="liquid-glass p-2 ">
+      <div className="bg-green-100 p-4 w-sm rounded-xl relative">
       <button
         onClick={() => setDrugForm(false)}
         className="absolute top-4 right-4 cursor-pointer"
@@ -83,7 +86,7 @@ function DrugForm() {
       </button>
       <form onSubmit={handleFormSubmit} className="text-sm 2xl:text-[16px]">
         <h1 className="text-center text-lg lg:text-2xl font-bold mt-4">
-          Add Drug
+          Add New Drug
         </h1>
         <div className="mt-8 mb-4">
           <label htmlFor="genericName" className="block mb-1">
@@ -163,9 +166,12 @@ function DrugForm() {
         </div>
         <button
           disabled={formState.isLoading}
-          className="bg-black disabled:bg-gray-700 font-extrabold text-white w-full py-2 px-4 rounded mt-4 cursor-pointer hover:bg-black/70 trans"
+          className="bg-black disabled:bg-gray-700 flex items-center justify-center font-semibold text-white w-full py-2 px-4 rounded mt-4 cursor-pointer hover:bg-black/70 trans"
         >
-          {formState.isLoading ? "Submiting..." : "Submit"}
+          {formState.isLoading ? "Submiting..." : <span className=" flex items-center gap-2">
+            <Send size={18} />
+            <span>Add Drug</span>
+            </span>}
         </button>
         <p
           aria-label="error message"
@@ -174,6 +180,7 @@ function DrugForm() {
           {formState.error}
         </p>
       </form>
+    </div>
     </div>
   );
 }

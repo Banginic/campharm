@@ -37,7 +37,7 @@ function PharmacyCard({ pharmacy }: { pharmacy: PharmacyType }) {
   return (
     <Link
       href={`/pharmacies/${pharmacy.id}`}
-      className="border border-gray-200 rounded  cursor-pointer hover:bg-gray-200 p-4 flex my-2 justify-between gap-4 items-center flex-nowrap w-sm lg:w-lg mx-auto bg-gray-300/20 backdrop:blur-md shadow-md"
+      className="border border-white/30 bg-white/20 backdrop:blur-2xl rounded-xl cursor-pointer hover:bg-white/30 trans p-4 flex my-2 justify-between gap-4 items-center flex-nowrap w-sm lg:w-lg mx-auto shadow-md"
     >
       <div>
         {pharmacy.isOpen ? (

@@ -39,7 +39,7 @@ function SetLocation() {
   }
 
   return (
-    <section className="border border-gray-300 bg-gray-300/20 backdrop:blur-md rounded w-sm mx-auto p-4">
+    <section className="border border-gray-300 bg-gray-300/20 backdrop:blur-md mt-10 liquid-glass-effect rounded-xl w-sm mx-auto p-4">
       <div className="flex items-center gap-2">
         <span className="h-2 w-10 bg-black rounded border"></span>
         <span

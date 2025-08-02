@@ -24,9 +24,9 @@ function Sidebar({
     <div
       className={` ${
         isSidebarOpen ? "fixed" : "hidden"
-      } lg:hidden  right-0 left-0 top-0 h-92 z-50 bg-white border border-gray-300 `}
+      } lg:hidden  right-0 left-0 top-0 h-92 z-50 bg-green-100 border border-gray-300 `}
     >
-      <section className="relative bg-gray-300/20 h-full">
+      <section className="relative  h-full">
         <button
           onClick={toggleSidebar}
           className="absolute top-8 right-4 cursor-pointer"
@@ -38,7 +38,7 @@ function Sidebar({
             alt="./placeholder.png"
           />
         </button>
-        <div className=" p-4 flex flex-col gap-2 pt-12">
+        <div className=" p-4 flex flex-col gap-2 pt-12 ">
           <div onClick={toggleSidebar} className="px-8">
             <User />
           </div>

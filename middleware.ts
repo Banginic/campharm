@@ -4,25 +4,27 @@ import { verifyToken } from './libs/jwt-edge';
 
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get('token')?.value
-  const validToken = await verifyToken(token || 'none')
+//   const { pathname } = request.nextUrl;
+//   const token = request.cookies.get('token')?.value
+ 
+
+//   const validToken = await verifyToken(token || 'none')
+//    if (!token || !validToken) {
+//     return NextResponse.redirect(new URL('/pharmacy/login', request.url))
+//   }
 
 
+//   const isPharmacyRoute = pathname.startsWith('/pharmacy')
 
-  const isAdminRoute = pathname.startsWith('/admin');
-  const isPharmacyRoute = pathname.startsWith('/pharmacy')
-
-  if (isPharmacyRoute) {
+//   if (isPharmacyRoute) {
   
-  }
-  if( pathname.startsWith('/pharmacy') && !validToken){
-     return NextResponse.redirect(new URL('/pharmacy/login', request.url));
-  }
+//   }
+//   if( pathname.startsWith('/pharmacy') && !validToken){
+//      return NextResponse.redirect(new URL('/pharmacy/login', request.url));
+//   }
 
-  if (isAdminRoute) {
-  
-  }
+//  const response = NextResponse.next()
+//  response.headers.set('user-email', String(validToken.email))
 
   return NextResponse.next();
 }

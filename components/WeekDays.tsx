@@ -42,9 +42,9 @@ function WeekDays({
   }));
 
   return (
-    <section className="w-sm border mt-8 border-gray-300 bg-gray-300/20 backdrop:blur-sm mx-auto rounded p-4 shadow">
+    <section className="w-sm border mt-8  liquid-glass mx-auto rounded p-4 shadow">
       {calendar.map((day) => (
-        <div className="grid grid-cols-3 text-sm my-0.5 bg-white border px-4 py-2 rounded justify-between border-gray-50">
+        <div className="grid grid-cols-3 text-sm my-1.5 liquid-glass-effect px-4 h-14 rounded justify-between items-center border-gray-50">
           <p>{day.date}</p>
           <p>{day.day}</p>
           <div>

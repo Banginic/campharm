@@ -1,5 +1,5 @@
 import { password } from "@/assets/photos";
-import { integer, pgTable, serial, varchar, boolean, jsonb } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, varchar, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
 
 export const pharmacyTable = pgTable('pharmacy_table', {
     id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
@@ -14,17 +14,21 @@ export const pharmacyTable = pgTable('pharmacy_table', {
     isVerified: boolean("isVerified").notNull().default(false),
     isOpen: boolean("isOpen").notNull().default(true),
     location: jsonb('location').notNull(),
-     weeklySchedule: jsonb("weekly_schedule").notNull()
+    isFrozen: boolean('isFrozen').notNull().default(false),
+     weeklySchedule: jsonb("weekly_schedule").notNull(),
+     createdAt: timestamp('created_at', { mode: 'string'}).defaultNow(),
+     updatedAt: timestamp('updated_at', { mode: 'string'}).defaultNow()
 
 })
 
 export const drugTable = pgTable('drug_table', {
      id: serial("id").primaryKey(),
-     tradeName: varchar('trade_name',{ length: 255 }),
+     tradeName: varchar('trade_name',{ length: 255 }).notNull().default(''),
+     description: varchar('trade_name',{ length: 500 }).notNull().default(''),
      dosageForm: varchar('dosage_form',{ length: 255 }),
      dosageStrength: varchar('dosage_strength',{ length: 255 }),
      genericName: varchar('generic_name',{ length: 255 }),
-     price: integer('price'),
+     price: integer('price').default(0).notNull(),
      pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()
 })
 

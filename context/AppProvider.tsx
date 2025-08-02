@@ -4,6 +4,7 @@ import AppContext from "./AppContext";
 
 function AppProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState("en");
+  const [ showModal, setModal ] = useState(false)
   const [isMainSidebarOpen, setMainSidebar] = useState(false);
   const [isPharmacySidebarOpen, setPharmacySidebar] = useState(false);
   const [preferedTown, setPreferedTown] = useState<null | {
@@ -27,6 +28,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     setPreferedTown,
     isPharmacySidebarOpen,
     togglePharmacySidebar,
+    showModal, setModal,
   };
   useEffect(() => {
     function checkStorage() {

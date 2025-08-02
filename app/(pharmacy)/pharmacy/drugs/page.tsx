@@ -6,6 +6,8 @@ import { PharmacyContext } from "@/context/PharmacyProvider";
 import myFetch from "@/libs/myFetch";
 import { useQuery } from "@tanstack/react-query";
 import { DrugType } from "@/models/types";
+import { CirclePlus } from "lucide-react";
+import { drugs } from "@/assets/data";
 
 interface DataType{
   error?: string;
@@ -36,11 +38,12 @@ function Drug() {
       <h1 className="text-lg font-bold lg:text-3xl text-center">Drugs</h1>
       <button
         onClick={() => setDrugForm(true)}
-        className="px-4 py-2 ml-6 lg:ml-35 mt-8 rounded bg-black text-white cursor-pointer hover:bg-black/70"
+        className="px-4 py-2 ml-6 lg:ml-35 mt-8 flex items-center gap-2 rounded bg-black text-white cursor-pointer hover:bg-black/70"
       >
+        <CirclePlus size={18} />
         Add drug
       </button>
-      <div className="min-h-[50dvh] mt-4 w-full rounded grid place-items-center">
+      <div className="min-h-[50dvh] mt-4 w-full  rounded grid place-items-center">
         {
           isLoading ? (
             <Loading />
@@ -50,9 +53,9 @@ function Drug() {
             <NoData message={'Drug'} />
           ) : null
         }
-        <div>
+        <div className="liquid-glass p-2 lg:p-4">
           {
-            data?.data && data?.data.map(item => (
+            drugs.map(item => (
               <DrugCard drug={item} />
             ))
           }
@@ -61,7 +64,7 @@ function Drug() {
         
       <div
         className={`${
-          showAddDrugForm ? "fixed" : "hidden"
+          showAddDrugForm ? "fixed overflow-y-scroll scrollbar-hidden " : "hidden"
         } bg-black/70 backdrop:blur-md inset-0 z-50 grid place-items-center`}
       >
         <DrugForm />

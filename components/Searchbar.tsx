@@ -4,12 +4,12 @@ import { search_icon } from "@/assets/photos";
 
 function Searchbar() {
   return (
-    <div className="border rounded border-gray-300 py-2 px- flex gap-4 items-center px-2 w-sm mx-auto">
+    <div className="border min-w-sm w-[450px] lg:w-[60%]  bg-white/20 backdrop:blur-2xl rounded-sm border-white/30 shadow-md py-2.5 px-4 flex gap-3 items-center  mx-auto">
       <Image
         src={search_icon}
         alt="./placeholder.png"
-        width={30}
-        height={30}
+        width={25}
+        height={25}
         className=""
       />
       <input

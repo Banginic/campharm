@@ -8,6 +8,8 @@ export interface AppContextType {
   setPreferedTown: React.Dispatch<React.SetStateAction< null | { region: string, city: string}>>
   isPharmacySidebarOpen: boolean;
   togglePharmacySidebar: () => void;
+  showModal: boolean;
+  setModal:React.Dispatch<React.SetStateAction< boolean>>
 }
 
 export interface WeeklyScheduleType {
@@ -29,6 +31,7 @@ export interface DrugType {
   dosageStrength: string;
   price?: number;
   pharmacyId: string;
+  description?: string
 }
 export interface PharmacyType {
   id: string;
