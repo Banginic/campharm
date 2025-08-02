@@ -12,6 +12,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "@neondatabase/serverless": "^1.0.1",
     "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
@@ -26,6 +27,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.62.0",
+    "react-hot-toast": "^2.5.2",
     "react-toastify": "^11.0.5",
     "zod": "^4.0.14"
   },

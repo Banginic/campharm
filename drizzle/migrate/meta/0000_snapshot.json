@@ -1,5 +1,5 @@
 {
-  "id": "7f2be196-3c56-48b6-b8b5-c8b7e850c540",
+  "id": "26e4a6e4-727b-440d-9a7e-2cab7ed7edaf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -16,6 +16,19 @@
         },
         "trade_name": {
           "name": "trade_name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "dosage_form": {
+          "name": "dosage_form",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dosage_strength": {
+          "name": "dosage_strength",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -30,7 +43,8 @@
           "name": "price",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": 0
         },
         "pharmacy_id": {
           "name": "pharmacy_id",
@@ -152,11 +166,32 @@
           "primaryKey": false,
           "notNull": true
         },
+        "isFrozen": {
+          "name": "isFrozen",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
         "weekly_schedule": {
           "name": "weekly_schedule",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
         }
       },
       "indexes": {},

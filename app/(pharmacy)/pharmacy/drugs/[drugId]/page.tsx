@@ -1,14 +1,14 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, use } from "react";
 import {
   Back,
   DrugDetailsCard,
   NoData,
   Loading,
   ErrorFetching,
+  Title,
 } from "@/components/index";
 import { useQuery } from "@tanstack/react-query";
-import myFetch from "@/libs/myFetch";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import { DrugType } from "@/models/types";
 import { drugs } from "@/assets/data";
@@ -21,33 +21,30 @@ interface DataType {
   message?: string;
   success: boolean;
 }
-function DrugDetails({ params }: { params: { drugId: string } }) {
+function DrugDetails({ params }: { params: Promise<{ drugId: string }> }) {
   const { pharmacyDetails } = useContext(PharmacyContext)!;
-  const { drugId } = params;
+  const { drugId } = use(params);
 
-  function returnFn() {
-    const fetchDetails = {
-      endpoint: `/api/single-drug?pharmacyId=${pharmacyDetails?.id}&drugId=${drugId}`,
-      id: drugId,
-      body: "",
-      method: "get",
-    };
-    return myFetch<DataType>(fetchDetails);
+  async function returnFn() :Promise<DataType> {
+    const response = await fetch(`/api/drugs/list-single-drug?pharmacyId=${pharmacyDetails?.id}&drugId=${drugId}`,{
+      method: 'GET',
+      credentials: 'include'
+    })
+    const data  = await response.json()
+    return data
   }
 
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: [`drug-${drugId}`],
     queryFn: returnFn,
   });
-  console.log(data);
+ 
   return (
     <section className="relative ">
       <div className="absolute">
         <Back link="/pharmacy/drugs" />
       </div>
-      <h1 className="text-lg font-bold lg:text-3xl text-center">
-        Drug Details
-      </h1>
+      <Title text="Drug Details" />
       <div className="mt-12 border   w-[90%] lg:w-lg  mx-auto border-gray-300 ">
         <div>
           <div>
@@ -55,12 +52,12 @@ function DrugDetails({ params }: { params: { drugId: string } }) {
               <Loading />
             ) : isError && !drugs ? (
               <ErrorFetching message={"Drugs"} refetch={refetch} />
-            ) : !data?.data && !drugs ? (
+            ) : !data?.data || data?.data.length === 0 ? (
               <NoData message={"Drug"} photo={no_drug} />
             ) : (
-              <div className="p-2 liquid-glass-effect rounded-2xl">
-                <DrugDetailsCard drug={drugs[0]} />
-                <button className="border rounded py-2 px-4 mt-8 flex gap-2 items-center  hover:bg-red-400 text-red-400 hover:text-white border-red-400  cursor-pointer">
+              <div className="p-4 liquid-glass-effect rounded-2xl">
+                <DrugDetailsCard drug={data?.data[0]} />
+                <button className="border rounded py-2 px-4 mt-8 flex gap-2 items-center shadow-2xl hover:bg-red-400 text-red-400 hover:text-white border-red-400  cursor-pointer">
                   <Trash size={18} />
                   Delete drug
                 </button>

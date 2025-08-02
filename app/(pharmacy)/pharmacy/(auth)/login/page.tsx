@@ -1,31 +1,35 @@
 "use client";
-import { person, password } from "@/assets/photos";
-import Image from "next/image";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
 import type { FormEvent } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { PharmacyContext } from "@/context/PharmacyProvider";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema, LoginSchemaType } from "@/schemas/pharmacyAuth";
+import { Mail, Lock } from "lucide-react";
 
 function Login() {
   const { setPharmacyDetails } = useContext(PharmacyContext)!;
 
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
-  function clearForm() {
-    setFormData({ email: "", password: "" });
-  }
-  async function handleFormSumbit(event: FormEvent) {
-    event.preventDefault();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
+  const onSubmit = async (formData: LoginSchemaType) => {
     setFormState({ isLoading: true, error: "" });
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/pharmacy-auth/login", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
-        credentials: 'include'
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -45,87 +49,84 @@ function Login() {
       setFormState({ ...formState, error: "Error occoured logging in" });
     } finally {
       // setFormState({...formState, isLoading: false})
-      clearForm();
+      reset();
     }
-  }
+  };
+
   return (
     <div className="grid place-items-center">
-      <form
-        onSubmit={handleFormSumbit}
-        className="border rounded w-sm border-gray-300 bg-gray-300/20 backdrop:blur-md py-6 px-8"
-      >
-        <h1 className="text-center font-bold text-2xl lg:text-3xl">Login</h1>
-        <div className="mt-8 mb-4">
-          <label htmlFor="email" className="block">
-            Email
-          </label>
-          <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
-            <Image
-              src={person}
-              width={25}
-              height={25}
-              alt="./placeholder.png"
-            />
-            <input
-              type="email"
-              placeholder="example@email.com"
-              required
-              autoComplete="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              className="border-none outline-none w-full"
-            />
-          </div>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block">
-            Password
-          </label>
-          <div className="flex items center gap-2 border rounded py-2 px-4 bg-white shadow border-gray-400">
-            <Image
-              src={password}
-              width={25}
-              height={25}
-              alt="./placeholder.png"
-            />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              required
-              autoComplete="password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              className="border-none outline-none w-full"
-            />
-          </div>
-        </div>
-        <div>
-          <button className="text-gray-600 cursor-pointer">
-            Forgor password
-          </button>
-        </div>
-        <button
-          type="submit"
-          disabled={formState.isLoading}
-          className={`w-full mt-8 cursor-pointer bg-black disabled:bg-gray-500 disabled:animate-pulse hover:bg-black/80 text-white py-2 rounded font-semibold`}
+      <div className="liquid-glass p-2">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="liquid-glass-effect rounded-2xl py-6 px-8 w-sm"
         >
-          {formState.isLoading ? "Logging in..." : "Login"}
-        </button>
-        <p className="text-red-500 h-4 text-center mt-1">{formState.error}</p>
-        <div className="flex items-center gap-4 justify-center mt-2 text-sm">
-          <p>Don't have an account?</p>
-          <Link
-            href={"/pharmacy/sign-up"}
-            className="text-blue-800 font-semibold cursor-pointer hover:underline"
+          <h1 className="text-center font-bold text-2xl lg:text-3xl">Login</h1>
+          <div className="mt-8 mb-4">
+            <label htmlFor="email" className="block">
+              Email
+            </label>
+            <div className="flex items-center gap-2 border rounded py-2 px-4 bg-transparent shadow border-gray-400">
+              <Mail size={25} />
+              <input
+                type="email"
+                placeholder="example@email.com"
+                {...register("email", { required: true })}
+                autoComplete="email"
+                className="border-none outline-none w-full"
+              />
+            </div>
+            {errors?.email && (
+              <p className="text-red-400 mt-0.5 text-sm">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block">
+              Password
+            </label>
+            <div className="flex items center gap-2 border rounded py-2 px-4 bg-transparent shadow border-gray-400">
+              <Lock size={25} />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                autoComplete="password"
+                {...register("password", { required: true })}
+                className="border-none outline-none w-full"
+              />
+            </div>
+            {errors?.password && (
+              <p className="text-red-400 mt-0.5 text-sm">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+          <div>
+            <button className="text-gray-600 cursor-pointer">
+              Forgor password
+            </button>
+          </div>
+          <button
+            type="submit"
+            disabled={formState.isLoading}
+            className={`w-full mt-8 cursor-pointer bg-black disabled:bg-gray-500 disabled:animate-pulse hover:bg-black/80 text-white py-2 rounded font-semibold`}
           >
-            Register
-          </Link>
-        </div>
-      </form>
+            {formState.isLoading ? "Logging in..." : "Login"}
+          </button>
+          <p className="text-red-400 text-sm h-4 text-center mt-1">
+            {formState.error}
+          </p>
+          <div className="flex items-center gap-4 justify-center mt-2 text-sm">
+            <p>Don't have an account?</p>
+            <Link
+              href={"/pharmacy/sign-up"}
+              className="text-blue-800 font-semibold cursor-pointer hover:underline"
+            >
+              Register
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

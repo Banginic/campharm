@@ -24,7 +24,7 @@ export const pharmacyTable = pgTable('pharmacy_table', {
 export const drugTable = pgTable('drug_table', {
      id: serial("id").primaryKey(),
      tradeName: varchar('trade_name',{ length: 255 }).notNull().default(''),
-     description: varchar('trade_name',{ length: 500 }).notNull().default(''),
+     description: varchar('description',{ length: 500 }).notNull().default(''),
      dosageForm: varchar('dosage_form',{ length: 255 }),
      dosageStrength: varchar('dosage_strength',{ length: 255 }),
      genericName: varchar('generic_name',{ length: 255 }),

@@ -1,13 +1,13 @@
 "use client";
 import React, { useContext } from "react";
 import { DrugCard, DrugForm } from "@/pharmacy-components/index";
-import { NoData, ErrorFetching, Loading } from "@/components/index";
+import { NoData, ErrorFetching, Loading, Title } from "@/components/index";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import myFetch from "@/libs/myFetch";
 import { useQuery } from "@tanstack/react-query";
 import { DrugType } from "@/models/types";
 import { CirclePlus } from "lucide-react";
-import { drugs } from "@/assets/data";
+import { no_drug } from "@/assets/photos";
 
 interface DataType{
   error?: string;
@@ -17,14 +17,15 @@ interface DataType{
 }
 function Drug() {
   const { pharmacyDetails } = useContext(PharmacyContext)!;
-  function returnFn() {
-    const fetchDetails = {
-      method: "post",
-      body: "",
-      id: "",
-      endpoint: `/api/get-drugs?pharmacyId=${pharmacyDetails?.id ?? ""}`,
-    };
-    return myFetch<DataType>(fetchDetails);
+  async function returnFn(): Promise<DataType | null> {
+    if(!pharmacyDetails?.id){
+      return null
+    }
+    const response = await fetch(`/api/drugs/list-all-drugs?pharmacyId=${pharmacyDetails.id }&limit=14`, {
+        method: 'GET' })
+   const data = await response.json()
+   return data
+    
   }
   const { showAddDrugForm, setDrugForm } = useContext(PharmacyContext)!;
 
@@ -32,10 +33,11 @@ function Drug() {
     queryKey: ["drugs"],
     queryFn: returnFn,
   });
+  console.log(data)
 
   return (
     <section className="relative max-w-2xl mx-auto ">
-      <h1 className="text-lg font-bold lg:text-3xl text-center">Drugs</h1>
+      <Title text="Drugs" />
       <button
         onClick={() => setDrugForm(true)}
         className="px-4 py-2 ml-6 lg:ml-35 mt-8 flex items-center gap-2 rounded bg-black text-white cursor-pointer hover:bg-black/70"
@@ -49,14 +51,14 @@ function Drug() {
             <Loading />
           ) : isError ? (
             <ErrorFetching message={"Drugs"} refetch={refetch} />
-          ) : !data ?(
-            <NoData message={'Drug'} />
+          ) :  data?.data?.length === 0 ?(
+            <NoData message={'Drug'} photo={no_drug}/>
           ) : null
         }
         <div className="liquid-glass p-2 lg:p-4">
           {
-            drugs.map(item => (
-              <DrugCard drug={item} />
+            data?.data && data.data.map(item => (
+              <DrugCard drug={item} key={item.id} />
             ))
           }
         </div>
