@@ -16,7 +16,7 @@ export default function PharmacyLayout({
       <div 
         
         style={{
-          backgroundImage: "url('/bg_image.jpeg')",
+          backgroundImage: "url('/bg_image.jpg')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

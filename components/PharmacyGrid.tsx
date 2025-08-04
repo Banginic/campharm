@@ -1,67 +1,50 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PharmacyCard, NoPharmacy, Loading } from "./index";
-import AppContext from "@/context/AppContext";
-import { PHARMACIES } from "@/assets/data";
-import { PharmacyType } from "@/models/types";
+import { PharmaciesTypes } from "@/models/types";
+import { useQuery } from "@tanstack/react-query";
 
 function PharmacyGrid() {
-  const { preferedTown } = useContext(AppContext)!;
-  const [pharmacies, setPharmacies] = useState<PharmacyType[] | null>(null);
+  const [pharmacies, setPharmacies] = useState<PharmaciesTypes | null>(null);
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const regionalPharmacies = PHARMACIES.find(
-    (item) => item.region === preferedTown?.region
-  );
-  const areaPharmacies = regionalPharmacies?.pharmacies.filter(
-    (item) => item.town === preferedTown?.city
-  );
+  const preferedTownInLS = localStorage.getItem("preferedTown");
+  if (preferedTownInLS === null) return <Loading />;
+  const preferedTown = JSON.parse(preferedTownInLS);
 
-  useEffect(() => {
-    async function fetchPharmacies() {
-      setLoading(true);
-      setError("");
-      try {
-        if (preferedTown?.city) {
-          const res = await fetch(
-            `/api/pharmacy/list-town-pharmacies?city=${encodeURIComponent(preferedTown?.city)}&limit=15`,
-            {
-              method: "GET",
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          const data = await res.json()
-          console.log(data)
-         if( data.success){
-          setPharmacies(data.data)
-          return;
-         }
-         setError(data.error)
-        }
-      } catch (ex: unknown) {
-        if (ex instanceof Error) {
-          setError(ex.message);
-        }
-        setError("Error fetching data");
+  async function fetchFunction(): Promise<PharmaciesTypes> {
+    const res = await fetch(
+      `/api/pharmacy/list-town-pharmacies?region=${
+        preferedTown?.region
+      }&city=${encodeURIComponent(preferedTown.city)}&limit=15`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       }
-      finally{
-        setLoading(false)
-      }
-    }
-    fetchPharmacies();
-    return () => {};
-  }, []);
-  if(isLoading) return <Loading />
-  if (!areaPharmacies || areaPharmacies.length < 1) {
+    );
+    const data = await res.json();
+    setPharmacies(data);
+    return data;
+  }
+
+  const { data, isPending, isError, refetch } = useQuery({
+    queryKey: ["client-pharmacies"],
+    queryFn: fetchFunction,
+  });
+
+  if (isLoading || isPending) return <Loading />;
+
+  if (!data) {
     return <NoPharmacy city={preferedTown?.city!} />;
   }
+
   return (
     <section>
       <div>
-        {pharmacies && pharmacies?.map((pharmacy) => (
-          <PharmacyCard pharmacy={pharmacy} key={pharmacy.id} />
-        ))}
+        {pharmacies &&
+          pharmacies.data?.map((pharmacy) => (
+            <PharmacyCard pharmacy={pharmacy} key={pharmacy.id} />
+          ))}
       </div>
     </section>
   );

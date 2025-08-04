@@ -1,19 +1,27 @@
 "use client";
 import AppContext from "@/context/AppContext";
 import React, { useContext } from "react";
-import { Ban, Frown } from 'lucide-react'
-import { freezeProfile, deleteProfile } from "@/libs/freeze-delete-profile";
+import { Ban, Frown } from "lucide-react";
+import {
+  useFreezePharmacy,
+  useDeletePharmacy,
+} from "@/hooks/useDeleteFreezePharmacy";
+import { Spiner } from "@/components/index";
 
 function MyModal({ message }: { message: string }) {
-  const { showModal, setModal } = useContext(AppContext)!;
+  const { setModal } = useContext(AppContext)!;
+  const { mutate: freezePharmacy, isPending: freezeLoader } =
+    useFreezePharmacy();
+  const { mutate: deletePharmacy, isPending: deleteLoader } =
+    useDeletePharmacy();
 
   function handleConfirmation() {
-    setTimeout(() => setModal(false), 1000);
     if (message === "Delete") {
-      deleteProfile();
-      return;
+      deletePharmacy();
     }
-    freezeProfile();
+    freezePharmacy();
+
+    const timer = setTimeout(() => setModal(false), 1000);
   }
   return (
     <div
@@ -32,13 +40,23 @@ function MyModal({ message }: { message: string }) {
               onClick={() => setModal(false)}
               className="border py-2 rounded px-4 flex items-center gap-2 border-gray-400 cursor-pointer trans hover:border-gray-800"
             >
-              <Ban size={18}/>
+              <Ban size={18} />
               Cancel
             </button>
             <button
               onClick={handleConfirmation}
-              className="border py-2 rounded px-4 flex items-center gap-2 bg-black text-white cursor-pointer  hover:bg-black/80 trans hover:red-gray-800"
-            ><Frown size={18} />
+              className={` ${
+                freezeLoader || (deleteLoader && "bg-black/70")
+              } border py-2 trans rounded px-4 flex items-center gap-2 bg-black text-white cursor-pointer  hover:bg-black/80 trans hover:red-gray-800`}
+            >
+              {" "}
+              <span>
+                {freezeLoader || deleteLoader ? (
+                  <Spiner height="size-5" color="white" />
+                ) : (
+                  <Frown size={18} />
+                )}
+              </span>
               Yes! {message}
             </button>
           </div>

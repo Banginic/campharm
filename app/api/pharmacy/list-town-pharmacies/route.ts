@@ -1,24 +1,28 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from '@/drizzle/index'
 import { pharmacyTable } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const city = searchParams.get("city");
+  const region = searchParams.get("region");
   const limit = searchParams.get("limit");
 
   try {
-    if (!city) {
+    if (!city || !region) {
       return NextResponse.json(
-        { error: "City parameter is required", success: false },
+        { error: "City and Region are required", success: false },
         { status: 400 }
       );
     }
     const pharmacies = await db
       .select()
       .from(pharmacyTable)
-      .where(eq(pharmacyTable.town, city))
+      .where(and(
+        eq(pharmacyTable.town, city),
+        eq(pharmacyTable.region, region)
+      ))
       .limit(Number(limit))
 
 

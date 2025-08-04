@@ -8,7 +8,8 @@ import { PharmacyContext } from "@/context/PharmacyProvider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginSchemaType } from "@/schemas/pharmacyAuth";
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, Send } from "lucide-react";
+import { Spiner } from "@/components";
 
 function Login() {
   const { setPharmacyDetails } = useContext(PharmacyContext)!;
@@ -109,9 +110,15 @@ function Login() {
           <button
             type="submit"
             disabled={formState.isLoading}
-            className={`w-full mt-8 cursor-pointer bg-black disabled:bg-gray-500 disabled:animate-pulse hover:bg-black/80 text-white py-2 rounded font-semibold`}
+            className={`w-full mt-8 cursor-pointer bg-black disabled:bg-gray-800 disabled:animate-pulse hover:bg-black/80 text-white py-2 rounded font-semibold`}
           >
-            {formState.isLoading ? "Logging in..." : "Login"}
+            {formState.isLoading ? <span className="flex justify-center items-center gap-2 ">
+              <Spiner color="white" height="size-5" /> Logging in....
+            </span> : <span className="flex items-center gap-2 justify-center">
+              <Send size={18} />
+              Login
+            </span>
+            }
           </button>
           <p className="text-red-400 text-sm h-4 text-center mt-1">
             {formState.error}

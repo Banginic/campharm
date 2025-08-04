@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   if (isNaN(pharmacyIdNumber)) {
     return NextResponse.json(
       { error: "Pharmacy ID must be a number", success: false },
-      { status: 400 }
+      { status: 403 }
     );
   }
 
@@ -33,8 +33,8 @@ export async function GET(request: Request) {
 
     if (drugs.length === 0) {
       return NextResponse.json(
-        { message: "No drugs found for this pharmacy", success: true },
-        { status: 404 }
+        { message: "No drugs found for this pharmacy", success: true, data: [] },
+        { status: 200 }
       );
     }
     return NextResponse.json({ data: drugs, success: true }, { status: 200 });

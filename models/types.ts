@@ -23,6 +23,7 @@ export interface WeeklyScheduleType {
 
 }
 
+type APIResponse = { success: boolean, message?: string, error?: string}
 export interface DrugType {
   id: string;
   genericName: string;
@@ -34,22 +35,36 @@ export interface DrugType {
   description?: string;
   inStock: boolean
 }
+export interface DrugTypes extends APIResponse {
+  data: DrugType[] | []
+}
 export interface PharmacyType {
-  id: string;
+  id: number;
   pharmacyName:string;
   pharmacistName: string; 
   isOpen: boolean;
-  isOnCall: boolean;n: string;
+  isOnCall: boolean;
+  region: string;
   town: string;
   phoneNumber: string;
   email: string;
   isVerified: boolean;
+  isFrozen: boolean;
+  createdAt: Date;
+  updatedAt: Date;
   weeklySchedule: WeeklyScheduleType;
 
 }
+export interface PharmaciesTypes extends APIResponse {
+  data: PharmacyType [] | []
+}
+
+
 export interface PharmacyContextType {
   showOnCall: boolean;
   setOnCall: React.Dispatch<React.SetStateAction<boolean>>;
+  lang: 'en' | 'fr';
+  setLang: React.Dispatch<React.SetStateAction<'en' | 'fr'>>;
   showAddDrugForm: boolean;
   setDrugForm: React.Dispatch<React.SetStateAction<boolean>>;
   showWorkingDaysForm: boolean;
