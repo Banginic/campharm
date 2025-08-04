@@ -13,13 +13,13 @@ export interface AppContextType {
 }
 
 export interface WeeklyScheduleType {
-  monday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  tuesday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  wednesday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  thursday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  friday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  saturday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
-  sunday: { open: '08:00', close: '18:00', isOnCall: boolean } | null;
+  monday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  tuesday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  wednesday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  thursday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  friday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  saturday: { open: string | Date, close: string | Date, isOnCall: boolean };
+  sunday: { open: string | Date, close: string | Date, isOnCall: boolean };
 
 }
 
@@ -39,13 +39,12 @@ export interface PharmacyType {
   pharmacyName:string;
   pharmacistName: string; 
   isOpen: boolean;
-  isOnCall: boolean;
-  region: string;
+  isOnCall: boolean;n: string;
   town: string;
   phoneNumber: string;
   email: string;
   isVerified: boolean;
-  weeklySchedule?: WeeklyScheduleType;
+  weeklySchedule: WeeklyScheduleType;
 
 }
 export interface PharmacyContextType {

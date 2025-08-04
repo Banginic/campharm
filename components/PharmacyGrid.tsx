@@ -25,13 +25,14 @@ function PharmacyGrid() {
       try {
         if (preferedTown?.city) {
           const res = await fetch(
-            `/api/pharmacies?city=${encodeURIComponent(preferedTown?.city)}`,
+            `/api/pharmacy/list-town-pharmacies?city=${encodeURIComponent(preferedTown?.city)}&limit=15`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
             }
           );
           const data = await res.json()
+          console.log(data)
          if( data.success){
           setPharmacies(data.data)
           return;

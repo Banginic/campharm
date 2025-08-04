@@ -10,12 +10,12 @@ export async function POST(req: Request) {
      
      const weeklySchedule = {
         monday:    { open: "08:00", close: "18:00", isOnCall: false },
-        tuesday:   { open: "08:00", close: "18:00", isOnCall: true },
+        tuesday:   { open: "08:00", close: "18:00", isOnCall: false },
         wednesday: { open: "08:00", close: "18:00", isOnCall: false },
-        thursday:  { open: "08:00", close: "18:00", isOnCall: true },
+        thursday:  { open: "08:00", close: "18:00", isOnCall: false },
         friday:    { open: "08:00", close: "18:00", isOnCall: false },
         saturday:  { open: "09:00", close: "13:00", isOnCall: false },
-        sunday:    null
+        sunday:  { open: "09:00", close: "13:00", isOnCall: false },
       }
     
     const body = await req.json();
