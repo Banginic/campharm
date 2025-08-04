@@ -115,7 +115,7 @@ function DrugDetails({ params }: { params: Promise<{ drugId: string }> }) {
                       Drug is currently in stock.
                     </p>
                   ) : (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-400 text-sm">
                       Drug is currently out of stock.
                     </p>
                   )}

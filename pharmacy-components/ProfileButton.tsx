@@ -2,7 +2,7 @@
 import AppContext from "@/context/AppContext";
 import React, { useContext, useState } from "react";
 import { MyModal } from "@/components/index";
-import { Snowflake, Trash } from "lucide-react";
+import { Snowflake, Trash, CaptionsOff } from "lucide-react";
 import { PharmaciesTypes } from "@/models/types";
 
 function ProfileButton({ pharmacy }: { pharmacy: PharmaciesTypes }) {
@@ -15,12 +15,15 @@ function ProfileButton({ pharmacy }: { pharmacy: PharmaciesTypes }) {
   }
   return (
     <div>
-      <div className="mt-8  relative">
-       { pharmacy?.data[0].isFrozen &&  <p className="text-yellow-700 text-sm  mb-0.5">Account is Frozen</p>}
-        <div className="flex  gap-4">
+      <div className="mt-4  relative">
+       { pharmacy?.data[0].isFrozen &&  <p className="text-red-400 text-xs flex gap-2 mb-1 items-center ">
+        <CaptionsOff size={18} />
+        <span>Account is Frozen</span>
+        </p>}
+        <div className="flex flex-col gap-4">
           <button
             onClick={() => handleClick(pharmacy?.data[0].isFrozen ? 'Unfreeze' : 'Freeze')}
-            className="border py-2 rounded px-4 border-gray-400 flex gap-2 items-center cursor-pointer trans hover:border-gray-800"
+            className="border py-2 rounded px-4 border-gray-400 inline-flex gap-2 text-sm items-center cursor-pointer trans hover:border-neutral-800 text-neutral-700"
           >
             {" "}
             <Snowflake size={18} />
@@ -32,10 +35,10 @@ function ProfileButton({ pharmacy }: { pharmacy: PharmaciesTypes }) {
           </button>
           <button
             onClick={() => handleClick("Delete")}
-            className="border py-2 rounded px-4 border-red-400 cursor-pointer flex items-center gap-2 text-red-500 hover:bg-red-100 trans hover:red-gray-800"
+            className="border py-2 rounded px-4 border-neutral-400 text-sm cursor-pointer inline-flex items-center gap-2 text-neutral-700 hover:bg-red-500 hover:text-red-100 trans hover:red-gray-800"
           >
             <Trash size={18} />
-            Delete account
+            Permanently Delete Account
           </button>
         </div>
       </div>

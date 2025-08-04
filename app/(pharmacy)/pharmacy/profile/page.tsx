@@ -6,6 +6,7 @@ import { PharmaciesTypes } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorFetching, Loading, NoData } from "@/components/index";
 import { no_drug } from "@/assets/photos";
+import { ManualClosePharmcy } from "@/components/index";
 
 function Profile() {
   const { apiFetch } = useApiClient<PharmaciesTypes>();
@@ -41,6 +42,8 @@ function Profile() {
             <p className="text-gray-600 text-[16px]">
               Since: {new Date(data?.data[0].createdAt).toLocaleDateString('en-GB')}
             </p>
+            
+            <ManualClosePharmcy />
             <ProfileButton pharmacy={data} />
           </div>
         )}
