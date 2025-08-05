@@ -9,6 +9,7 @@ export const pharmacyTable = pgTable('pharmacy_table', {
     phoneNumber: varchar('phone_number', { length: 15 }).notNull(),
     region: varchar('region', { length: 15 }).notNull(),
     town: varchar('town', { length: 50 }).notNull(),
+    address: varchar('address', { length: 50 }).notNull().default(''),
     password: varchar('password', { length: 255 }).notNull(),
     isOnCall: boolean("isOnCall").notNull().default(false),
     isVerified: boolean("isVerified").notNull().default(false),

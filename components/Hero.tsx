@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import { MapPin, Search, Star, Users, Shield, Clock, Sparkle } from 'lucide-react';
+import { MapPin, Star, Users, Shield, Clock, Sparkle } from 'lucide-react';
 import Link from 'next/link';
 import Logo from './Logo';
+import { SearchPharmacy } from './index'
 
 const PharmacyHero = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -52,30 +53,7 @@ const PharmacyHero = () => {
             </div>
 
             {/* Search Bar */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 border border-white/20 w-sm lg:w-lg shadow-2xl">
-              <div className="flex gap-3">
-                <div className="flex items-center flex-1 bg-white rounded-xl px-4 py-2.5">
-                  <MapPin className="text-gray-400 mr-3" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Enter your location or zip code"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 outline-none text-gray-700 text-xs placeholder-gray-400 lg:text-sm"
-                  />
-                </div>
-                <button
-                  onClick={handleSearch}
-                  className="borde bg-green-950/60 text-white border-black/70  text-sm px-4 py-1 rounded-xl cursor-pointer font-semibold transition-all duration-300 lg:hover:scale-105 hover:shadow-lg flex items-center gap-2"
-                >
-                  <Search size={20} />
-                  Search
-                </button>
-                <Link href={'/purpose'} className='bg-black hover:bg-black/90 text-white hidden lg:flex justify-center px-4  text-sm mx-aut py-2 rounded-lg gap-2 items-center cursor-pointer'>
-              <Sparkle size={18} />
-              Get Started</Link>
-              </div>
-            </div>
+            <SearchPharmacy />
             
             <Link href={'/purpose'} className='bg-black hover:bg-black/90 lg:hidden text-white w-sm justify-center px-4 flex text-sm mx-aut py-2.5 rounded-lg gap-2 items-center cursor-pointer'>
               <Sparkle size={18} />

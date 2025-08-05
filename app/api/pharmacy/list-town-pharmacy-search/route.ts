@@ -1,34 +1,36 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from '@/drizzle/index'
 import { pharmacyTable } from "@/drizzle/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, ilike, or } from "drizzle-orm";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const city = searchParams.get("city");
-  const region = searchParams.get("region");
+export async function POST(req: Request) {
+      const { searchParams } = new URL(req.url);
   const limit = searchParams.get("limit");
-
-  try {
-    if (!city || !region) {
-      return NextResponse.json(
-        { error: "City and Region are required", success: false },
-        { status: 400 }
-      );
-    }
-    const pharmacies = await db
-      .select()
-      .from(pharmacyTable)
-      .where(and(
-        eq(pharmacyTable.town, city),
-        eq(pharmacyTable.region, region)
-      ))
-      .limit(Number(limit))
+ const body = await req.json()
+ 
+ try {
+     if (!body ) {
+         return NextResponse.json(
+             { error: "search query is requird", success: false, data: [] },
+             { status: 400 }
+            );
+        }
+    const query = `%${body.trim()}%`;
+const pharmacies = await db
+  .select()
+  .from(pharmacyTable)
+  .where(
+    or(
+      ilike(pharmacyTable.town, `%${query}%`),
+      ilike(pharmacyTable.address, `%${query}%`)
+    )
+  )
+  .limit(Number(limit) || 10);
 
 
     if (pharmacies.length === 0) {
       return NextResponse.json(
-        { message: "No pharmacies found", success: true, data: [] },
+        { message: "No pharmacy found", success: true, data: [] },
         { status: 200 }
       );
     }

@@ -8,18 +8,17 @@ import {
   phone,
   verified,
 } from "@/assets/photos";
-import { PHARMACIES } from "@/assets/data";
 import Image from "next/image";
 import { Back, WeekDays } from "@/components/index";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import type { PharmacyType } from "@/models/types";
 import { Loading } from "@/components/index";
 
-function PharmacyDetails({ params }: { params: { pharmacyId: string } }) {
+function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }) {
   const [pharmacy, setPharmacy] = useState<PharmacyType | null>(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { pharmacyId } = params;
+  const { pharmacyId } = use(params);
 
   const pharmacyLocation = {
     latitude: "",
@@ -33,7 +32,7 @@ function PharmacyDetails({ params }: { params: { pharmacyId: string } }) {
       try {
         if (pharmacyId) {
           const res = await fetch(
-            `/api/pharmacy?pharmacyId=${encodeURIComponent(pharmacyId)}`,
+            `/api/pharmacy/list-single-pharmacy?pharmacyId=${encodeURIComponent(pharmacyId)}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
