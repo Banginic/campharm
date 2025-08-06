@@ -39,13 +39,13 @@ function PharmacyGrid() {
   }
 
   return (
-    <section>
-      <div>
+    <section className="mt-8">
+      
         {pharmacies &&
           pharmacies.data?.map((pharmacy) => (
             <PharmacyCard pharmacy={pharmacy} key={pharmacy.id} />
           ))}
-      </div>
+      
     </section>
   );
 }

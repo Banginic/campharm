@@ -1,24 +1,22 @@
 import { password } from "@/assets/photos";
-import { integer, pgTable, serial, varchar, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, varchar, boolean, jsonb, timestamp, time } from "drizzle-orm/pg-core";
 
 export const pharmacyTable = pgTable('pharmacy_table', {
-    id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
-    pharmacyName: varchar('pharmacy_name', { length: 255}).notNull().unique(),
-    email: varchar('email', {length:25}).notNull().unique(),
-    pharmacistName: varchar('pharmacist_name', { length: 50}).notNull(). default('No Verified'),
-    phoneNumber: varchar('phone_number', { length: 15 }).notNull(),
-    region: varchar('region', { length: 15 }).notNull(),
-    town: varchar('town', { length: 50 }).notNull(),
-    address: varchar('address', { length: 50 }).notNull().default(''),
-    password: varchar('password', { length: 255 }).notNull(),
-    isOnCall: boolean("isOnCall").notNull().default(false),
-    isVerified: boolean("isVerified").notNull().default(false),
-    isOpen: boolean("isOpen").notNull().default(true),
-    location: jsonb('location').notNull(),
-    isFrozen: boolean('isFrozen').notNull().default(false),
-     weeklySchedule: jsonb("weekly_schedule").notNull(),
-     createdAt: timestamp('created_at', { mode: 'string'}).defaultNow(),
-     updatedAt: timestamp('updated_at', { mode: 'string'}).defaultNow()
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  pharmacyName: varchar('pharmacy_name', { length: 255 }).notNull().unique(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  pharmacistName: varchar('pharmacist_name', { length: 50 }).notNull().default('Not Verified'),
+  phoneNumber: varchar('phone_number', { length: 20 }).notNull(),
+  region: varchar('region', { length: 50 }).notNull(),
+  town: varchar('town', { length: 100 }).notNull(),
+  address: varchar('address', { length: 100 }).notNull().default(''),
+  password: varchar('password', { length: 255 }).notNull(),
+  isVerified: boolean("is_verified").notNull().default(false),
+  licenceNumber: varchar('licence_number', { length: 100 }).notNull().default('N/A'),
+  location: jsonb('location').notNull().default({ lat: 0, lng: 0 }),
+  isFrozen: boolean('is_frozen').notNull().default(false),
+  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow()
 
 })
 
@@ -34,6 +32,17 @@ export const drugTable = pgTable('drug_table', {
      pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()
 })
 
+export const dailySchedule = pgTable('daily_schedule_table', {
+  id: serial("id").primaryKey(),
+  day: varchar('day', { length: 255 }).notNull().default(''),
+  isOpen: boolean("is_open").notNull().default(true),
+  isOnCall: boolean("is_on_call").notNull().default(false),
+  openingTime: time("opening_time").notNull(),
+  closingTime: time("closing_time").notNull(),
+  pharmacyId: integer('pharmacy_id')
+    .references(() => pharmacyTable.id, { onDelete: 'cascade' })
+    .notNull()
+});
 export const users = pgTable('users', {
     id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
     name: varchar('name', { length: 50 }).notNull(),

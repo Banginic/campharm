@@ -35,15 +35,32 @@ export interface DrugType {
   description?: string;
   inStock: boolean
 }
+export interface DrugSearchType extends APIResponse {
+  data: {
+    id: string;
+  genericName: string;
+  tradeName?: string;
+  dosageForm: string;
+  dosageStrength: string;
+  price?: number;
+  pharmacyId: string;
+  description: string;
+  inStock: boolean;
+ pharmacyName: string;
+ isOpen: boolean
+  }[] | []
+}
 export interface DrugTypes extends APIResponse {
   data: DrugType[] | []
 }
-export interface PharmacyType {
+
+
+
+export interface PharmaciesTypes extends APIResponse {
+  data:  {
   id: number;
   pharmacyName:string;
   pharmacistName: string; 
-  isOpen: boolean;
-  isOnCall: boolean;
   region: string;
   town: string;
   phoneNumber: string;
@@ -52,11 +69,38 @@ export interface PharmacyType {
   isFrozen: boolean;
   createdAt: Date;
   updatedAt: Date;
-  weeklySchedule: WeeklyScheduleType;
-
+  location: {
+    lon: number, lat: number
+  } | {}, 
+  address: string,
+  licenceNumber: string,
+} [] | []
 }
-export interface PharmaciesTypes extends APIResponse {
-  data: PharmacyType [] | []
+export interface PharmacyDetailsTypes extends APIResponse {
+  data:  {
+
+  id: number;
+  pharmacyName:string;
+  pharmacistName: string; 
+  region: string;
+  town: string;
+  phoneNumber: string;
+  email: string;
+  isVerified: boolean;
+  isFrozen: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  location: {
+    lon: number, lat: number
+  } | {}, 
+  address: string,
+  licenceNumber?: string,
+  day:string;
+  isOpen: boolean;
+  isOnCall: boolean;
+  openingTime: Date;
+  closingTime: Date;
+} [] | []
 }
 
 
@@ -69,7 +113,7 @@ export interface PharmacyContextType {
   setDrugForm: React.Dispatch<React.SetStateAction<boolean>>;
   showWorkingDaysForm: boolean;
   setWorkingDays: React.Dispatch<React.SetStateAction<boolean>>;
-  pharmacyDetails: PharmacyType | null;
-  setPharmacyDetails: React.Dispatch<React.SetStateAction<PharmacyType | null>>;
+  pharmacyDetails: PharmaciesTypes | null;
+  setPharmacyDetails: React.Dispatch<React.SetStateAction<PharmaciesTypes | null>>;
 }
    

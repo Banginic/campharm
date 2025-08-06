@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { CAMEROON } from "@/assets/data";
 import { toast } from "react-toastify";
@@ -15,8 +15,12 @@ import {
   Phone,
   UserLock,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { PharmacyContext } from "@/context/PharmacyProvider";
 
 function Signup() {
+  const {setPharmacyDetails} = useContext(PharmacyContext)!
+  const router = useRouter()
   const [region, setRegion] = useState("");
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
   const town = region && CAMEROON.find((item) => item.region === region);
@@ -42,8 +46,10 @@ function Signup() {
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("pharmacy-token", data.token);
+        localStorage.setItem('pharmacyDetails', JSON.stringify(data?.data))
+        setPharmacyDetails(data?.data)
         reset();
-        return;
+        setTimeout(() => router.push('/pharmacy'), 2000)
       }
       toast.error(data.error);
       setFormState({ ...formState, error: data.error });

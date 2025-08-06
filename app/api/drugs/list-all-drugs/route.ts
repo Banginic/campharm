@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   if (!pharmacyId) {
     return NextResponse.json(
-      { error: "Pharmacy ID is required", success: false },
+      { error: "Pharmacy ID is required", success: false, data: [] },
       { status: 403 }
     );
   }
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   const pharmacyIdNumber = Number(pharmacyId);
   if (isNaN(pharmacyIdNumber)) {
     return NextResponse.json(
-      { error: "Pharmacy ID must be a number", success: false },
+      { error: "Pharmacy ID must be a number", success: false, data: [] },
       { status: 403 }
     );
   }

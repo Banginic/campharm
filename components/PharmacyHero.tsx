@@ -12,8 +12,10 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import { PharmacyDetailsTypes } from '@/models/types'
+import { PharmacyOnCallStatus, PharmacyStatus, PharmacyTotalDrugs } from '@/components/index'
 
-export default function PharmacyAdminHero() {
+export default function PharmacyAdminHero({ data} : { data: PharmacyDetailsTypes }) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Sample pharmacy data - in a real app, this would come from your API/database
@@ -38,7 +40,7 @@ export default function PharmacyAdminHero() {
     return () => clearInterval(timer);
   }, []);
 
-  const formatDate = (date) => {
+  const formatDate = (date:Date) => {
     return date.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
@@ -47,7 +49,7 @@ export default function PharmacyAdminHero() {
     });
   };
 
-  const formatTime = (date) => {
+  const formatTime = (date:Date) => {
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
@@ -55,31 +57,8 @@ export default function PharmacyAdminHero() {
     });
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "open":
-        return "bg-green-500";
-      case "closed":
-        return "bg-red-500";
-      case "busy":
-        return "bg-yellow-500";
-      default:
-        return "bg-gray-500";
-    }
-  };
 
-  const getStatusText = (status) => {
-    switch (status) {
-      case "open":
-        return "Open";
-      case "closed":
-        return "Closed";
-      case "busy":
-        return "Busy";
-      default:
-        return "Unknown";
-    }
-  };
+
 
   return (
     <div className="liquid-glass min-h-[400px] relative overflow-hidden">
@@ -105,14 +84,15 @@ export default function PharmacyAdminHero() {
             </div>
 
             {/* Pharmacy name and location */}
-            <div className="text-right text-green-950  mt-8 lg:mt-0">
+            <div className="ml-1 text-green-950  mt-8 lg:mt-0">
               <h1 className="text-xl lg:text-2xl font-bold ">
-                {pharmacyData.name}
+                {data?.data[0].pharmacyName}
               </h1>
               <div className="flex items-center  space-x-2">
                 <MapPin className="size-5 text-green-950/70" />
                 <p className="text-green-950/70 text-sm">
-                  {pharmacyData.location}
+                  {data?.data[0].address}  { ' '}
+                  {data?.data[0].town}  
                 </p>
               </div>
             </div>
@@ -121,64 +101,15 @@ export default function PharmacyAdminHero() {
           {/* Stats grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Total Medications */}
-            <div className=" p-4 liquid-glass border border-white/20 hover:bg-white/15 transition-all duration-300 transform lg:hover:scale-105">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-blue-500/20 rounded-full">
-                  <Package className="size-5 lg:size-8 text-blue-500" />
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-green-950/70 ">
-                    {pharmacyData.totalMedications.toLocaleString()}
-                  </p>
-                  <p className="text-green-950/60  text-sm">
-                    Total Medications
-                  </p>
-                </div>
-              </div>
-            </div>
+           
 
-            {/* Current Status */}
-            <div className="liquid-glass p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 transform lg:hover:scale-105">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div
-                    className={`size-3 lg:size-4 rounded-full ${getStatusColor(
-                      pharmacyData.status
-                    )} animate-pulse`}
-                  ></div>
-                  <p className="text-green-950/70 text-sm font-semibold">
-                    {getStatusText(pharmacyData.status)}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-green-950/70 text-sm">Current Status</p>
-                  <p className="text-green-950/70 text-sm">
-                    {pharmacyData.openingTime} - {pharmacyData.closingTime}
-                  </p>
-                </div>
-              </div>
-            </div>
+           <PharmacyTotalDrugs />
+            <PharmacyStatus data={data} />
+            <PharmacyOnCallStatus data={data} />
 
-            {/* On-Call Status */}
-            <div className="liquid-glass p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 transform lg:hover:scale-105">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-green-500/20 rounded-full">
-                  <Phone className="size-5 lg:size-8 text-green-600" />
-                </div>
-                <div className="text-right">
-                  <p className="text-green-950/70 text-lg font-semibold">
-                    {pharmacyData.onCallAvailable ? "Available" : "Unavailable"}
-                  </p>
-                  <p className="text-green-950/60  text-sm">On-Call Service</p>
-                  {pharmacyData.onCallAvailable && (
-                    <p className="text-green-500 text-xs mt-1">
-                      {pharmacyData.onCallPharmacist}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-
+           
+            
+              
             {/* Today's Orders */}
             <div className="liquid-glass p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 transform lg:hover:scale-105">
               <div className="flex items-center justify-between mb-4">

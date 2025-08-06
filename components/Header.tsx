@@ -3,7 +3,7 @@ import { PrivateNavbar, PublicNavbar } from './index'
 
 function Header() {
   return (
-    <div>
+    <div >
        <PublicNavbar />
     </div>
   )

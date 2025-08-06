@@ -7,7 +7,7 @@ export const mainQueryClient = new QueryClient()
 export default function MainLayout({ children }: { children: React.ReactNode}) {
   return (
     <QueryClientProvider client={mainQueryClient}>
-      <div className="min-h-[85dvh] border relative  mx-auto py-12 sm:py-14">
+      <div className="min-h-[85dvh]  relative  mx-auto ">
         <Header />
         <main className="">{children}</main>
       </div>

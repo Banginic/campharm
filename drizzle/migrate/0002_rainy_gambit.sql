@@ -1,1 +1,0 @@
-ALTER TABLE "drug_table" ADD COLUMN "in_stock" boolean DEFAULT true NOT NULL;

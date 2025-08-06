@@ -9,7 +9,6 @@ const PharmacyHero = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
-    console.log('Searching for:', searchQuery);
     // Handle search logic here
   };
 

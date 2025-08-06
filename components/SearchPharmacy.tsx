@@ -1,31 +1,23 @@
 "use client";
-import { Key, MapPin, Search, Sparkle, X } from "lucide-react";
+import {  MapPin, Search, Sparkle, X } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useDebouncer } from "@/hooks/useDebouncer";
 import { useQuery } from "@tanstack/react-query";
 import { Spiner } from "./index";
+import { searchFilter } from '@/utils/searchFilter'
 import { PharmaciesTypes } from "@/models/types";
 
 function SearchPharmacy() {
   const [searchQuery, setSearchQuery] = useState("");
   const debounceQuery = useDebouncer(searchQuery, 400);
 
-  async function fetchPharmacies(query: string): Promise<PharmaciesTypes> {
-    const res = await fetch("/api/pharmacy/list-town-pharmacy-search", {
-      method: "POST",
-      body: JSON.stringify(debounceQuery),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await res.json();
-    return data;
-  }
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["pharmacy", debounceQuery],
-    queryFn: () => fetchPharmacies(debounceQuery),
+    queryFn: () => searchFilter<PharmaciesTypes>(debounceQuery, "/api/pharmacy/list-town-pharmacy-search"),
     enabled: debounceQuery.length > 2,
   });
-  console.log(data);
+ 
 
   function handleSearch() {
     setSearchQuery("");

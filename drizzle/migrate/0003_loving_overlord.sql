@@ -1,1 +1,0 @@
-ALTER TABLE "pharmacy_table" ADD COLUMN "address" varchar(50) DEFAULT '' NOT NULL;

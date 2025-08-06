@@ -1,9 +1,81 @@
 {
-  "id": "26e4a6e4-727b-440d-9a7e-2cab7ed7edaf",
+  "id": "eca75af8-09e6-4c9f-8f2a-44998b734bcd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.daily_schedule_table": {
+      "name": "daily_schedule_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "day": {
+          "name": "day",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "is_open": {
+          "name": "is_open",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "is_on_call": {
+          "name": "is_on_call",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "opening_time": {
+          "name": "opening_time",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "closing_time": {
+          "name": "closing_time",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pharmacy_id": {
+          "name": "pharmacy_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_schedule_table_pharmacy_id_pharmacy_table_id_fk": {
+          "name": "daily_schedule_table_pharmacy_id_pharmacy_table_id_fk",
+          "tableFrom": "daily_schedule_table",
+          "tableTo": "pharmacy_table",
+          "columnsFrom": [
+            "pharmacy_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.drug_table": {
       "name": "drug_table",
       "schema": "",
@@ -16,6 +88,13 @@
         },
         "trade_name": {
           "name": "trade_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "description": {
+          "name": "description",
           "type": "varchar(500)",
           "primaryKey": false,
           "notNull": true,
@@ -45,6 +124,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": 0
+        },
+        "in_stock": {
+          "name": "in_stock",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
         },
         "pharmacy_id": {
           "name": "pharmacy_id",
@@ -104,7 +190,7 @@
         },
         "email": {
           "name": "email",
-          "type": "varchar(25)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -113,25 +199,32 @@
           "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true,
-          "default": "'No Verified'"
+          "default": "'Not Verified'"
         },
         "phone_number": {
           "name": "phone_number",
-          "type": "varchar(15)",
+          "type": "varchar(20)",
           "primaryKey": false,
           "notNull": true
         },
         "region": {
           "name": "region",
-          "type": "varchar(15)",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true
         },
         "town": {
           "name": "town",
-          "type": "varchar(50)",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
         },
         "password": {
           "name": "password",
@@ -139,45 +232,33 @@
           "primaryKey": false,
           "notNull": true
         },
-        "isOnCall": {
-          "name": "isOnCall",
+        "is_verified": {
+          "name": "is_verified",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
         },
-        "isVerified": {
-          "name": "isVerified",
-          "type": "boolean",
+        "licence_number": {
+          "name": "licence_number",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true,
-          "default": false
-        },
-        "isOpen": {
-          "name": "isOpen",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": true
+          "default": "'N/A'"
         },
         "location": {
           "name": "location",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'{\"lat\":0,\"lng\":0}'::jsonb"
         },
-        "isFrozen": {
-          "name": "isFrozen",
+        "is_frozen": {
+          "name": "is_frozen",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
-        },
-        "weekly_schedule": {
-          "name": "weekly_schedule",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
         },
         "created_at": {
           "name": "created_at",

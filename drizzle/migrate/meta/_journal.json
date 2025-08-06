@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1754145455854,
-      "tag": "0000_curved_exiles",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1754163339734,
-      "tag": "0001_spooky_fat_cobra",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1754165617787,
-      "tag": "0002_rainy_gambit",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1754362349883,
-      "tag": "0003_loving_overlord",
+      "when": 1754486606797,
+      "tag": "0000_youthful_giant_girl",
       "breakpoints": true
     }
   ]
