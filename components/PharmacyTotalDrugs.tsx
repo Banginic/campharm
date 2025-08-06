@@ -9,7 +9,8 @@ function PharmacyTotalDrugs() {
   const { apiFetch } = useApiClient<DrugTypes>();
   const { isLoading, data } = useQuery({
     queryKey: ["drugs"],
-    queryFn: () => apiFetch("/api/drugs/list-all-drugs"),
+    queryFn: () => apiFetch("/api/drugs/list-all-drugs", { cache: 'force-cache', }),
+    refetchInterval: 520000
   });
 
   if (isLoading) return <Loading />;

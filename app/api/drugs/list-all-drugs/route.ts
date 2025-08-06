@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const pharmacyId = searchParams.get("pharmacyId");
-  const limit = searchParams.get("limit");
+
 
 
   if (!pharmacyId) {
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       .select()
       .from(drugTable)
       .where(eq(drugTable.pharmacyId, pharmacyIdNumber))
-      .limit(Number(limit))
+
 
     if (drugs.length === 0) {
       return NextResponse.json(

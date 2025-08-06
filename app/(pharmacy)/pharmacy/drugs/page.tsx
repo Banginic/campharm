@@ -15,7 +15,7 @@ function Drug() {
       return null;
     }
     const response = await fetch(
-      `/api/drugs/list-all-drugs?pharmacyId=${pharmacyDetails.id}&limit=14`,
+      `/api/drugs/list-all-drugs?pharmacyId=${pharmacyDetails?.id}&limit=14`,
       {
         method: "GET",
       }

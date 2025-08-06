@@ -34,3 +34,10 @@ export { default as SearchPharmacy } from './SearchPharmacy'
 export { default as PharmacyStatus } from './PharmacyStatus'
 export { default as PharmacyOnCallStatus } from './PharmacyOnCallStatus'
 export { default as PharmacyTotalDrugs } from './PharmacyTotalDrugs'
+export { default as PharmacyHeroCTA } from './PharmacyHeroCTA'
+
+
+// ui
+// export { default as CurrentDate } from './ui/currentDate'
+export { default as HeroPharmacyName } from './ui/HeroPharmacyName'
+export { default as HeroTotalOrders } from './ui/HeroTotalOrders'
