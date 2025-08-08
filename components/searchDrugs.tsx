@@ -5,6 +5,7 @@ import { Search, Tablets, X, Pill } from "lucide-react";
 import { useDebouncer } from "@/hooks/useDebouncer";
 import { useQuery } from "@tanstack/react-query";
 import { DrugSearchType } from "@/models/types";
+import { getClosingStatus } from "@/libs/formateClosingTime";
 import Spiner from "./Spiner";
 import AppContext from "@/context/AppContext";
 import Link from "next/link";
@@ -85,7 +86,7 @@ function Searchbar() {
             <div className="min-h-full grid place-items-center">
               <Spiner height="size-8" color="text-green-500" />
               <p className="text-sm text-center animate-pulse text-green-500">
-                Loadin....
+                Loading....
               </p>
             </div>
           ) : !data || data?.data.length === 0 ? (
@@ -101,7 +102,7 @@ function Searchbar() {
             <div className="flex flex-col mt-4 gap-2">
               {data?.data.map((item) => (
                 <Link
-                  href={`/pharmacies/${item.id} `}
+                  href={`/pharmacies/drugs/${item.pharmacyId}/${item.id} `}
                   key={item.id}
                   className="liquid-glass-effect rounded-lg  w-full py-2 px-4 text-sm  flex justify-around items-center"
                 >
@@ -115,19 +116,9 @@ function Searchbar() {
                   </div>
                   <div className="flex flex-col">
                     <h3 className="text-green-800 font-semibold">{item.pharmacyName}</h3>
-                    <h3 className={item.isOpen ? 'text-green-500' : 'text-yellow-800'}>{item.isOpen ? "Open" : "Closed"}</h3>
+                    <h3 className='text-xs'>{item.town}</h3>
                   </div>
-                  {/* <div className="flex-1 text-center">
-                    <h3 className="text-green-950/70 text-xs">Status</h3> */}
-                  {/* <p
-                     
-                    >
-                      {item.isOpen ? "Open" : "Closed"}
-                    </p>
-                  </div>
-                 {
-                    item.isOnCall ?  <p className="text-green-500">OnCall</p> :  <p className="text-green-950 sr-only">OffCall</p>
-                 } */}
+                 
                 </Link>
               ))}
             </div>

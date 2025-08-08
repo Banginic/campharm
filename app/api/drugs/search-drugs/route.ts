@@ -37,7 +37,8 @@ console.log(query)
           price: drugTable.price,
           description: drugTable.description,
           pharmacyName: pharmacyTable.pharmacyName,
-          pharmacyId: pharmacyTable.id
+          pharmacyId: pharmacyTable.id,
+          town: pharmacyTable.town
         }
       ).from(drugTable)
       .innerJoin(pharmacyTable, eq(drugTable.pharmacyId, pharmacyTable.id))

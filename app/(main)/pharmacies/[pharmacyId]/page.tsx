@@ -70,7 +70,7 @@ function PharmacyDetails({
   if (isLoading) return <Loading />;
   if (pharmacy === null) return;
   return (
-    <div className="relative max-w-7xl mx-auto my-6">
+    <div className="relative max-w-7xl mx-auto mb-8">
       <div className="absolute">
         <Back link="/pharmacies" />
       </div>
@@ -177,7 +177,7 @@ function PharmacyDetails({
               <span>{new Date().toLocaleDateString("en-GB")}</span>
             </p>
 
-            <p className="flex flex-col text-xs">
+            <div className="flex flex-col text-xs">
               <span className="text-neutral-600">Opening</span>
               <span>
                 {pharmacy.data[0]?.isOnCall ? (
@@ -197,7 +197,7 @@ function PharmacyDetails({
                   </div>
                 )}
               </span>
-            </p>
+            </div>
             <p className="flex flex-col text-xs">
               <span className="text-neutral-600">Closing</span>
               <span>

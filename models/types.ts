@@ -47,7 +47,7 @@ export interface DrugSearchType extends APIResponse {
   description: string;
   inStock: boolean;
  pharmacyName: string;
- isOpen: boolean
+ town: string;
   }[] | []
 }
 export interface DrugTypes extends APIResponse {

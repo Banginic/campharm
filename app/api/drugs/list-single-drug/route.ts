@@ -11,13 +11,13 @@ export async function GET(request: Request) {
 
   if (!pharmacyId) {
     return NextResponse.json(
-      { error: "Pharmacy ID is required", success: false },
+      { error: "Pharmacy ID is required", success: false, data: [] },
       { status: 403 }
     );
   }
   if (!drugId) {
     return NextResponse.json(
-      { error: "Drug ID is required", success: false },
+      { error: "Drug ID is required", success: false, data: [] },
       { status: 403 }
     );
   }
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   const pharmacyIdNumber = Number(pharmacyId);
   if (isNaN(pharmacyIdNumber)) {
     return NextResponse.json(
-      { error: "Pharmacy ID must be a number", success: false },
+      { error: "Pharmacy ID must be a number", success: false, data: [] },
       { status: 400 }
     );
   }
@@ -42,11 +42,11 @@ export async function GET(request: Request) {
 
     if (drugs.length === 0) {
       return NextResponse.json(
-        { message: "No drug with this pharmacy", success: true },
-        { status: 404 }
+        { message: "No drug with this pharmacy", success: true, data: [] },
+        { status: 200 }
       );
     }
-    return NextResponse.json({ data: drugs, success: true }, { status: 200 });
+    return NextResponse.json({ data: drugs, success: true, message: '' }, { status: 200 });
   } catch (error) {
     return NextResponse.error();
   }

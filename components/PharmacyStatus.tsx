@@ -1,19 +1,20 @@
 import { PharmacyDetailsTypes } from "@/models/types";
 import React from "react";
+import { getClosingStatus } from "@/libs/formateClosingTime";
+import { getOpeningStatus } from "@/libs/formateOpeningTime";
 
 export default function PharmacyStatus({
   data,
 }: {
   data: PharmacyDetailsTypes;
 }) {
-
-      const getStatusColor = (status: boolean) => {
+  const getStatusColor = (status: boolean) => {
     switch (status) {
       case true:
         return "bg-green-500";
-     case false:
+      case false:
         return "bg-red-500";
-    
+
       default:
         return "bg-gray-500";
     }
@@ -24,7 +25,7 @@ export default function PharmacyStatus({
       case true:
         return "Open";
       case false:
-        return "Closed"
+        return "Closed";
       default:
         return "Unknown";
     }
@@ -35,17 +36,19 @@ export default function PharmacyStatus({
         <div className="flex items-center space-x-3">
           <div
             className={`size-3 lg:size-4 rounded-full ${getStatusColor(
-              data.data[0].isOpen 
+              data.data[0].isOpen
             )} animate-pulse`}
           ></div>
           <p className="text-green-950/70 text-sm font-semibold">
-            {getStatusText(data.data[0].isOpen )}
+            {getStatusText(data.data[0].isOpen)}
           </p>
         </div>
         <div className="text-right">
           <p className="text-green-950/70 text-sm">Current Status</p>
-          <p className="text-green-950/70 text-sm">
-            {'08:00'} - {'18:00'}
+          <p className="text-yellow-700 text-sm">
+            {getOpeningStatus(data.data[0].openingTime) === "Open"
+              ? getClosingStatus(data.data[0].closingTime)
+              : getOpeningStatus(data.data[0].openingTime)}
           </p>
         </div>
       </div>

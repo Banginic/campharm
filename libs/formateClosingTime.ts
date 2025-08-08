@@ -25,5 +25,5 @@ export function getClosingStatus(closingTimeStr: string): string {
   const hours = Math.floor(duration.asHours());
   const minutes = duration.minutes();
 
-  return `In ${hours} hr${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+  return `Closing in ${hours} hr${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
 }
