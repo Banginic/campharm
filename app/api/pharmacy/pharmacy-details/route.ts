@@ -36,7 +36,7 @@ export async function GET(req: Request) {
         pharmacyName: pharmacyTable.pharmacyName,
         pharmacistName: pharmacyTable.pharmacistName,
         email: pharmacyTable.email,
-        phone: pharmacyTable.phoneNumber,
+        phoneNumber: pharmacyTable.phoneNumber,
         region: pharmacyTable.region,
         town: pharmacyTable.town,
         address: pharmacyTable.address,

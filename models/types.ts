@@ -98,8 +98,8 @@ export interface PharmacyDetailsTypes extends APIResponse {
   day:string;
   isOpen: boolean;
   isOnCall: boolean;
-  openingTime: Date;
-  closingTime: Date;
+  openingTime: string;
+  closingTime: string;
 } [] | []
 }
 

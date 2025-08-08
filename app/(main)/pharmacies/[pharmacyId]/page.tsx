@@ -11,11 +11,18 @@ import {
 import Image from "next/image";
 import { Back, WeekDays } from "@/components/index";
 import { useEffect, useState, use } from "react";
-import type { PharmacyType } from "@/models/types";
+import type { PharmacyDetailsTypes } from "@/models/types";
 import { Loading } from "@/components/index";
+import { Forward, Frown, Info, Phone, Wifi } from "lucide-react";
+import { getOpeningStatus } from "@/libs/formateOpeningTime";
+import { getClosingStatus } from "@/libs/formateClosingTime";
 
-function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }) {
-  const [pharmacy, setPharmacy] = useState<PharmacyType | null>(null);
+function PharmacyDetails({
+  params,
+}: {
+  params: Promise<{ pharmacyId: string }>;
+}) {
+  const [pharmacy, setPharmacy] = useState<PharmacyDetailsTypes | null>(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { pharmacyId } = use(params);
@@ -32,16 +39,17 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
       try {
         if (pharmacyId) {
           const res = await fetch(
-            `/api/pharmacy/list-single-pharmacy?pharmacyId=${encodeURIComponent(pharmacyId)}`,
+            `/api/pharmacy/pharmacy-details?pharmacyId=${encodeURIComponent(
+              pharmacyId
+            )}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
             }
           );
           const data = await res.json();
-          console.log(data.data);
           if (data.success) {
-            setPharmacy(data.data[0]);
+            setPharmacy(data);
             return;
           }
           setError(data.error);
@@ -60,28 +68,29 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
   }, []);
 
   if (isLoading) return <Loading />;
+  if (pharmacy === null) return;
   return (
-    <div className="relative">
+    <div className="relative max-w-7xl mx-auto my-6">
       <div className="absolute">
         <Back link="/pharmacies" />
       </div>
       <h1 className="text-xl lg:text-4xl font-bold text-center">
         PHARMACY DETAILS
       </h1>
-      <div className="flex gap-4 items-cente flex-col lg:flex-row">
-        <section className="mt-8 border border-gray-300 h-66 liquid-glass-effect rounded-xl shadow-md gap-4 p-4 w-sm mx-auto">
+      <div className="flex gap-4 mt-4 items-cente flex-col lg:flex-row">
+        <section className="mt-8 border border-gray-300  w-[90%] lg:w-lg liquid-glass-effect rounded-xl shadow-md gap-4 p-4 mx-auto">
           <div className="flex items-center gap-4">
             <Image
               src={verified}
               alt="./placeholder.png"
               width={25}
-              className={`${!pharmacy?.isVerified && "hidden"}`}
+              className={`${!pharmacy?.data[0].isVerified && "hidden"}`}
             />
-            <p className="text-lg lg:text-2xl font-bold">
-              {pharmacy?.pharmacyName}
+            <p className="text-lg lg:text-2xl text-green-600 font-bold">
+              {pharmacy?.data[0].pharmacyName}
             </p>
           </div>
-          <div className="mt-4 text-gray-900">
+          <div className="mt-4 text-neutral-600">
             <div className="flex items-center gap-4 mb-1">
               <Image
                 src={doctor}
@@ -89,7 +98,7 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
                 width={20}
                 height={20}
               />
-              <p className="">{pharmacy?.pharmacistName}</p>
+              <p className="">{pharmacy?.data[0].pharmacistName}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -98,7 +107,7 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
                 width={20}
                 height={20}
               />
-              <p className="">{pharmacy?.phoneNumber}</p>
+              <p className="">{pharmacy?.data[0].phoneNumber}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -107,7 +116,7 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
                 width={20}
                 height={20}
               />
-              <p className="">{pharmacy?.email}</p>
+              <p className="">{pharmacy?.data[0].email}</p>
             </div>
             <div className="flex items-center gap-4 mb-1">
               <Image
@@ -117,28 +126,112 @@ function PharmacyDetails({ params }: { params: Promise<{ pharmacyId: string }> }
                 height={20}
               />
               <p className="">
-                {pharmacy?.town}, {pharmacy?.region} Region
+                {pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region
               </p>
             </div>
           </div>
-          <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacyLocation.latitude},${pharmacyLocation.longitude}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded w-full justify-center mt-4 cursor-pointer"
-          >
-            <Image
-              src={direction}
-              alt="./placeholder.png"
-              width={25}
-              height={25}
-            />
-            <p>Direction</p>
-          </a>
+          <div className="flex gap-8 ml-4 items-center">
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacyLocation.latitude},${pharmacyLocation.longitude}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
+            >
+              <Forward size={18} />
+              <p>Direction</p>
+            </a>
+            <a
+              href={`tel:${pharmacy?.data[0].phoneNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 hover:bg-black bg-black/90 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
+            >
+              <Phone size={18} />
+              <p>Call</p>
+            </a>
+          </div>
         </section>
-        {pharmacy?.weeklySchedule && (
-          <WeekDays weeklySchedule={pharmacy.weeklySchedule} isOnCall={pharmacy.isOnCall} />
-        )}
+        <div className="liquid-glass-effect w-[90%] lg:w-lg mx-auto mt-4 rounded-lg p-2 text-[18px]">
+          <div className="flex items-center justify-between px-2 text-neutral-600">
+            <h2>Today's Hours</h2>
+            <div className="text-sm">
+              {pharmacy?.data[0].isOnCall ? (
+                <p className="text-green-500 flex items-center gap-2 border rounded-lg p-1">
+                  <Wifi size={18} />
+                  <span>On Call</span>
+                </p>
+              ) : (
+                <p className="text-red-400 flex items-center gap-2 border rounded-lg p-1">
+                  <Frown size={18} />
+                  <span>Not on call</span>
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-between items-center liquid-glass-effect p-2 rounded-lg px-4">
+            <p className="flex gap-2 text-sm">
+              <span>
+                {pharmacy?.data[0]?.day.slice(0, 1).toUpperCase() +
+                  pharmacy?.data[0]?.day.slice(1)}
+              </span>
+              <span>{new Date().toLocaleDateString("en-GB")}</span>
+            </p>
+
+            <p className="flex flex-col text-xs">
+              <span className="text-neutral-600">Opening</span>
+              <span>
+                {pharmacy.data[0]?.isOnCall ? (
+                  <span className="text-green-500">Open</span>
+                ) : (
+                  <div>
+                    {getOpeningStatus(pharmacy?.data[0]?.openingTime) ===
+                    "Open" ? (
+                      <span className="text-green-600">
+                        {getOpeningStatus(pharmacy?.data[0]?.openingTime)}
+                      </span>
+                    ) : (
+                      <span className="text-yellow-600">
+                        {getOpeningStatus(pharmacy?.data[0]?.openingTime)}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </span>
+            </p>
+            <p className="flex flex-col text-xs">
+              <span className="text-neutral-600">Closing</span>
+              <span>
+                {pharmacy?.data[0]?.isOnCall ? (
+                  <span className="text-green-500">Open</span>
+                ) : (
+                  <div>
+                    {getClosingStatus(pharmacy?.data[0]?.closingTime) ===
+                    "Closed" ? (
+                      <span className="text-red-500">
+                        {getClosingStatus(pharmacy?.data[0]?.closingTime)}
+                      </span>
+                    ) : (
+                      <span className="text-yellow-600">
+                        {getClosingStatus(pharmacy?.data[0]?.closingTime)}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </span>
+            </p>
+          </div>
+
+          <div className=" liquid-glass-effec rounded-lg p-2 mt-8 mb-2 bg-green-100">
+            <p className="flex gap-2 items-center text-green-700">
+              <Info size={18} />
+              <h3>Emergency On-Call Service</h3>
+            </p>
+            <p className="text-sm text-neutral-600 mt-2">
+              24/7 emergency pharmaceutical services available. Call our main
+              number for urgent medication needs.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

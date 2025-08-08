@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/drizzle/index";
-import { pharmacyTable } from "@/drizzle/schema";
+import { pharmacyTable, dailySchedule } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function GET(req: Request) {
