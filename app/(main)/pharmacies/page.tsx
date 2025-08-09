@@ -2,7 +2,7 @@ import { PreferedTown, Searchbar, PharmacyGrid } from "@/components/index";
 
  function Pharmacies() {
   return (
-    <div>
+    <div className="mb-12">
       <h1 className="font-bold text-xl lg:text-4xl text-center text-green-950 m-8">
         PHARMACIES
       </h1>

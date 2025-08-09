@@ -1,6 +1,16 @@
 import { useMemo } from "react";
 import moment from "moment";
+import { isPharmacyOpen } from "@/libs/isPharmayOpen";
 
+interface PharmacyDailySchedule {
+  pharmacyId: number;
+  pharmacyName: string;
+  closingTime: string; // e.g. "18:00"
+  openingTime: string; // e.g. "08:00"
+  isOnCall: boolean;
+  isOpen: boolean; // API-provided
+  day: string;     // e.g. "monday"
+}
 
 export type DayName =
   | "sunday"
@@ -11,97 +21,121 @@ export type DayName =
   | "friday"
   | "saturday";
 
-interface DaySchedule {
-  open?: string | Date;
-  close?: string | Date;
-  isOnCall?: boolean;
-}
-
- type WeeklyScheduleType = Record<DayName, DaySchedule>;
-
-export function usePharmacyStatus(weeklySchedule: WeeklyScheduleType ) {
+export function usePharmacyStatusSingle(pharmacy: PharmacyDailySchedule) {
   return useMemo(() => {
-    if (!weeklySchedule) {
+    // No valid times
+    if (!pharmacy.openingTime || !pharmacy.closingTime) {
       return {
-        isOpen: false,
-        closingIn: null,
-        openingTime: "N/A",
-        closingTime: "N/A",
+        status: "Closed",
+        timeInfo: null,
         isOnCall: false,
       };
     }
-
- const weekDays: { name: DayName; index: number }[] = [
-  { name: "sunday", index: 0 },
-  { name: "monday", index: 1 },
-  { name: "tuesday", index: 2 },
-  { name: "wednesday", index: 3 },
-  { name: "thursday", index: 4 },
-  { name: "friday", index: 5 },
-  { name: "saturday", index: 6 },
-];
-    
-
+const ApiIsOpen =  isPharmacyOpen(pharmacy.openingTime, pharmacy.closingTime, pharmacy.isOnCall)
     const todayIndex = new Date().getDay();
-    const today = weekDays.find((d) => d.index === todayIndex);
-    const todaySchedule = today ? weeklySchedule[today.name]  : undefined;
+    const currentDay: DayName = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ][todayIndex] as DayName;
 
-    if (!todaySchedule?.open || !todaySchedule?.close) {
+    // If not today's schedule, default closed unless onCall
+    if (pharmacy.day.toLowerCase() !== currentDay) {
       return {
-        isOpen: false,
-        closingIn: null,
-        openingTime: "N/A",
-        closingTime: "N/A",
-        isOnCall: todaySchedule?.isOnCall ?? false,
+        isOpen: ApiIsOpen,
+        status: pharmacy.isOnCall ? "Open (On Call)" : "Closed",
+        timeInfo: null,
+        isOnCall: pharmacy.isOnCall,
       };
     }
 
     const now = moment();
-    const start = moment(todaySchedule.open, "HH:mm");
-    const end = moment(todaySchedule.close, "HH:mm");
+    const start = moment(pharmacy.openingTime, "HH:mm");
+    const end = moment(pharmacy.closingTime, "HH:mm");
 
-    let isOpen = false;
+    let isOpen: boolean;
 
-    // Handle case where closing time is past midnight
-    if (end.isBefore(start)) {
-      isOpen = now.isAfter(start) || now.isBefore(end);
+    // Priority 1: On call always open
+    if (pharmacy.isOnCall) {
+      isOpen = true;
+    } else if (ApiIsOpen !== undefined) {
+      // API override
+      isOpen = ApiIsOpen;
     } else {
-      isOpen = now.isBetween(start, end);
+      // Calculate open/close
+      if (end.isBefore(start)) {
+        // Overnight schedule
+        isOpen = now.isAfter(start) || now.isBefore(end);
+      } else {
+        isOpen = now.isBetween(start, end);
+      }
     }
 
-    // Calculate closing time remaining
-    let closingIn: string | null = null;
-    if (isOpen) {
-      let remainingMinutes;
+    let status: string;
+    let timeInfo: string | null = null;
 
+    if (isOpen) {
+      status = "Open";
+
+      // Calculate time until closing
+      let minutesToClose: number;
       if (end.isBefore(start)) {
-        // Past midnight case
+        // Overnight case
         if (now.isBefore(end)) {
-          remainingMinutes = end.diff(now, "minutes");
+          minutesToClose = end.diff(now, "minutes");
         } else {
           const midnight = moment("23:59", "HH:mm");
-          remainingMinutes = midnight.diff(now, "minutes") + end.diff(moment("00:00", "HH:mm"), "minutes");
+          minutesToClose =
+            midnight.diff(now, "minutes") +
+            end.diff(moment("00:00", "HH:mm"), "minutes");
         }
       } else {
-        remainingMinutes = end.diff(now, "minutes");
+        minutesToClose = end.diff(now, "minutes");
       }
 
-      const remainingHours = Math.floor(remainingMinutes / 60);
-      const remainingMins = remainingMinutes % 60;
+      const hours = Math.floor(minutesToClose / 60);
+      const mins = minutesToClose % 60;
+      timeInfo =
+        hours > 0 ? `Closing in ${hours}h ${mins}m` : `Closing in ${mins}m`;
+    } else {
+      // Closed — calculate time until opening
+      status = "Closed";
 
-      if (remainingHours < 4) {
-        closingIn = remainingHours > 0
-          ? `Closing in ${remainingHours}h ${remainingMins}m`
-          : `Closing in ${remainingMins}m`;
+      let minutesToOpen: number;
+      if (end.isBefore(start)) {
+        // Overnight — if before opening, open later today
+        minutesToOpen = start.diff(now, "minutes");
+        if (minutesToOpen < 0) {
+          minutesToOpen += 24 * 60; // wrap to next day
+        }
+      } else {
+        minutesToOpen = start.diff(now, "minutes");
+      }
+
+      if (minutesToOpen > 0) {
+        const hours = Math.floor(minutesToOpen / 60);
+        const mins = minutesToOpen % 60;
+        timeInfo =
+          hours > 0
+            ? `Opening in ${hours}h ${mins}m`
+            : `Opening in ${mins}m`;
       }
     }
 
     return {
-      isOpen,
-      closingIn,
-      openingTime: todaySchedule.open,
-      closingTime: todaySchedule.close,
-      isOnCall: todaySchedule.isOnCall ?? false,
+      status: pharmacy.isOnCall ? "Open (On Call)" : status,
+      timeInfo,
+      isOnCall: pharmacy.isOnCall,
     };
-  }, [weeklySchedule]);
+  }, [
+    pharmacy.openingTime,
+    pharmacy.closingTime,
+    pharmacy.isOnCall,
+    pharmacy.isOpen,
+    pharmacy.day,
+  ]);
 }

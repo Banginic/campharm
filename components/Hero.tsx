@@ -24,14 +24,12 @@ const PharmacyHero = () => {
     <div className="min-h-screen  relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-10 -left-10 w-80 h-80 bg-white/50 opacity-5 rounded-full animate-pulse"></div>
         <div className="absolute top-1/2 -right-20 w-96 h-96 bg-white/50 opacity-5 rounded-full animate-pulse delay-1000"></div>
         <div className="absolute -bottom-20 left-1/3 w-72 h-72 bg-white/5 0 opacity-5 rounded-full animate-pulse delay-500"></div>
       </div>
 
-      <div className="container mx-auto px-[2rem] lg:px-[5rem] py-12 relative z-10">
+      <div className="container mx-auto px-[2rem] lg:px-[5rem] 2xl:py-12 relative z-10">
         <div className='mb-8'>
-          <Logo link='/'  />
         </div>
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
           {/* Left Content */}

@@ -39,7 +39,7 @@ function Searchbar() {
           maxLength={10}
           value={searchQuery}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search drug here"
+          placeholder="e.g Paracetamol"
           className="border-none outline-none flex-1"
           max={8}
         />

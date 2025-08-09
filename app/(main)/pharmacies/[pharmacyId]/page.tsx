@@ -84,23 +84,26 @@ function PharmacyDetails({
               src={verified}
               alt="./placeholder.png"
               width={25}
-              className={`${!pharmacy?.data[0].isVerified && "hidden"}`}
+              className={`${pharmacy?.data[0].isVerified && "hidden"}`}
             />
             <p className="text-lg lg:text-2xl text-green-600 font-bold">
               {pharmacy?.data[0].pharmacyName}
             </p>
           </div>
-          <div className="mt-4 text-neutral-600">
-            <div className="flex items-center gap-4 mb-1">
+          <div className="mt-4 text-green-950">
+            <div className="flex items-center gap-4 mb-2">
               <Image
                 src={doctor}
                 alt="./placeholder.png"
                 width={20}
                 height={20}
               />
-              <p className="">{pharmacy?.data[0].pharmacistName}</p>
+              <p className="flex flex-col">
+                <span className="text-sm lg:text-[16px]">{pharmacy?.data[0].pharmacistName}</span>
+                <span className="text-xs lg:text-sm text-green-950/60 ">Phamacist</span>
+              </p>
             </div>
-            <div className="flex items-center gap-4 mb-1">
+            <div className="flex items-center gap-4 mb-2 text-sm lg:text-[16px]">
               <Image
                 src={phone}
                 alt="./placeholder.png"
@@ -109,33 +112,34 @@ function PharmacyDetails({
               />
               <p className="">{pharmacy?.data[0].phoneNumber}</p>
             </div>
-            <div className="flex items-center gap-4 mb-1">
+            <div className="flex items-center gap-4 mb-2">
               <Image
                 src={email}
                 alt="./placeholder.png"
                 width={20}
                 height={20}
               />
-              <p className="">{pharmacy?.data[0].email}</p>
+              <p className="text-sm lg:text-[16px]">{pharmacy?.data[0].email}</p>
             </div>
-            <div className="flex items-center gap-4 mb-1">
+            <div className="flex items-center gap-4 mb-2">
               <Image
                 src={location}
                 alt="./placeholder.png"
                 width={20}
                 height={20}
               />
-              <p className="">
-                {pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region
+              <p className="flex flex-col">
+                <span className="text-sm lg:text-[16px}">123. Rd noddr</span>
+                <span className="text-xs lg:text-sm text-green-950/60">{pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region</span>
               </p>
             </div>
           </div>
-          <div className="flex gap-8 ml-4 items-center">
+          <div className="flex  w-[90%] mx-auto gap-2 items-center ">
             <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacyLocation.latitude},${pharmacyLocation.longitude}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
+              className="flex items-center w-1/2 gap-4 hover:bg-green-950 bg-green-900 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
             >
               <Forward size={18} />
               <p>Direction</p>
@@ -144,7 +148,7 @@ function PharmacyDetails({
               href={`tel:${pharmacy?.data[0].phoneNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 hover:bg-black bg-black/90 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
+              className="flex items-center flex-1 gap-4 hover:bg-black bg-black/90 text-white px-4 py-2 rounded  justify-center mt-4 cursor-pointer"
             >
               <Phone size={18} />
               <p>Call</p>
@@ -168,7 +172,7 @@ function PharmacyDetails({
               )}
             </div>
           </div>
-          <div className="mt-4 flex justify-between items-center liquid-glass-effect p-2 rounded-lg px-4">
+          <div className="mt-4 flex justify-between items-center border border-gray-600/40 p-2 rounded-lg px-4">
             <p className="flex gap-2 text-sm">
               <span>
                 {pharmacy?.data[0]?.day.slice(0, 1).toUpperCase() +
@@ -221,11 +225,11 @@ function PharmacyDetails({
             </p>
           </div>
 
-          <div className=" liquid-glass-effec rounded-lg p-2 mt-8 mb-2 bg-green-100">
-            <p className="flex gap-2 items-center text-green-700">
+          <div className=" liquid-glass-effec rounded-lg p-2 mt-8 mb-2 bg-green-50/30">
+            <div className="flex gap-2 items-center text-green-700">
               <Info size={18} />
               <h3>Emergency On-Call Service</h3>
-            </p>
+            </div>
             <p className="text-sm text-neutral-600 mt-2">
               24/7 emergency pharmaceutical services available. Call our main
               number for urgent medication needs.

@@ -1,51 +1,44 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { PharmacyCard, NoPharmacy, Loading } from "./index";
-import { PharmaciesTypes } from "@/models/types";
+import { PharmaciesDailySchedule } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
+import { useApiClient } from "@/hooks/useApiClient";
 
 function PharmacyGrid() {
-  const [pharmacies, setPharmacies] = useState<PharmaciesTypes | null>(null);
-  const [isLoading, setLoading] = useState(false);
+  const [preferedTown, setPreferedTown] = useState<{ region: string; city: string } | null>(null);
+  const { apiFetch } = useApiClient<PharmaciesDailySchedule>();
 
-  const preferedTownInLS = localStorage.getItem("preferedTown");
-  if (preferedTownInLS === null) return <Loading />;
-  const preferedTown = JSON.parse(preferedTownInLS);
+  // Get from localStorage in useEffect (so SSR doesn't break too)
+  useEffect(() => {
+    const storedTown = localStorage.getItem("preferedTown");
+    if (storedTown) {
+      setPreferedTown(JSON.parse(storedTown));
+    }
+  }, []);
 
-  async function fetchFunction(): Promise<PharmaciesTypes> {
-    const res = await fetch(
-      `/api/pharmacy/list-town-pharmacies?region=${
-        preferedTown?.region
-      }&city=${encodeURIComponent(preferedTown.city)}&limit=15`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const data = await res.json();
-    setPharmacies(data);
-    return data;
-  }
-
-  const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ["client-pharmacies"],
-    queryFn: fetchFunction,
+  const { data, isPending } = useQuery({
+    queryKey: ["client-pharmacies", preferedTown?.region, preferedTown?.city],
+    queryFn: () =>
+      apiFetch(
+        `/api/pharmacy/list-town-pharmacies?limit=15`,
+        { method: "GET" }
+      ),
+    enabled: !!preferedTown, // only run query when town is loaded
   });
 
-  if (isLoading || isPending) return <Loading />;
+  // Loading while getting from localStorage or fetching
+  if (!preferedTown || isPending) return <Loading />;
 
-  if (!data) {
-    return <NoPharmacy city={preferedTown?.city!} />;
+  if (!data || data.data.length === 0) {
+    return <NoPharmacy city={preferedTown.city} />;
   }
 
   return (
     <section className="mt-8">
-      
-        {pharmacies &&
-          pharmacies.data?.map((pharmacy) => (
-            <PharmacyCard pharmacy={pharmacy} key={pharmacy.id} />
-          ))}
-      
+      {data.data.map((pharmacy) => (
+        <PharmacyCard pharmacy={pharmacy} key={pharmacy.pharmacyId} />
+      ))}
     </section>
   );
 }

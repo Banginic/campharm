@@ -1,27 +1,47 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from '@/drizzle/index'
-import { pharmacyTable } from "@/drizzle/schema";
+import { pharmacyTable, dailySchedule } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const city = searchParams.get("city");
+  const city = searchParams.get("town");
   const region = searchParams.get("region");
   const limit = searchParams.get("limit");
+  
 
   try {
     if (!city || !region) {
       return NextResponse.json(
-        { error: "City and Region are required", success: false },
+        { error: "City and Region are required", success: false, data: [] },
         { status: 400 }
       );
     }
+
+    const decodedRegion = decodeURIComponent(region)
+    const decodedtown = decodeURIComponent(city)
+
+     const today = new Date()
+    .toLocaleString('en-GB', { weekday: 'long' })
+    .toLowerCase();
+
     const pharmacies = await db
-      .select()
+      .select({
+        pharmacyId: pharmacyTable.id,
+        pharmacyName: pharmacyTable.pharmacyName,
+        isOpen: dailySchedule.isOpen,
+        closingTime: dailySchedule.closingTime,
+        openingTime: dailySchedule.openingTime,
+        isOnCall: dailySchedule.isOnCall,
+        day: dailySchedule.day
+      })
       .from(pharmacyTable)
+      .leftJoin(dailySchedule, eq(dailySchedule.pharmacyId, pharmacyTable.id))
       .where(and(
-        eq(pharmacyTable.town, city),
-        eq(pharmacyTable.region, region)
+        eq(pharmacyTable.town, decodedtown),
+        eq(pharmacyTable.region, decodedRegion),
+        eq(dailySchedule.pharmacyId, pharmacyTable.id),
+        eq(dailySchedule.day, today),
       ))
       .limit(Number(limit))
 

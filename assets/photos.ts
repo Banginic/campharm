@@ -32,8 +32,9 @@ import town_logo from './photos/town.png'
 import region from './photos/region.png'
 import bg_image from './photos/bg_image.jpeg'
 import no_drug from './photos/no_drug.png'
+import pharmacy_icon  from './photos/pharmacy_icon.png'
 
-export { pharmacy, about, update, blog , town_logo, region, bg_image, no_drug,
+export { pharmacy, about, update, blog , town_logo, region, bg_image, no_drug, pharmacy_icon,
     apple_logo, banginic_logo, close_menu, doctor, menu_open, place_holder_img, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
     facebook, instagram, twitter, start, at, search_icon, back, direction, verified, no_message, offline
 }
