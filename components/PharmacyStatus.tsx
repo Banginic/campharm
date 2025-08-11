@@ -46,9 +46,13 @@ export default function PharmacyStatus({
         <div className="text-right">
           <p className="text-green-950/70 text-sm">Current Status</p>
           <p className="text-yellow-700 text-sm">
-            {getOpeningStatus(data.data[0].openingTime) === "Open"
-              ? getClosingStatus(data.data[0].closingTime)
-              : getOpeningStatus(data.data[0].openingTime)}
+            {data.data[0].isOnCall ? (
+              <p>Is On call</p>
+            ) : getOpeningStatus(data.data[0].openingTime) === "Open" ? (
+              getClosingStatus(data.data[0].closingTime)
+            ) : (
+              getOpeningStatus(data.data[0].openingTime)
+            )}
           </p>
         </div>
       </div>

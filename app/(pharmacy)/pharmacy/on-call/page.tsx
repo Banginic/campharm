@@ -1,83 +1,138 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useApiClient } from "@/hooks/useApiPharmacyClient";
+import React, { useState } from "react";
 import {
   Calendar,
   Clock,
-  Phone,
   AlertCircle,
   CheckCircle2,
   XCircle,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Loading } from "@/components/index";
 
-const PharmacyOnCallDashboard = () => {
-  // Mock pharmacy data - replace with your actual data source
-  const [pharmacyInfo, setPharmacyInfo] = useState({
+type PharmacyInfo = {
+  name: string;
+  license: string;
+  phone: string;
+  address: string;
+};
+
+type OnCallSchedule = Record<
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday",
+  boolean
+>;
+
+interface OnCallTypes {
+  success: boolean,
+  message?: string,
+  error?: string;
+ data: {
+   id: number;
+  day: string;
+  openingTime: string;
+  closingTime: string;
+  isOnCall: boolean;
+  isOpen: boolean
+ }[] | []
+}
+type EmergencyContact = {
+  phone: string;
+  alternatePhone: string;
+  email: string;
+};
+
+type Message = {
+  type: "success" | "error" | "";
+  text: string;
+};
+
+const daysOfWeek = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+] as const;
+
+const PharmacyOnCallDashboard: React.FC = () => {
+  const [pharmacyInfo, setPharmacyInfo] = useState<PharmacyInfo>({
     name: "Downtown Pharmacy",
     license: "PH-2024-001",
     phone: "(555) 123-4567",
     address: "123 Main St, Downtown",
   });
+  const { apiFetch } = useApiClient<OnCallTypes>()
+const { data, isLoading: fetchLoader, isError } = useQuery({
+    queryKey: ['pharmacy-is-on-call'],
+    queryFn: () => apiFetch('/api/on-call/list-on-calls', { method: 'GET'})
+  })
 
-  // State for on-call schedule
-  const [onCallSchedule, setOnCallSchedule] = useState({
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
-    Sunday: false,
+  const [onCallSchedule, setOnCallSchedule] = useState<OnCallSchedule>({
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
   });
 
-  // State for emergency contact info
-  const [emergencyContact, setEmergencyContact] = useState({
+  const [emergencyContact, setEmergencyContact] = useState<EmergencyContact>({
     phone: "",
     alternatePhone: "",
     email: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<Message>({ type: "", text: "" });
 
-  // Check if pharmacy is currently on call
-  const isCurrentlyOnCall = () => {
-    const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-    return onCallSchedule[today];
+  if(!data) return <Loading />
+
+
+  const isCurrentlyOnCall = (): boolean => {
+    const today = new Date()
+      .toLocaleDateString("en-US", { weekday: "long" })
+      .toLowerCase();
+      const onCallDay =  data.data.find(day => day.day === today)
+      return onCallDay?.isOnCall || false
   };
 
-  // Handle day toggle
-  const toggleDay = (day) => {
+  const toggleDay = (day: keyof OnCallSchedule): void => {
     setOnCallSchedule((prev) => ({
       ...prev,
       [day]: !prev[day],
     }));
   };
 
-  // Handle emergency contact update
-  const handleContactChange = (field, value) => {
+  function isOnCallDay(day: string){
+    const isOnCallDay = data?.data.find(item => item.day === day)
+    return isOnCallDay?.isOnCall
+  }
+
+  const handleContactChange = (
+    field: keyof EmergencyContact,
+    value: string
+  ): void => {
     setEmergencyContact((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  // Save on-call schedule
-  const saveSchedule = async () => {
+  const saveSchedule = async (): Promise<void> => {
+    
     setIsLoading(true);
     try {
-      // Simulate API call - replace with your actual API endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Here you would make the actual API call to update the database
-      // const response = await fetch('/api/pharmacy/oncall-schedule', {
-      //   method: 'PUT',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     schedule: onCallSchedule,
-      //     emergencyContact
-      //   })
-      // });
-
+      const data =  apiFetch('/api/on-call/update-on-call', { method: 'PUT', body: JSON.stringify(onCallSchedule)})
       setMessage({
         type: "success",
         text: "On-call schedule updated successfully!",
@@ -94,15 +149,6 @@ const PharmacyOnCallDashboard = () => {
     }
   };
 
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
   const activeDays = daysOfWeek.filter((day) => onCallSchedule[day]);
 
   return (
@@ -124,8 +170,8 @@ const PharmacyOnCallDashboard = () => {
                 <div
                   className={`flex items-center px-4 py-2 rounded text-sm  ${
                     isCurrentlyOnCall()
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
+                      ? "bg-green-50/30 text-green-500 font-semibold"
+                      : "bg-red-50/30 text-red-500 font-semibold"
                   }`}
                 >
                   {isCurrentlyOnCall() ? (
@@ -145,89 +191,57 @@ const PharmacyOnCallDashboard = () => {
           </div>
         </div>
 
-        {/* Pharmacy Info Card */}
-        <div className="liquid-glass mb-6 p-2">
-          <div className="liquid-glass-effect rounded-xl p-6 ">
-            <h2 className="lg:text-xl font-semibold text-neutral-700 mb-4 flex items-center">
-              Pharmacy Information
-            </h2>
-            <hr className="border-neutral-400 mb-4" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-neutral-500">Pharmacy Name</p>
-                <p className="font-medium">{pharmacyInfo.name}</p>
-              </div>
-              <div>
-                <p className="text-sm text-neutral-500">License Number</p>
-                <p className="font-medium">{pharmacyInfo.license}</p>
-              </div>
-              <div>
-                <p className="text-sm text-neutral-500">Phone Number</p>
-                <p className="font-medium">{pharmacyInfo.phone}</p>
-              </div>
-              <div>
-                <p className="text-sm text-neutral-500">Address</p>
-                <p className="font-medium">{pharmacyInfo.address}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+ 
+       
 
         {/* On-Call Schedule */}
-     <div className="liquid-glass mb-6 p-2">
-         <div className="liquid-glass-effect p-6 rounded-xl">
-          <h2 className="text-xl font-semibold text-neutral-900 mb-4 flex items-center">
-            <Calendar className="w-5 h-5 mr-2" />
-            Weekly On-Call Schedule
-          </h2>
+        <div className="liquid-glass mb-6 p-2">
+          <div className="liquid-glass-effect p-6 rounded-xl">
+            <h2 className="text-xl font-semibold text-neutral-900 mb-4 flex items-center">
+              <Calendar className="w-5 h-5 mr-2" />
+              Weekly On-Call Schedule
+            </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-            {daysOfWeek.map((day) => (
-              <div key={day} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-neutral-700">{day}</span>
-                  <button
-                    onClick={() => toggleDay(day)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                      onCallSchedule[day] ? "bg-green-600" : "bg-neutral-400"
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        onCallSchedule[day] ? "translate-x-6" : "translate-x-1"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              {daysOfWeek.map((day) => (
+                <div key={day} className="border border-green-950/50 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-neutral-700 capitalize">
+                      {day}
+                    </span>
+                    <button
+                      onClick={() => toggleDay(day)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                        onCallSchedule[day] || isOnCallDay(day) ? "bg-green-600" : "bg-neutral-400"
                       }`}
-                    />
-                  </button>
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          onCallSchedule[day] 
+                            ? "translate-x-6"
+                            : "translate-x-1"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                  <div className="mt-2">
+                    <span
+                      className={`text-sm ${
+                        onCallSchedule[day] || isOnCallDay(day)
+                          ? "text-green-600"
+                          : "text-neutral-500"
+                      }`}
+                    >
+                      {onCallSchedule[day] || isOnCallDay(day) ? "On Call" : "Off Call"}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-2">
-                  <span
-                    className={`text-sm ${
-                      onCallSchedule[day] ? "text-green-600" : "text-neutral-500"
-                    }`}
-                  >
-                    {onCallSchedule[day] ? "On Call" : "Off Call"}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Schedule Summary */}
-          <div className="bg-black/10 text-black/90 rounded-lg p-4">
-            <h3 className="font-medium  mb-2">
-              Current Schedule Summary
-            </h3>
-            {activeDays.length > 0 ? (
-              <p className="text-neutral-700">
-                On call:{" "}
-                <span className="font-medium">{activeDays.join(", ")}</span>
-              </p>
-            ) : (
-              <p className="text-red-400">No on-call days scheduled</p>
-            )}
+           
           </div>
         </div>
-     </div>
 
         {/* Emergency Contact Information */}
         <div className="bg-red-100 rounded-lg shadow-sm p-6 mb-6">
@@ -244,7 +258,9 @@ const PharmacyOnCallDashboard = () => {
               <input
                 type="tel"
                 value={emergencyContact.phone}
-                onChange={(e) => handleContactChange("phone", e.target.value)}
+                onChange={(e) =>
+                  handleContactChange("phone", e.target.value)
+                }
                 className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="(555) 123-4567"
               />
@@ -272,7 +288,9 @@ const PharmacyOnCallDashboard = () => {
               <input
                 type="email"
                 value={emergencyContact.email}
-                onChange={(e) => handleContactChange("email", e.target.value)}
+                onChange={(e) =>
+                  handleContactChange("email", e.target.value)
+                }
                 className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="emergency@pharmacy.com"
               />
