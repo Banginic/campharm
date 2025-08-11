@@ -63,3 +63,9 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+.btn{
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}

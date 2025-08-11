@@ -15,8 +15,8 @@ function ManualClosePharmacy() {
             <span className="text-xs  font-normal">Active and available</span>
           </p>
           <button className="cursor-pointer border border-neutral-400 hover:border-neutral-800 text-neutral-700 w-full text-sm rounded py-2 px-4 flex gap-2 items-center">
-            Close Pharmacy
             <LogOut size={18} />
+            Close Pharmacy
           </button>
         </div>
       ) : (

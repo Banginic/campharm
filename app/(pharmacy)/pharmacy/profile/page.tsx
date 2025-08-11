@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ErrorFetching, Loading, NoData } from "@/components/index";
 import { no_drug } from "@/assets/photos";
 import { ManualClosePharmcy } from "@/components/index";
+import Link from "next/link";
+import { MapPin, MapPinned } from "lucide-react";
 
 function Profile() {
   const { apiFetch } = useApiClient<PharmaciesTypes>();
@@ -42,8 +44,10 @@ function Profile() {
             <p className="text-gray-600 text-[16px]">
               Since: {new Date(data?.data[0].createdAt).toLocaleDateString('en-GB')}
             </p>
-            
             <ManualClosePharmcy />
+            <Link href={'/pharmacy/update-location'}  className="border py-2 rounded px-4 border-gray-400 inline-flex gap-2 text-sm items-center mt-4 w-full cursor-pointer trans hover:border-neutral-800 text-neutral-700">
+            <MapPinned size={18} />
+            Set Location</Link>
             <ProfileButton pharmacy={data} />
           </div>
         )}
