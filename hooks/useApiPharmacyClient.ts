@@ -3,7 +3,9 @@ import { useContext } from "react";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 
 export function useApiClient<T>() {
+  
   const { pharmacyDetails, lang } = useContext(PharmacyContext)!;
+
 
   async function apiFetch(endpoint: string, options?: RequestInit): Promise<T> {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -12,9 +14,9 @@ export function useApiClient<T>() {
     // ✅ Attach global params automatically
     url.searchParams.set("lang", lang || "en");
     // url.searchParams.set('country', pharmacyDetails?.data[0].country);
-    url.searchParams.set("region", pharmacyDetails?.data[0].region || "");
-    url.searchParams.set("city", pharmacyDetails?.data[0].town || "");
-    url.searchParams.set("pharmacyId", pharmacyDetails?.data[0].id?.toString() || "");
+    url.searchParams.set("region", pharmacyDetails?.region || "");
+    url.searchParams.set("city", pharmacyDetails?.town || "");
+    url.searchParams.set("pharmacyId", pharmacyDetails?.id?.toString() || '');
 
     const res = await fetch(url.toString(), {
       ...options,

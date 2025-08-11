@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { MapPin, Star, Users, Shield, Clock, Sparkle } from 'lucide-react';
 import Link from 'next/link';
-import Logo from './Logo';
 import { SearchPharmacy } from './index'
+import { MY_DATA } from '@/assets/data';
 
 const PharmacyHero = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,14 +28,14 @@ const PharmacyHero = () => {
         <div className="absolute -bottom-20 left-1/3 w-72 h-72 bg-white/5 0 opacity-5 rounded-full animate-pulse delay-500"></div>
       </div>
 
-      <div className="container mx-auto px-[2rem] lg:px-[5rem] 2xl:py-12 relative z-10">
+      <div className="container mx-auto px-[2rem] lg:px-[5rem]  relative z-10">
         <div className='mb-8'>
         </div>
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+        <div className="grid lg:grid-cols-2 gap-12 items-center ">
           {/* Left Content */}
           <div className="text-white space-y-8">
             {/* Main Heading */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-green-950/70">
                 Find Your{' '}
                 <span className="">
@@ -125,7 +125,7 @@ const PharmacyHero = () => {
                       <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mx-auto mb-4 flex items-center justify-center">
                         <span className="text-2xl">💊</span>
                       </div>
-                      <h3 className="text-white text-xl font-bold mb-2">Pharmcam</h3>
+                      <h3 className="text-white text-xl font-bold mb-2">{MY_DATA.appName}</h3>
                       <p className="text-blue-100 text-sm">Find nearby pharmacies</p>
                     </div>
 

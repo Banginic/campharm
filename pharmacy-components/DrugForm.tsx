@@ -10,9 +10,9 @@ import { DrugSchema, DrugSchemaType } from "@/schemas/drugSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { queryClient } from "@/app/(pharmacy)/layout";
 import { useMutation } from "@tanstack/react-query";
 import { Spiner } from "@/components";
+import { queryClient } from "@/libs/queryClient";
 
 function DrugForm() {
   const router = useRouter();
@@ -56,7 +56,7 @@ function DrugForm() {
       onSuccess: () => {
         reset();
         toast.success('Drug added successfully'),
-          queryClient.invalidateQueries({ queryKey: ["drugs"] });
+          queryClient.invalidateQueries({ queryKey: ["pharmacy-drugs"] });
         setDrugForm(false);
       },
       onError: (errors: any) => {

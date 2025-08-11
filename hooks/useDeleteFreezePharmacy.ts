@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useApiClient } from "./useApiPharmacyClient";
 import { PharmaciesTypes } from "@/models/types";
 import { toast } from "react-toastify";
-import { queryClient } from "@/app/(pharmacy)/layout";
+import { queryClient } from "@/libs/queryClient";
 import { useRouter } from "next/navigation";
 
 

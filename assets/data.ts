@@ -1,6 +1,6 @@
 import { pharmacy, about, update, blog } from './photos';
 export const MY_DATA = {
-    appName: "Campharm", 
+    appName: "Medyro", 
     socialLinks: {
         twitter: "https://twitter.com", 
         facebook: "https://facebook.com",

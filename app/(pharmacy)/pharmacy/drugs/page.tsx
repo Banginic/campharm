@@ -7,28 +7,18 @@ import { useQuery } from "@tanstack/react-query";
 import { DrugTypes } from "@/models/types";
 import { CirclePlus } from "lucide-react";
 import { no_drug } from "@/assets/photos";
+import { useApiClient } from "@/hooks/useApiPharmacyClient";
 
 function Drug() {
-  const { pharmacyDetails } = useContext(PharmacyContext)!;
-  async function returnFn(): Promise<DrugTypes | null> {
-    if (!pharmacyDetails?.id) {
-      return null;
-    }
-    const response = await fetch(
-      `/api/drugs/list-all-drugs?pharmacyId=${pharmacyDetails?.id}&limit=14`,
-      {
-        method: "GET",
-      }
-    );
-    const data = await response.json();
-    return data;
-  }
   const { showAddDrugForm, setDrugForm } = useContext(PharmacyContext)!;
+  
+  const { apiFetch } = useApiClient<DrugTypes>()
+    const { isError, isLoading, data, refetch } = useQuery({
+      queryKey: ["pharmacy-drugs"],
+      queryFn: () => apiFetch('/api/drugs/list-all-drugs?limit=20', { method: 'GET', }),
+    });
 
-  const { isError, isLoading, data, refetch } = useQuery({
-    queryKey: ["drugs"],
-    queryFn: returnFn,
-  });
+
 
   return (
     <section className="relative max-w-2xl mx-auto ">

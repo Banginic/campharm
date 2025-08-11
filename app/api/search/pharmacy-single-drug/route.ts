@@ -26,10 +26,11 @@ export async function GET(req: Request) {
     const conditions = [
       eq(pharmacyTable.id, Number(pharmacyId)),
       eq(pharmacyTable.isFrozen, false),
+      eq(dailySchedule.day, today)
     ];
 
-    if (region) conditions.push(eq(pharmacyTable.region, region));
-    if (city) conditions.push(eq(pharmacyTable.town, city));
+    if (region) conditions.push(eq(pharmacyTable.region, decodeURIComponent(region)));
+    if (city) conditions.push(eq(pharmacyTable.town, decodeURIComponent(city)));
     if (drugId) {
       conditions.push(eq(drugTable.id, Number(drugId)));
       conditions.push(eq(drugTable.inStock, true));
@@ -62,7 +63,7 @@ export async function GET(req: Request) {
       .from(pharmacyTable)
       .leftJoin(
         dailySchedule,
-        and(eq(dailySchedule.pharmacyId, pharmacyTable.id), eq(dailySchedule.day, today))
+        and(eq(dailySchedule.pharmacyId, pharmacyTable.id))
       )
       .leftJoin(drugTable, eq(drugTable.pharmacyId, pharmacyTable.id))
       .where(and(...conditions))
@@ -70,7 +71,7 @@ export async function GET(req: Request) {
 
     if (pharmacy.length === 0) {
       return NextResponse.json(
-        { message: "No pharmacies found", success: true, data: [] },
+        { message: "No Drug found", success: true, data: [] },
         { status: 200 }
       );
     }

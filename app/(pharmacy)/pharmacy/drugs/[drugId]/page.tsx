@@ -14,9 +14,9 @@ import { PharmacyContext } from "@/context/PharmacyProvider";
 import { DrugType } from "@/models/types";
 import { no_drug } from "@/assets/photos";
 import { CirclePlus, CircleX, Trash } from "lucide-react";
-import { queryClient } from "../../../layout";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { queryClient } from "@/libs/queryClient";
 
 interface DataType {
   error?: string;

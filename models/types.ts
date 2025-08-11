@@ -125,6 +125,30 @@ export interface PharmacyDetailsTypes extends APIResponse {
     | [];
 }
 
+
+interface Location {
+  lat: number;
+  lng: number;
+}
+
+export interface PharmacyDetails {
+  id: number;
+  pharmacyName: string;
+  email: string;
+  pharmacistName: string;
+  phoneNumber: string;
+  address: string;         // empty string in your example
+  region: string;
+  town: string;
+  licenceNumber: string;
+  location: Location;
+  password: string;
+  isFrozen: boolean;
+  isVerified: boolean;
+  createdAt: string;       // ISO date string
+  updatedAt: string;       // ISO date string
+}
+
 export interface PharmacyContextType {
   showOnCall: boolean;
   setOnCall: React.Dispatch<React.SetStateAction<boolean>>;
@@ -134,8 +158,8 @@ export interface PharmacyContextType {
   setDrugForm: React.Dispatch<React.SetStateAction<boolean>>;
   showWorkingDaysForm: boolean;
   setWorkingDays: React.Dispatch<React.SetStateAction<boolean>>;
-  pharmacyDetails: PharmaciesTypes | null;
+  pharmacyDetails: PharmacyDetails | null;
   setPharmacyDetails: React.Dispatch<
-    React.SetStateAction<PharmaciesTypes | null>
+    React.SetStateAction<PharmacyDetails | null>
   >;
 }

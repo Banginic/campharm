@@ -6,8 +6,11 @@ import { eq } from "drizzle-orm";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const pharmacyId = searchParams.get("pharmacyId");
+  const region = searchParams.get('region')
+  const town = searchParams.get('city')
+  const limit = searchParams.get('limit')
 
-
+console.log('called')
 
   if (!pharmacyId) {
     return NextResponse.json(

@@ -178,7 +178,7 @@ function PharmacyDetails({
                 {pharmacy?.data[0]?.day.slice(0, 1).toUpperCase() +
                   pharmacy?.data[0]?.day.slice(1)}
               </span>
-              <span>{new Date().toLocaleDateString("en-GB")}</span>
+              {/* <span>{new Date().toLocaleDateString("en-GB")}</span> */}
             </p>
 
             <div className="flex flex-col text-xs">
@@ -202,9 +202,9 @@ function PharmacyDetails({
                 )}
               </span>
             </div>
-            <p className="flex flex-col text-xs">
-              <span className="text-neutral-600">Closing</span>
-              <span>
+            <div className="flex flex-col text-xs">
+              <p className="text-neutral-600">Closing</p>
+              <div>
                 {pharmacy?.data[0]?.isOnCall ? (
                   <span className="text-green-500">Open</span>
                 ) : (
@@ -221,8 +221,8 @@ function PharmacyDetails({
                     )}
                   </div>
                 )}
-              </span>
-            </p>
+              </div>
+            </div>
           </div>
 
           <div className=" liquid-glass-effec rounded-lg p-2 mt-8 mb-2 bg-green-50/30">

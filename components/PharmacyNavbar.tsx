@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Logo, Hamburger, Language, User, Navlinks, Sidebar } from "./index";
 import { PHARMACY_NAVLINKS } from "@/assets/data";
 import AppContext from "@/context/AppContext";
+import Link from "next/link";
 
 function PharmacyNavbar() {
   const { isPharmacySidebarOpen, togglePharmacySidebar } =
@@ -10,7 +11,9 @@ function PharmacyNavbar() {
   return (
     <header className="h-[13dvh] flex items-center relative">
       <nav className="flex items-center justify-between px-6 lg:justify-around w-full">
-        <Logo link="/pharmacy" />
+        <Link href="/pharmacy" >
+        <Logo />
+        </Link>
         <Navlinks navlinks={PHARMACY_NAVLINKS} />
         <div className="flex items-center gap-4">
           <Language />
