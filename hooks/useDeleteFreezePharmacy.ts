@@ -17,7 +17,7 @@ export function useFreezePharmacy() {
   }),
     onSuccess:() =>{
         toast.success('Pharmacy updated successfully.')
-        queryClient.invalidateQueries({queryKey: ['pharmacy-profile']})
+        queryClient.invalidateQueries({queryKey: ['pharmacy-details']})
     },
     onError: () =>{
         toast.warning('Error updating pharmacy.')

@@ -15,7 +15,7 @@ export default function PharmacyDashboard() {
   }, [pharmacyDetails]);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["pharmacy"],
+    queryKey: ["pharmacy-details"],
     queryFn: () =>
       apiFetch("/api/pharmacy/pharmacy-details", {
         method: "GET",

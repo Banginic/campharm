@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from '@/drizzle/index'
-import { pharmacyTable } from "@/drizzle/schema";
+import { pharmacyTable, dailySchedule } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function GET(req: Request) {
@@ -19,8 +19,24 @@ export async function GET(req: Request) {
       );
     }
     const pharmacy = await db
-      .select()
+      .select({
+        pharmacyId: pharmacyTable.id,
+        pharmacyName: pharmacyTable.pharmacyName,
+        isFrozen: pharmacyTable.isFrozen,
+        phoneNumber: pharmacyTable.phoneNumber,
+        email: pharmacyTable.email,
+        address: pharmacyTable.address,
+        town: pharmacyTable.town,
+        region: pharmacyTable.region,
+        createdAt : pharmacyTable.createdAt,
+        location: pharmacyTable.location,
+        licenceNumber: pharmacyTable.licenceNumber,
+        isOpen: dailySchedule.isOpen,
+        isOnCall: dailySchedule.isOnCall,
+        day: dailySchedule.day
+      })
       .from(pharmacyTable)
+      .leftJoin(dailySchedule, eq(dailySchedule.pharmacyId, pharmacyTable.id))
       .where(and(
         eq(pharmacyTable.town, city),
         eq(pharmacyTable.region, region),

@@ -3,9 +3,9 @@ import AppContext from "@/context/AppContext";
 import React, { useContext, useState } from "react";
 import { MyModal } from "@/components/index";
 import { Snowflake, Trash, CaptionsOff } from "lucide-react";
-import { PharmaciesTypes } from "@/models/types";
+import { PharmacyDetailsTypes } from "@/models/types";
 
-function ProfileButton({ pharmacy }: { pharmacy: PharmaciesTypes }) {
+function ProfileButton({ pharmacy }: { pharmacy: PharmacyDetailsTypes }) {
   const [message, setMessage] = useState("");
   const { showModal, setModal } = useContext(AppContext)!;
 
@@ -23,7 +23,7 @@ function ProfileButton({ pharmacy }: { pharmacy: PharmaciesTypes }) {
         <div className="flex flex-col gap-4">
           <button
             onClick={() => handleClick(pharmacy?.data[0].isFrozen ? 'Unfreeze' : 'Freeze')}
-            className="border py-2 rounded px-4 border-gray-400 inline-flex gap-2 text-sm items-center cursor-pointer trans hover:border-neutral-800 text-neutral-700"
+            className={`border py-2 rounded px-4 border-gray-400 inline-flex gap-2 text-sm items-center cursor-pointer trans hover:border-neutral-800 ${pharmacy.data[0].isFrozen ? 'border-red-400' : ''} text-neutral-700`}
           >
             {" "}
             <Snowflake size={18} />

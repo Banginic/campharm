@@ -2,7 +2,7 @@
 import React from "react";
 import { ProfileButton } from "@/pharmacy-components/index";
 import { useApiClient } from "@/hooks/useApiPharmacyClient";
-import { PharmaciesTypes } from "@/models/types";
+import { PharmacyDetailsTypes } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorFetching, Loading, NoData } from "@/components/index";
 import { no_drug } from "@/assets/photos";
@@ -11,15 +11,16 @@ import Link from "next/link";
 import { MapPin, MapPinned } from "lucide-react";
 
 function Profile() {
-  const { apiFetch } = useApiClient<PharmaciesTypes>();
+  const { apiFetch } = useApiClient<PharmacyDetailsTypes>();
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ["pharmacy-profile"],
+    queryKey: ["pharmacy-details"],
     queryFn:() => apiFetch("api/pharmacy/profile", {
     method: "GET",
+    cache: 'no-cache'
   }),
   });
 
-  console.log(data);
+ 
 
   return (
     <div className="max-w-2xl mx-auto relative">
@@ -44,10 +45,10 @@ function Profile() {
             <p className="text-gray-600 text-[16px]">
               Since: {new Date(data?.data[0].createdAt).toLocaleDateString('en-GB')}
             </p>
-            <ManualClosePharmcy />
+            <ManualClosePharmcy data={data} />
             <Link href={'/pharmacy/update-location'}  className="border py-2 rounded px-4 border-gray-400 inline-flex gap-2 text-sm items-center mt-4 w-full cursor-pointer trans hover:border-neutral-800 text-neutral-700">
             <MapPinned size={18} />
-            Set Location</Link>
+            Update Location</Link>
             <ProfileButton pharmacy={data} />
           </div>
         )}

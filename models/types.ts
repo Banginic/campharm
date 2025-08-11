@@ -95,32 +95,27 @@ export interface PharmaciesTypes extends APIResponse {
     | [];
 }
 export interface PharmacyDetailsTypes extends APIResponse {
-  data:
-    | {
-        id: number;
-        pharmacyName: string;
-        pharmacistName: string;
-        region: string;
-        town: string;
-        phoneNumber: string;
-        email: string;
-        isVerified: boolean;
-        isFrozen: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        location:
-          | {
-              lon: number;
-              lat: number;
-            }
-          | {};
-        address: string;
-        licenceNumber?: string;
-        day: string;
-        isOpen: boolean;
-        isOnCall: boolean;
-        openingTime: string;
-        closingTime: string;
+  data: {
+  pharmacyId: number;             // assuming id is number
+  pharmacyName: string;
+  pharmacistName: string;
+  isFrozen: boolean;
+  phoneNumber: string;
+  email: string;
+  address: string;
+  town: string;
+  region: string;
+  createdAt: string;              // ISO date string
+  location: {
+    lat: number;
+    lng: number;
+  };
+  licenceNumber: string;
+  isOpen: boolean;
+  isOnCall: boolean;
+  openingTime: string;
+  closingTime: string;
+  day: string;
       }[]
     | [];
 }

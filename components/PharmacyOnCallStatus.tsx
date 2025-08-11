@@ -3,6 +3,7 @@ import { Phone } from 'lucide-react'
 import React from 'react'
 
 function PharmacyOnCallStatus({ data} :{data: PharmacyDetailsTypes}) {
+  console.log(data)
   return (
     <div className="liquid-glass p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 transform lg:hover:scale-105">
               <div className="flex items-center justify-between mb-4">
