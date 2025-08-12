@@ -12,9 +12,12 @@ export const pharmacyTable = pgTable('pharmacy_table', {
   address: varchar('address', { length: 100 }).notNull().default(''),
   password: varchar('password', { length: 255 }).notNull(),
   isVerified: boolean("is_verified").notNull().default(false),
+  photoId: varchar('photo_id').notNull().default(''),
   licenceNumber: varchar('licence_number', { length: 100 }).notNull().default('N/A'),
   location: jsonb('location').notNull().default({ lat: 0, lng: 0 }),
   isFrozen: boolean('is_frozen').notNull().default(false),
+  verificationOTP: varchar('verification_otp', {length: 6}).notNull().default(''),
+  verificationOTPExpired: timestamp('otp_expiry_time').notNull().defaultNow(),
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow()
 
