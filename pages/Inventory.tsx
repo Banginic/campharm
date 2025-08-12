@@ -3,7 +3,8 @@ import React from "react";
 import { Boxes, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ComingSoonInventory = () => {
+
+const Inventory = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  text-center p-6">
       <motion.div
@@ -46,4 +47,4 @@ const ComingSoonInventory = () => {
   );
 };
 
-export default ComingSoonInventory;
+export default Inventory;

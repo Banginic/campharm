@@ -3,7 +3,7 @@ import React from "react";
 import { Clock, Package } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ComingSoonViewOrder = () => {
+const ViewOrder = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center p-6">
       <motion.div
@@ -44,4 +44,4 @@ const ComingSoonViewOrder = () => {
   );
 };
 
-export default ComingSoonViewOrder;
+export default ViewOrder;

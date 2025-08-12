@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import { NAVLINKS } from "@/assets/data";
 import { User } from "./index";
 import { close_menu } from "@/assets/photos";
 

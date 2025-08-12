@@ -6,7 +6,7 @@ import { useDebouncer } from "@/hooks/useDebouncer";
 import { useQuery } from "@tanstack/react-query";
 import { Spiner } from "./index";
 import { searchFilter } from '@/utils/searchFilter'
-import { PharmaciesTypes } from "@/models/types";
+import { PharmacyDetailsTypes } from "@/models/types";
 
 function SearchPharmacy() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,7 +14,7 @@ function SearchPharmacy() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["pharmacy", debounceQuery],
-    queryFn: () => searchFilter<PharmaciesTypes>(debounceQuery, "/api/pharmacy/list-town-pharmacy-search"),
+    queryFn: () => searchFilter<PharmacyDetailsTypes>(debounceQuery, "/api/pharmacy/list-town-pharmacy-search"),
     enabled: debounceQuery.length > 2,
   });
  
@@ -101,8 +101,8 @@ function SearchPharmacy() {
             <div className="flex flex-col mt-4 gap-2">
               {data?.data.map((pharmacy) => (
                 <Link
-                  href={`/pharmacies/${pharmacy.id} `}
-                  key={pharmacy.id}
+                  href={`/pharmacies/${pharmacy.pharmacyId} `}
+                  key={pharmacy.pharmacyId}
                   className="liquid-glass-effect rounded-lg  w-full py-2 px-4 text-sm  flex justify-around items-center"
                 >
                   <h3 className="text-green-950">{pharmacy.pharmacyName}</h3>

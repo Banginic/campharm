@@ -3,7 +3,7 @@ import React from "react";
 import { CalendarClock, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ComingSoonStaffSchedule = () => {
+const StaffSchedule = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  text-center p-6">
       <motion.div
@@ -47,4 +47,4 @@ const ComingSoonStaffSchedule = () => {
   );
 };
 
-export default ComingSoonStaffSchedule;
+export default StaffSchedule;
