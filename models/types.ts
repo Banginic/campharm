@@ -103,6 +103,7 @@ export interface PharmacyDetailsTypes extends APIResponse {
   phoneNumber: string;
   email: string;
   address: string;
+  isVerified: string
   town: string;
   region: string;
   createdAt: string;              // ISO date string

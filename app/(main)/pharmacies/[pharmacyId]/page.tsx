@@ -9,7 +9,7 @@ import {
   verified,
 } from "@/assets/photos";
 import Image from "next/image";
-import { Back, WeekDays } from "@/components/index";
+import { Back } from "@/components/index";
 import { useEffect, useState, use } from "react";
 import type { PharmacyDetailsTypes } from "@/models/types";
 import { Loading } from "@/components/index";

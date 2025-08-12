@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from '@/drizzle/index'
-import { pharmacyTable } from "@/drizzle/schema";
+import { pharmacyTable, dailySchedule } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function PUT(req: Request) {
@@ -35,18 +35,37 @@ export async function PUT(req: Request) {
         { status: 200 }
       );
     }
-    const updatedPharmacy = await db.update(pharmacyTable)
+    if(pharmacy[0].isFrozen === false){
+
+      //Close pharmacy completely
+      await db.update(dailySchedule)
+      .set({ isOpen: false})
+      .where(eq(dailySchedule.pharmacyId, Number(pharmacyId)))
+
+      //Freeze pharmacy
+        await db.update(pharmacyTable)
     .set({isFrozen: !pharmacy[0].isFrozen})
          .where(and(
         eq(pharmacyTable.town, city),
         eq(pharmacyTable.region, region),
         eq(pharmacyTable.id, Number(pharmacyId))
       ))
+    }
+    else{
+        await db.update(pharmacyTable)
+    .set({isFrozen: !pharmacy[0].isFrozen})
+         .where(and(
+        eq(pharmacyTable.town, city),
+        eq(pharmacyTable.region, region),
+        eq(pharmacyTable.id, Number(pharmacyId))
+      ))
+    }
+   
 
     return NextResponse.json(
       {
         message: "Pharmacy updated successfully",
-        data: updatedPharmacy,
+        data: [],
         success: true,
       },
       { status: 203 }

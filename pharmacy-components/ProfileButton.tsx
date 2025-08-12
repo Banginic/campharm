@@ -27,18 +27,18 @@ function ProfileButton({ pharmacy }: { pharmacy: PharmacyDetailsTypes }) {
           >
             {" "}
             <Snowflake size={18} />
-            <span>
+            <p>
               {
-                pharmacy?.data[0].isFrozen ? 'Unfreeze Account' : 'Freeze Account'
+                pharmacy?.data[0].isFrozen ? 'Unfreeze Account' : <span>Freeze Account <span className="text-xs italic text-neutral-500">(You will not be visible online)</span></span>
               }
-            </span>
+            </p>
           </button>
           <button
             onClick={() => handleClick("Delete")}
-            className="border py-2 rounded px-4 border-neutral-400 text-sm cursor-pointer inline-flex items-center gap-2 text-neutral-700 hover:bg-red-500 hover:text-red-100 trans hover:red-gray-800"
+            className="border py-2 rounded px-4 group border-neutral-400 text-sm cursor-pointer inline-flex items-center gap-2 text-neutral-700 hover:bg-red-500 hover:text-red-100 trans hover:red-gray-800"
           >
             <Trash size={18} />
-            Permanently Delete Account
+            Delete Account <span className="text-xs italic text-neutral-500 group-hover:text-white">( You will pamaently loose your account)</span>
           </button>
         </div>
       </div>
