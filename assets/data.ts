@@ -1,11 +1,12 @@
 import { pharmacy, about, update, blog } from './photos';
 export const MY_DATA = {
-    appName: "Medyro", 
+    appName: "Medyro",
+    appUrl: 'https://medyro.vercel.app' ,
     socialLinks: {
         twitter: "https://twitter.com", 
         facebook: "https://facebook.com",
         instagram: "https://instagram.com"},
-    developer_link: "https://banginic-1.orender.com",
+    developer_link: "https://banginic.vercel.app",
 }
 export const PUBLIC_NAVLINKS = [
     { name: "Pharmacies", href: "/pharmacies", icon: pharmacy },
