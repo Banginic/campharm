@@ -73,14 +73,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="5M61_D2oFK-LEPEBEv-eb196Y4xZK3A3ZmI13gE2qiE" />
       </head>
       <body
-        style={{
-          backgroundImage: "url('/bg_image.jpg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-        }}
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-gradient-to-br from-pink-200/20 via-purple-500/20 to-green-200/70`}
       >
         <AppLayout>{children}</AppLayout>
       </body>

@@ -12,9 +12,9 @@ interface Props {
 function Navlinks({ navlinks }: { navlinks: Props[]}) {
 const { preferedTown } = useContext(AppContext)!
   return (
-    <ul className="item-center gap-4 font-semibold text-[16px] hidden lg:flex">
+    <ul className="item-center  gap-4 font-semibold text-[16px] hidden lg:flex">
       {navlinks.map((item) => (
-        <li key={item.name}>
+        <li key={item.name} className="text-neutral-700 hover:text-black">
           <Link className={!preferedTown && item.name === 'Pharmacies' ? 'hidden' : ''} href={item.href}>{item.name}</Link>
         </li>
       ))}

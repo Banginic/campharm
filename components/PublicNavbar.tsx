@@ -15,7 +15,7 @@ import Link from "next/link";
 function PublicNavbar() {
   const { isMainSidebarOpen, toggleMainSidebar } = useContext(AppContext)!;
   return (
-    <header className="h-[12dvh] flex items-center relative">
+    <header className="h-[12dvh] py-12 flex items-center relative">
       <nav className="flex items-center justify-between px-6 lg:justify-around w-full">
         <Link href={"/"}>
           <Logo />
