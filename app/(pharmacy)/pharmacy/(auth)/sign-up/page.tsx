@@ -49,7 +49,7 @@ function Signup() {
         localStorage.setItem('pharmacyDetails', JSON.stringify(data?.data))
         setPharmacyDetails(data?.data)
         reset();
-        setTimeout(() => router.push('/pharmacy'), 2000)
+        setTimeout(() => router.push('/pharmacy/login'), 2000)
       }
       toast.error(data.error);
       setFormState({ ...formState, error: data.error });

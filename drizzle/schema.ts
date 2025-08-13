@@ -32,7 +32,8 @@ export const drugTable = pgTable('drug_table', {
      genericName: varchar('generic_name',{ length: 255 }),
      price: integer('price').default(0).notNull(),
      inStock: boolean('in_stock').default(true).notNull(),
-     pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull()
+     pharmacyId: integer('pharmacy_id').references(() => pharmacyTable.id, { onDelete: 'cascade'}).notNull(),
+     createdAt: timestamp('created_at').notNull().defaultNow()
 })
 
 export const dailySchedule = pgTable('daily_schedule_table', {
