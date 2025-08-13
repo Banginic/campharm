@@ -23,7 +23,7 @@ function SearchPharmacy() {
   }
   return (
     <section className="relative">
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 border border-white/20 w-sm lg:w-lg shadow-2xl ">
+      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 border border-white/20 lg:w-lg shadow-2xl ">
         <div className="flex gap-3 items-center">
           <div className="flex items-center flex-1 bg-white rounded-xl px-4 py-2.5">
             <MapPin className="text-gray-400 mr-3" size={20} />

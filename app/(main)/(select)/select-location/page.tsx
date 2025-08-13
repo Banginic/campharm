@@ -64,7 +64,7 @@ function SetLocation() {
                 onChange={(e) =>
                   setFormData({ ...formData, region: e.target.value })
                 }
-                className="border border-gray-400 py-2 px-4 rounded"
+                className="border border-gray-400 py-2.5 px-4 rounded"
               >
                 <option value="">Please select region</option>
                 {CAMEROON.map((item) => (
@@ -105,7 +105,7 @@ function SetLocation() {
                 onChange={(e) =>
                   setFormData({ ...formData, city: e.target.value })
                 }
-                className="border border-gray-400 py-2 px-4 rounded"
+                className="border border-gray-400 py-2.5 px-4 rounded"
               >
                 <option value="">Please select city</option>
                 {selectedRegion &&

@@ -52,7 +52,7 @@ const PharmacyHero = () => {
             {/* Search Bar */}
             <SearchPharmacy />
             
-            <Link href={'/purpose'} className='bg-black hover:bg-black/90 lg:hidden text-white w-sm justify-center px-4 flex text-sm mx-aut py-2.5 rounded-lg gap-2 items-center cursor-pointer'>
+            <Link href={'/purpose'} className='bg-black hover:bg-black/90 lg:hidden  text-white mx-auto justify-center flex text-sm py-3 rounded-lg gap-2 items-center cursor-pointer'>
               <Sparkle size={18} />
               Get Started</Link>
 
