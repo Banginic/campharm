@@ -17,7 +17,6 @@ function SearchPharmacy() {
     queryFn: () => searchFilter<PharmacyDetailsTypes>(debounceQuery, "/api/pharmacy/list-town-pharmacy-search"),
     enabled: debounceQuery.length > 2,
   });
- 
 
   function handleSearch() {
     setSearchQuery("");
@@ -85,7 +84,7 @@ function SearchPharmacy() {
             <div className="min-h-full grid place-items-center">
               <Spiner height="size-8" color="text-green-500" />
               <p className="text-sm text-center animate-pulse text-green-500">
-                Loadin....
+                Loading....
               </p>
             </div>
           ) : !data || data?.data.length === 0 ? (
@@ -101,8 +100,8 @@ function SearchPharmacy() {
             <div className="flex flex-col mt-4 gap-2">
               {data?.data.map((pharmacy) => (
                 <Link
-                  href={`/pharmacies/${pharmacy.pharmacyId} `}
-                  key={pharmacy.pharmacyId}
+                  href={`/pharmacies/${pharmacy.id} `}
+                  key={pharmacy.id}
                   className="liquid-glass-effect rounded-lg  w-full py-2 px-4 text-sm  flex justify-around items-center"
                 >
                   <h3 className="text-green-950">{pharmacy.pharmacyName}</h3>

@@ -1,8 +1,8 @@
 import React from 'react'
-import { StaffSchedules } from '@/pages/exportPages'
+import StaffSchedule from '@/pages/StaffSchedule'
 
-function StaffSchedule() {
-  return <StaffSchedules />
+function StaffSchedules() {
+  return <StaffSchedule />
 }
 
-export default StaffSchedule
+export default StaffSchedules

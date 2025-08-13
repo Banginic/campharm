@@ -97,6 +97,7 @@ export interface PharmaciesTypes extends APIResponse {
 export interface PharmacyDetailsTypes extends APIResponse {
   data: {
   pharmacyId: number;             // assuming id is number
+  id: number;             // assuming id is number
   pharmacyName: string;
   pharmacistName: string;
   isFrozen: boolean;

@@ -5,13 +5,13 @@ import AccountVerification from "@/pages/AccountVerification";
 import { Loading } from "@/components/index";
 
 function page() {
-  const { lang, pharmacyDetails } = useContext(PharmacyContext)!;
+  const pharmacyContext = useContext(PharmacyContext);
   return (
     <div>
-      {!pharmacyDetails ? (
+      {!pharmacyContext ? (
         <Loading />
       ) : (
-        <AccountVerification lang={lang} pharmacyDetails={pharmacyDetails} />
+        <AccountVerification lang={pharmacyContext?.lang} pharmacyDetails={pharmacyContext?.pharmacyDetails} />
       )}
     </div>
   );

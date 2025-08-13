@@ -1,0 +1,19 @@
+{
+  "name": "Medyro",
+  "short_name": "Medyro",
+  "description": "Find nearby pharmacies and medications worldwide.",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/icons/medyro_favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/medyro_favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

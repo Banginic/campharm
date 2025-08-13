@@ -1,5 +1,5 @@
 import React from 'react'
-import { ViewOrder } from '@/pages/exportPages'
+import  ViewOrder from '@/pages/ViewOrder'
 
 function page() {
   return <ViewOrder />

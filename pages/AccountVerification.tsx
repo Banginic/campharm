@@ -17,8 +17,11 @@ export default function AccountVerification({
   lang,
 }: {
   lang: string;
-  pharmacyDetails: PharmacyDetails;
+  pharmacyDetails: PharmacyDetails | null ;
 }) {
+  if(!lang || !pharmacyDetails){
+    return <Loading />
+  }
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [photoId, setPhotoId] = useState<File | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(120); // 2 minutes

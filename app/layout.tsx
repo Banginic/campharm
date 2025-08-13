@@ -27,9 +27,9 @@ export const metadata: Metadata = {
         url: "https://medyro.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Medyro - Find Nearby Pharmacies & Medications"
-      }
-    ]
+        alt: "Medyro - Find Nearby Pharmacies & Medications",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -38,42 +38,49 @@ export const metadata: Metadata = {
     title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
     description:
       "Search for pharmacies nearby, buy medication locally, and manage your pharmacy with Medyro’s global directory & tools.",
-    images: ["https://medyro.com/og-image.jpg"]
+    images: ["https://medyro.com/og-image.jpg"],
   },
   alternates: {
     canonical: MY_DATA.appUrl || "https://medyro.com",
     languages: {
       "en-US": MY_DATA.appUrl || "https://medyro.com",
-      "fr-FR": "https://medyro.com/fr"
-    }
+      "fr-FR": "https://medyro.com/fr",
+    },
   },
   category: "Health & Medicine",
   robots: {
     index: true,
     follow: true,
-    nocache: false
+    nocache: false,
   },
   applicationName: "Medyro",
-  themeColor: "#0D6EFD",
-  manifest: "/site.webmanifest"
+  manifest: "/site.webmanifest",
 };
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body  style={{
+      <head>
+        <meta name="theme-color" content="#0D6EFD" />
+      </head>
+      <body
+        style={{
           backgroundImage: "url('/bg_image.jpg')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           minHeight: "100vh",
         }}
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+      >
         <AppLayout>{children}</AppLayout>
       </body>
     </html>

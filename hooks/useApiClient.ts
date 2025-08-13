@@ -2,24 +2,25 @@ import AppContext from "@/context/AppContext";
 import { useContext } from "react";
 
 export function useApiClient<T>() {
-  const { lang, preferedTown } = useContext(AppContext)!;
+  
+  const pharmacyContext = useContext(AppContext);
 
   async function apiFetch(endpoint: string, options?: RequestInit): Promise<T> {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
     const url = new URL(endpoint, baseUrl);
 
-    url.searchParams.set("lang", lang || "en");
+    url.searchParams.set("lang", pharmacyContext?.lang || "en");
     // url.searchParams.set('country', preferedTown?.countrry);
-    if (preferedTown?.region) {
+    if (pharmacyContext?.preferedTown?.region) {
       url.searchParams.set(
         "region",
-        encodeURIComponent(preferedTown?.region) || ""
+        encodeURIComponent(pharmacyContext?.preferedTown?.region) || ""
       );
     }
-    if (preferedTown?.city) {
+    if (pharmacyContext?.preferedTown?.city) {
       url.searchParams.set(
         "town",
-        encodeURIComponent(preferedTown?.city) || ""
+        encodeURIComponent(pharmacyContext?.preferedTown?.city) || ""
       );
     }
 
