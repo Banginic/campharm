@@ -70,6 +70,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="theme-color" content="#0D6EFD" />
+        <meta name="google-site-verification" content="5M61_D2oFK-LEPEBEv-eb196Y4xZK3A3ZmI13gE2qiE" />
       </head>
       <body
         style={{
