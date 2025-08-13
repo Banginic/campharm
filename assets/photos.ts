@@ -12,7 +12,7 @@ import phone from './photos/phone.png'
 import pill from './photos/pill.png'
 import uk_flag from './photos/uk_flag.png'
 import start from './photos/start.png'
-import at from './photos/@.png'
+
 import instagram from './photos/instagram.png'
 import twitter from './photos/twitter.png'
 import facebook from './photos/facebook.png'
@@ -36,5 +36,5 @@ import pharmacy_icon  from './photos/pharmacy_icon.png'
 
 export { pharmacy, about, update, blog , town_logo, region, bg_image, no_drug, pharmacy_icon,
     apple_logo, banginic_logo, close_menu, doctor, menu_open, place_holder_img, email, france_flag, google_logo, location, password, person, phone, pill, uk_flag,
-    facebook, instagram, twitter, start, at, search_icon, back, direction, verified, no_message, offline
+    facebook, instagram, twitter, start,  search_icon, back, direction, verified, no_message, offline
 }
