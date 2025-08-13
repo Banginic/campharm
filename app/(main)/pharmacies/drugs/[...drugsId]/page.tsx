@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useParams } from 'next/navigation'
-import  MainDrugDetails  from '@/pages/MainDrugDetails'
+// import  MainDrugDetails  from '@/pages/MainDrugDetails'
 import { Loading } from '@/components/index'
 
 function page() {
@@ -15,7 +15,7 @@ if(!pharmacyId || !drugId ) return <Loading />
 
   return (
     <div>
-      <MainDrugDetails pharmacyId={pharmacyId} drugId={drugId} />
+      {/* <MainDrugDetails pharmacyId={pharmacyId} drugId={drugId} /> */}
     </div>
   )
 }
