@@ -8,26 +8,26 @@ import { MY_DATA } from "@/assets/data";
 export const metadata: Metadata = {
   title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
   description:
-    "Medyro helps you find the nearest pharmacy anywhere in the world, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
+    "Medyro helps you find the nearest pharmacy near you, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
   keywords: rootLayoutKeywords,
-  authors: [{ name: "Banginic", url: MY_DATA.appUrl || "https://medyro.com" }],
+  authors: [{ name: "Banginic", url: MY_DATA.appUrl || "https://medyro.vercel.app" }],
   creator: "Banginic",
   publisher: "Banginic",
-  metadataBase: new URL(MY_DATA.appUrl || "https://medyro.com"),
+  metadataBase: new URL(MY_DATA.appUrl || "https://medyro.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: MY_DATA.appUrl || "https://medyro.com",
+    url: MY_DATA.appUrl || "https://medyro.vercel.app",
     siteName: "Medyro",
-    title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
+    title: "Medyro | Find nearby pharmacies & medications ",
     description:
       "Discover nearby pharmacies, search for available medicines, and manage your pharmacy business with Medyro’s powerful global platform.",
     images: [
       {
-        url: "https://medyro.com/og-image.jpg",
+        url: "https://medyro.vercel.app/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Medyro - Find Nearby Pharmacies & Medications",
+        alt: "Medyro - Find nearby pharmacies & medications",
       },
     ],
   },
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
     description:
       "Search for pharmacies nearby, buy medication locally, and manage your pharmacy with Medyro’s global directory & tools.",
-    images: ["https://medyro.com/og-image.jpg"],
+    images: ["https://medyro.vercel.app/opengraph-image.png"],
   },
   alternates: {
-    canonical: MY_DATA.appUrl || "https://medyro.com",
+    canonical: MY_DATA.appUrl || "https://medyro.vercel.app",
     languages: {
-      "en-US": MY_DATA.appUrl || "https://medyro.com",
-      "fr-FR": "https://medyro.com/fr",
+      "en-US": MY_DATA.appUrl || "https://medyro.vercel.app",
+      "fr-FR": "https://medyro.vercel.app/fr",
     },
   },
   category: "Health & Medicine",

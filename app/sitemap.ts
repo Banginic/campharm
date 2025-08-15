@@ -2,13 +2,17 @@ import type { MetadataRoute } from "next";
 import { db } from "@/drizzle/index";
 import { pharmacyTable, drugTable } from "@/drizzle/schema";
 import { desc } from "drizzle-orm";
+import { CAMEROON } from "@/assets/data"; // [{ region: "littoral", towns: ["douala", ...] }, ...]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://medyro.vercel.app";
-
+ 
+  function escapeUrl (url: string){
+    return url.replace(/&/g, "&amp;")
+  }
   // 1️⃣ Static pages
   const staticRoutes: MetadataRoute.Sitemap = [
-    "",
+  
     "/blogs",
     "/help",
     "/pharmacies",
@@ -17,14 +21,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.4,
   }));
 
   // 2️⃣ Dynamic pharmacy pages
   const pharmacies = await db
     .select({
       id: pharmacyTable.id,
-      updatedAt: pharmacyTable.createdAt, // If you have updatedAt, use that
+      updatedAt: pharmacyTable.createdAt, // replace with updatedAt if available
     })
     .from(pharmacyTable)
     .orderBy(desc(pharmacyTable.createdAt));
@@ -40,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const drugs = await db
     .select({
       id: drugTable.id,
-      updatedAt: drugTable.createdAt, // If you have updatedAt, use that
+      updatedAt: drugTable.createdAt, // replace with updatedAt if available
     })
     .from(drugTable)
     .orderBy(desc(drugTable.createdAt));
@@ -52,6 +56,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // Combine all
-  return [...staticRoutes, ...pharmacyRoutes, ...drugRoutes];
+  // 4️⃣ Region/Town pharmacy listing pages (from CAMEROON array)
+  const regionTownRoutes: MetadataRoute.Sitemap = CAMEROON.flatMap(({ region, towns }) =>
+    towns.map((town) => ({
+      url: escapeUrl(`${baseUrl}/api/pharmacy/list-town-pharmacies?lang=en&region=${encodeURIComponent(region)}&town=${encodeURIComponent(town)}`),
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.2,
+    }))
+  );
+
+  // 5️⃣ Combine all routes
+  return [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.1
+    },
+    ...staticRoutes,
+    ...pharmacyRoutes,
+    ...drugRoutes,
+    ...regionTownRoutes,
+  ];
 }
