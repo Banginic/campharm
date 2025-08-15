@@ -1,10 +1,9 @@
 "use client";
-import { doctor, email, location, phone, verified } from "@/assets/photos";
+import { doctor, verified } from "@/assets/photos";
 import Image from "next/image";
 import { Back, Title } from "@/components/index";
 import { useEffect, useState, use } from "react";
 import type { PharmacyDetailsTypes } from "@/models/types";
-import { Loading } from "@/components/index";
 import {
   Ambulance,
   BikeIcon,
@@ -25,6 +24,7 @@ import {
 } from "lucide-react";
 import { getOpeningStatus } from "@/libs/formateOpeningTime";
 import { getClosingStatus } from "@/libs/formateClosingTime";
+import PharmacyDetailsSkeleton from "@/components/skeletons/PharmacyDetailsSkeleton";
 
 function PharmacyDetails({
   params,
@@ -76,7 +76,7 @@ function PharmacyDetails({
     return () => {};
   }, []);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <PharmacyDetailsSkeleton />;
   if (pharmacy === null) return;
   return (
     <div className="relative max-w-7xl mx-auto mb-8">
