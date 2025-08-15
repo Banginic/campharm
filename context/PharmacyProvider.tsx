@@ -1,7 +1,6 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import { PharmacyDetails } from "@/models/types";
-import { PharmacyContextType } from "@/models/types";
+import { PharmacyDetails, PharmacyContextType } from "@/models/types";
 
 export const PharmacyContext = createContext<PharmacyContextType | null>(null);
 
@@ -10,22 +9,17 @@ function PharmacyProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<"en" | "fr">("en");
   const [showAddDrugForm, setDrugForm] = useState(false);
   const [showWorkingDaysForm, setWorkingDays] = useState(false);
-  const [pharmacyDetails, setPharmacyDetails] = useState<PharmacyDetails | null>(
-    null
-  );
+  const [pharmacyDetails, setPharmacyDetails] = useState<PharmacyDetails | null>(null);
 
+  // Load pharmacy details from localStorage (only in browser)
   useEffect(() => {
-    function checkStoredDetails() {
-      const pharmacyDetails = localStorage.getItem("pharmacyDetails");
-      if (pharmacyDetails) {
-        setPharmacyDetails(JSON.parse(pharmacyDetails));
-      }
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("pharmacyDetails");
+      if (stored) setPharmacyDetails(JSON.parse(stored));
     }
-    checkStoredDetails();
-
-    return () => {};
   }, []);
-  const values = {
+
+  const values: PharmacyContextType = {
     showOnCall,
     setOnCall,
     lang,
@@ -36,10 +30,9 @@ function PharmacyProvider({ children }: { children: React.ReactNode }) {
     setWorkingDays,
     pharmacyDetails,
     setPharmacyDetails,
-
   };
 
-  return <PharmacyContext value={values}>{children}</PharmacyContext>;
+  return <PharmacyContext.Provider value={values}>{children}</PharmacyContext.Provider>;
 }
 
 export default PharmacyProvider;

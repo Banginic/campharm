@@ -21,7 +21,7 @@ export default function PharmacyDashboard() {
         method: "GET",
         cache: "force-cache",
       }),
-    
+    enabled : pharmacyDetails !== null
   });
   useEffect(() => {
   if (isError) {

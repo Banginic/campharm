@@ -1,32 +1,24 @@
-"use client";
-import { useContext, useEffect, useState } from "react";
+"use client"; // important! ensures this hook runs in the browser
+
+import { useContext } from "react";
 import { PharmacyContext } from "@/context/PharmacyProvider";
-import { getUserDetails } from "@/utils/getUserDetails";
-
-
-
 
 export function useApiClient<T>() {
-  const [data, setData] = useState();
-
-  useEffect(( ) => {
-    const data = getUserDetails()
-    setData(data)
-  },[])
   const pharmacyContext = useContext(PharmacyContext);
 
-
+  if (!pharmacyContext) {
+    throw new Error("useApiClient must be used within PharmacyProvider");
+  }
 
   async function apiFetch(endpoint: string, options?: RequestInit): Promise<T> {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
     const url = new URL(endpoint, baseUrl);
 
     // ✅ Attach global params automatically
     url.searchParams.set("lang", pharmacyContext?.lang || "en");
-    // url.searchParams.set('country', pharmacyDetails?.data[0].country);
-    url.searchParams.set("region", data.region || "");
-    url.searchParams.set("city", data.town || "");
-    url.searchParams.set("pharmacyId", data.id?.toString() || '');
+    url.searchParams.set("region", pharmacyContext?.pharmacyDetails?.region || "");
+    url.searchParams.set("city", pharmacyContext?.pharmacyDetails?.town || "");
+    url.searchParams.set("pharmacyId", pharmacyContext?.pharmacyDetails?.id?.toString() || "");
 
     const res = await fetch(url.toString(), {
       ...options,
@@ -36,9 +28,6 @@ export function useApiClient<T>() {
       },
     });
 
-    if (!res.ok) {
-      throw new Error(`API request failed: ${res.statusText}`);
-    }
 
     return await res.json();
   }
