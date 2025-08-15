@@ -6,7 +6,7 @@ import { rootLayoutKeywords } from "@/constants/keywords";
 import { MY_DATA } from "@/assets/data";
 
 export const metadata: Metadata = {
-  title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
+  title: "Medyro | Find nearby pharmacies & medications.",
   description:
     "Medyro helps you find the nearest pharmacy near you, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
   keywords: rootLayoutKeywords,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@medyro",
     creator: "@medyro",
-    title: "Medyro | Find Nearby Pharmacies & Medications Worldwide",
+    title: "Medyro | Find nearby pharmacies & medications.",
     description:
       "Search for pharmacies nearby, buy medication locally, and manage your pharmacy with Medyro’s global directory & tools.",
     images: ["https://medyro.vercel.app/opengraph-image.png"],
@@ -73,7 +73,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="5M61_D2oFK-LEPEBEv-eb196Y4xZK3A3ZmI13gE2qiE" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-gradient-to-br from-pink-200/20 via-purple-200/20 to-green-200/70`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-gradient-to-br from-pink-100/20 via-purple-200/20 to-green-200/70`}
       >
         <AppLayout>{children}</AppLayout>
       </body>

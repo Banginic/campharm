@@ -1,17 +1,28 @@
 "use client";
-import {
-  doctor,
-  email,
-  location,
-  phone,
-  verified,
-} from "@/assets/photos";
+import { doctor, email, location, phone, verified } from "@/assets/photos";
 import Image from "next/image";
-import { Back } from "@/components/index";
+import { Back, Title } from "@/components/index";
 import { useEffect, useState, use } from "react";
 import type { PharmacyDetailsTypes } from "@/models/types";
 import { Loading } from "@/components/index";
-import { Forward, Frown, Info, Phone, Wifi } from "lucide-react";
+import {
+  Ambulance,
+  BikeIcon,
+  Car,
+  Copy,
+  Flame,
+  Forward,
+  Frown,
+  Headset,
+  Hospital,
+  Info,
+  Mail,
+  MapPin,
+  Phone,
+  PhoneCall,
+  Siren,
+  Wifi,
+} from "lucide-react";
 import { getOpeningStatus } from "@/libs/formateOpeningTime";
 import { getClosingStatus } from "@/libs/formateClosingTime";
 
@@ -72,20 +83,32 @@ function PharmacyDetails({
       <div className="absolute">
         <Back link="/pharmacies" />
       </div>
-      <h1 className="text-xl lg:text-4xl font-bold text-center">
-        PHARMACY DETAILS
-      </h1>
+      <Title text="Pharmacy Details" />
+
       <div className="flex gap-4 mt-4 items-cente flex-col lg:flex-row">
-        <section className="mt-8 border border-gray-300  w-[90%] lg:w-lg liquid-glass-effect rounded-xl shadow-md gap-4 p-4 mx-auto">
-          <div className="flex items-center gap-4">
-            <Image
-              src={verified}
-              alt="./placeholder.png"
-              width={25}
-              className={`${pharmacy?.data[0].isVerified && "hidden"}`}
-            />
-            <p className="text-lg lg:text-2xl text-green-600 font-bold">
-              {pharmacy?.data[0].pharmacyName}
+        <section className="mt-8 border border-neutral-200  w-[95%] lg:w-lg  rounded-xl shadow-md gap-4 p-6 mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div>
+                {pharmacy.data[0].isVerified && (
+                  <Image
+                    src={verified}
+                    alt="./placeholder.png"
+                    width={25}
+                    className={`${pharmacy?.data[0].isVerified && "hidden"}`}
+                  />
+                )}
+              </div>
+              <p className="text-lg lg:text-2xl text-green-600 font-bold">
+                {pharmacy?.data[0].pharmacyName}
+              </p>
+            </div>
+            <p>
+              {pharmacy.data[0].isVerified ? (
+                <span className="text-xs text-green-500">Verified</span>
+              ) : (
+                <span className="text-xs text-yellow-600">Not Verified</span>
+              )}
             </p>
           </div>
           <div className="mt-4 text-green-950">
@@ -97,38 +120,51 @@ function PharmacyDetails({
                 height={20}
               />
               <p className="flex flex-col">
-                <span className="text-sm lg:text-[16px]">{pharmacy?.data[0].pharmacistName}</span>
-                <span className="text-xs lg:text-sm text-green-950/60 ">Phamacist</span>
+                <span className="text-sm lg:text-[16px]">
+                  {pharmacy?.data[0].pharmacistName}
+                </span>
+                <span className="text-xs lg:text-sm text-green-950/60 ">
+                  Phamacist
+                </span>
               </p>
             </div>
-            <div className="flex items-center gap-4 mb-2 text-sm lg:text-[16px]">
-              <Image
-                src={phone}
-                alt="./placeholder.png"
-                width={20}
-                height={20}
+            <div className="flex items-center gap-4 mb-2 text-sm lg:text-[16px] relative">
+              <Phone size={20} />
+              <p className="text-neutral-600">
+                {pharmacy?.data[0].phoneNumber}
+              </p>
+              <Copy
+                className="-top-1 absolute right-60 lg:right-75 cursor-pointer"
+                size={14}
               />
-              <p className="">{pharmacy?.data[0].phoneNumber}</p>
             </div>
             <div className="flex items-center gap-4 mb-2">
-              <Image
-                src={email}
-                alt="./placeholder.png"
-                width={20}
-                height={20}
-              />
-              <p className="text-sm lg:text-[16px]">{pharmacy?.data[0].email}</p>
+              <Mail size={20} />
+              <p className="text-sm lg:text-[16px] text-neutral-600">
+                {pharmacy?.data[0].email}
+              </p>
             </div>
             <div className="flex items-center gap-4 mb-2">
-              <Image
-                src={location}
-                alt="./placeholder.png"
-                width={20}
-                height={20}
-              />
+              <MapPin size={20} />
               <p className="flex flex-col">
-                <span className="text-sm lg:text-[16px}">123. Rd noddr</span>
-                <span className="text-xs lg:text-sm text-green-950/60">{pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region</span>
+                <span className="text-sm lg:text-[16px} text-indigo-600">
+                  123. Rd noddr
+                </span>
+                <span className="text-xs lg:text-sm text-neutral-600">
+                  {pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region
+                </span>
+              </p>
+            </div>
+            <div className="flex items-center gap-4 mb-2">
+              <BikeIcon size={20} />
+              <p className="text-sm lg:text-[16px] text-yellow-600">
+                No Delivery
+              </p>
+            </div>
+            <div className="flex items-center gap-4 mb-2">
+              <Car size={20} />
+              <p className="text-sm lg:text-[16px] text-indigo-600">
+                0.9 Km Away
               </p>
             </div>
           </div>
@@ -153,19 +189,19 @@ function PharmacyDetails({
             </a>
           </div>
         </section>
-        <div className="liquid-glass-effect w-[90%] lg:w-lg mx-auto mt-4 rounded-lg p-2 text-[18px]">
-          <div className="flex items-center justify-between px-2 text-neutral-600">
+        <div className="border border-neutral-200 shadow-md bg-white w-[95%] lg:w-lg mx-auto mt-4 rounded-lg p-6 text-[18px]">
+          <div className="flex items-center font-semibold justify-between px-2 text-neutral-600">
             <h2>Today's Hours</h2>
             <div className="text-sm">
               {pharmacy?.data[0].isOnCall ? (
-                <p className="text-green-500 flex items-center gap-2 border rounded-lg p-1">
+                <p className="text-green-500 flex items-center gap-2 bg-green-100 rounded-lg p-1">
                   <Wifi size={18} />
-                  <span>On Call</span>
+                  <span>On-Call Today</span>
                 </p>
               ) : (
-                <p className="text-red-400 flex items-center gap-2 border rounded-lg p-1">
+                <p className="text-red-400 flex items-center gap-2  bg-red-50 rounded-lg p-1">
                   <Frown size={18} />
-                  <span>Not on call</span>
+                  <span>Not on-call Today</span>
                 </p>
               )}
             </div>
@@ -223,7 +259,7 @@ function PharmacyDetails({
             </div>
           </div>
 
-          <div className=" liquid-glass-effec rounded-lg p-2 mt-8 mb-2 bg-green-50/30">
+          <div className=" liquid-glass-effec rounded-lg p-4 mt-8 mb-2 bg-neutral-200/50">
             <div className="flex gap-2 items-center text-green-700">
               <Info size={18} />
               <h3>Emergency On-Call Service</h3>
@@ -232,6 +268,54 @@ function PharmacyDetails({
               24/7 emergency pharmaceutical services available. Call our main
               number for urgent medication needs.
             </p>
+          </div>
+          <div className="bg-gray-100/50 border border-gray-100 mt-4 rounded-md p-4  text-sm">
+            <div>
+              <p className="text-sm text-red-900">Emergency numbers</p>
+              <div className="flex items-center gap-2 mt-4">
+                <Hospital size={20} className="text-green-500" />
+                <p className="w-[160px]">Emergency Pharmacy</p>
+                <button className="btn text-white flex items-center gap-4 bg-green-600">
+                  <PhoneCall size={18} />
+                  <a href={`tel:118`} target="_blank" rel="noopener noreferrer">
+                    00 00 00 00 00
+                  </a>
+                </button>
+              </div>
+              <div className="flex items-center gap-2 mt-4">
+                <Ambulance size={20} className="text-blue-500" />
+                <p className="w-[160px]">Ambulance</p>
+                <button className="btn text-white flex items-center gap-4 bg-blue-500">
+                  <PhoneCall size={18} />
+                  <a href={`tel:112`} target="_blank" rel="noopener noreferrer">
+                    112
+                  </a>
+                </button>
+              </div>
+              <div className="flex items-center gap-2 mt-4">
+                <Siren size={20} className="text-red-950" />
+                <p className="w-[160px]">Police</p>
+                <button className="btn flex items-center gap-4 text-white bg-blue-950">
+                  <Headset size={18} />
+                  <a href={`tel:112`} target="_blank" rel="noopener noreferrer">
+                    112
+                  </a>
+                </button>
+              </div>
+              <div className="flex items-center gap-2 mt-4">
+                <Flame size={20} className="text-red-500 fill-red-500" />
+                <p className="w-[160px]">Fire Fighters</p>
+                <button
+                  title="Call Fire fighters now."
+                  className="btn text-white bg-red-500 flex items-center gap-4"
+                >
+                  <PhoneCall size={18} />
+                  <a href={`tel:118`} target="_blank" rel="noopener noreferrer">
+                    118
+                  </a>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

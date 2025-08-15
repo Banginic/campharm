@@ -17,7 +17,7 @@ function PharmacyCard({ pharmacy }: { pharmacy: PharmacyDailySchedule }) {
   return (
     <Link
       href={`/pharmacies/${pharmacy.pharmacyId}`}
-      className="border border-white/30 bg-white/20 backdrop:blur-2xl rounded-xl cursor-pointer hover:bg-white/30 transition p-4 flex my-2  justify-between gap-4 items-center flex-nowrap w-[90%] max-w-xl mx-auto shadow-md"
+      className="border  backdrop:blur-2xl rounded-xl cursor-pointer hover:bg-white/30  border-neutral-200 transition px-4 py-5 flex my-2  justify-between gap-4 items-center bg-white flex-nowrap w-[95%] max-w-xl mx-auto shadow-md"
     >
       {/* Open status indicator */}
       <div>
