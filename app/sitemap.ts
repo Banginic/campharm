@@ -2,17 +2,13 @@ import type { MetadataRoute } from "next";
 import { db } from "@/drizzle/index";
 import { pharmacyTable, drugTable } from "@/drizzle/schema";
 import { desc } from "drizzle-orm";
-import { CAMEROON } from "@/assets/data"; // [{ region: "littoral", towns: ["douala", ...] }, ...]
+import { CAMEROON } from "@/assets/data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://medyro.vercel.app";
- 
-  function escapeUrl (url: string){
-    return url.replace(/&/g, "&amp;")
-  }
+
   // 1️⃣ Static pages
   const staticRoutes: MetadataRoute.Sitemap = [
-  
     "/blogs",
     "/help",
     "/pharmacies",
@@ -28,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pharmacies = await db
     .select({
       id: pharmacyTable.id,
-      updatedAt: pharmacyTable.createdAt, // replace with updatedAt if available
+      updatedAt: pharmacyTable.createdAt,
     })
     .from(pharmacyTable)
     .orderBy(desc(pharmacyTable.createdAt));
@@ -44,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const drugs = await db
     .select({
       id: drugTable.id,
-      updatedAt: drugTable.createdAt, // replace with updatedAt if available
+      updatedAt: drugTable.createdAt,
     })
     .from(drugTable)
     .orderBy(desc(drugTable.createdAt));
@@ -56,13 +52,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // 4️⃣ Region/Town pharmacy listing pages (from CAMEROON array)
+  // 4️⃣ Region/Town pages (user-facing)
   const regionTownRoutes: MetadataRoute.Sitemap = CAMEROON.flatMap(({ region, towns }) =>
     towns.map((town) => ({
-      url: escapeUrl(`${baseUrl}/api/pharmacy/list-town-pharmacies?lang=en&region=${encodeURIComponent(region)}&town=${encodeURIComponent(town)}`),
+      url: `${baseUrl}/pharmacies?lang=en&region=${encodeURIComponent(region)}&city=${encodeURIComponent(town)}`,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.2,
+      changeFrequency: "weekly",
+      priority: 0.5, // slightly higher than 0.2
     }))
   );
 
@@ -71,8 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.1
+      changeFrequency: "weekly",
+      priority: 1.0, // homepage priority
     },
     ...staticRoutes,
     ...pharmacyRoutes,
