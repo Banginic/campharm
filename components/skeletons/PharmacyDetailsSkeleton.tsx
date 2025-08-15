@@ -7,7 +7,7 @@ function PharmacyDetailsSkeleton() {
       <Title text="Pharmacy Details" />
       <div className="flex flex-col gap-12 lg:flex-row mt-8">
         {/* Left side */}
-        <div className="border border-gray-300/80 rounded p-4 bg-gray-200/50 w-[95%] max-w-lg mx-auto ">
+        <div className="border border-gray-300/50 rounded p-4 bg-gray-200/50 w-[95%] max-w-lg mx-auto ">
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
               <p className="size-4 rounded-full animate-pulse bg-gray-300"></p>
@@ -46,7 +46,7 @@ function PharmacyDetailsSkeleton() {
         </div>
 
         {/* Right side */}
-        <div className="border border-gray-300/80 p-4 bg-gray-200/50 w-[95%] max-w-lg mx-auto ">
+        <div className="border border-gray-300/50 p-4 bg-gray-200/50 w-[95%] max-w-lg mx-auto ">
           <div className="flex items-center justify-between gap-2  animate-pulse">
             <p className="h-4 w-26  bg-gray-300"></p>
             <p className="h-3 w-20 bg-gray-300"></p>

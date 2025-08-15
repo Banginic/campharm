@@ -148,7 +148,7 @@ function PharmacyDetails({
               <MapPin size={20} />
               <p className="flex flex-col">
                 <span className="text-sm lg:text-[16px} text-indigo-600">
-                  123. Rd noddr
+                  123. St John's Street
                 </span>
                 <span className="text-xs lg:text-sm text-neutral-600">
                   {pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region
@@ -273,8 +273,8 @@ function PharmacyDetails({
             <div>
               <p className="text-sm text-red-900">Emergency numbers</p>
               <div className="flex items-center gap-2 mt-4">
-                <Hospital size={20} className="text-green-500" />
-                <p className="w-[160px]">Emergency Pharmacy</p>
+                <Hospital size={22} className="text-green-500" />
+                <p className="w-[100px]">Emergency Pharmacy</p>
                 <button className="btn text-white flex items-center gap-4 bg-green-600">
                   <PhoneCall size={18} />
                   <a href={`tel:118`} target="_blank" rel="noopener noreferrer">
