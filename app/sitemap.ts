@@ -5,7 +5,7 @@ import { desc } from "drizzle-orm";
 import { CAMEROON } from "@/assets/data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "http://localhost:3000";
+  const baseUrl = 'https://medyro.vercel.app' ;
 
   // 1️⃣ Static pages
   const staticRoutes: MetadataRoute.Sitemap = [
