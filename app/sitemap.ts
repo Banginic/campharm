@@ -5,7 +5,7 @@ import { desc } from "drizzle-orm";
 import { CAMEROON } from "@/assets/data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://medyro.vercel.app";
+  const baseUrl = "http://localhost:3000";
 
   // 1️⃣ Static pages
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -55,10 +55,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 4️⃣ Region/Town pages (user-facing)
   const regionTownRoutes: MetadataRoute.Sitemap = CAMEROON.flatMap(({ region, towns }) =>
     towns.map((town) => ({
-      url: `${baseUrl}/pharmacies?lang=en&region=${encodeURIComponent(region)}&city=${encodeURIComponent(town)}`,
+      url: `${baseUrl}/pharmacies/lang/en/region/${encodeURIComponent(region)}/city/${encodeURIComponent(town)}`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.5, // slightly higher than 0.2
+      priority: 0.5,
     }))
   );
 
@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 1.0, // homepage priority
+      priority: 1.0,
     },
     ...staticRoutes,
     ...pharmacyRoutes,
