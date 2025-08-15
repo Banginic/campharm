@@ -4,6 +4,7 @@ import { PharmacyCard, NoPharmacy, Loading } from "./index";
 import { PharmaciesDailySchedule } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
 import { useApiClient } from "@/hooks/useApiClient";
+import PharmacySkeleton from "./skeletons/PharmacySkeleton";
 
 function PharmacyGrid() {
   const [preferedTown, setPreferedTown] = useState<{ region: string; city: string } | null>(null);
@@ -28,7 +29,7 @@ function PharmacyGrid() {
   });
 
   // Loading while getting from localStorage or fetching
-  if (!preferedTown || isPending) return <Loading />;
+  if (!preferedTown || isPending) return <PharmacySkeleton />;
 
   if (!data || data.data.length === 0) {
     return <NoPharmacy city={preferedTown.city} />;

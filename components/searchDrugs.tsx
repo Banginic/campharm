@@ -29,7 +29,7 @@ function Searchbar() {
   }
   return (
     <section className="relative">
-      <div className="border bg-white/60 backdrop:blur-2xl rounded-md border-white/30  py-2.5 px-4 flex gap-1 items-center mx-auto">
+      <div className="border bg-gray-100 backdrop:blur-2xl rounded-md border-white/30  py-2.5 px-4 flex gap-1 items-center mx-auto">
         <span className="flex items-center gap-1">
           <Pill className="fill-yellow-400 white" size={20} />
           <Tablets className="text-black" size={25} />

@@ -39,7 +39,7 @@ function SetLocation() {
   }
 
   return (
-    <section className="border border-gray-300 bg-gray-300/20 backdrop:blur-md mt-10 liquid-glass-effect rounded-xl w-sm mx-auto p-4">
+    <section className="border border-gray-300 bg-gray-300/20 backdrop:blur-md mt-30 liquid-glass-effect rounded-xl w-[95%] max-w-md mx-auto p-4">
       <div className="flex items-center gap-2">
         <span className="h-2 w-10 bg-black rounded border"></span>
         <span
@@ -64,7 +64,7 @@ function SetLocation() {
                 onChange={(e) =>
                   setFormData({ ...formData, region: e.target.value })
                 }
-                className="border border-gray-400 py-2.5 px-4 rounded"
+                className="border border-gray-400 py-2.5 px-4 rounded cursor-pointer"
               >
                 <option value="">Please select region</option>
                 {CAMEROON.map((item) => (
@@ -78,13 +78,13 @@ function SetLocation() {
               <button
                 onClick={cancelForm}
                 type="button"
-                className="border px-4 py-1 hover:scale-x-105 trans rounded shadow cursor-pointer"
+                className="border px-4 py-2 hover:scale-x-105 trans rounded shadow cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-black px-4 py-1 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
+                className="bg-black px-4 py-2 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
               >
                 Next
               </button>
@@ -96,7 +96,7 @@ function SetLocation() {
         {index === 2 && (
           <form onSubmit={handleFormSubmit} className="mt-8">
             <div className="flex flex-col mb-4 gap-0.5">
-              <label htmlFor="city">City</label>
+              <label htmlFor="city">City / Town</label>
               <select
                 value={formData.city}
                 required
@@ -105,9 +105,9 @@ function SetLocation() {
                 onChange={(e) =>
                   setFormData({ ...formData, city: e.target.value })
                 }
-                className="border border-gray-400 py-2.5 px-4 rounded"
+                className="border border-gray-400 py-2.5 px-4 rounded cursor-pointer"
               >
-                <option value="">Please select city</option>
+                <option value="">Please select city / town</option>
                 {selectedRegion &&
                   selectedRegion.towns.map((item) => (
                     <option key={item} value={item}>
@@ -120,13 +120,13 @@ function SetLocation() {
               <button
                 type="button"
                 onClick={() => setIndex(1)}
-                className="border px-4 py-1 hover:scale-x-105 trans rounded shadow cursor-pointer"
+                className="border px-4 py-2 hover:scale-x-105 trans rounded shadow cursor-pointer"
               >
                 Back
               </button>
               <button
                 type="submit"
-                className="bg-black px-4 py-1 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
+                className="bg-black px-4 py-2 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
               >
                 Next
               </button>
@@ -141,24 +141,24 @@ function SetLocation() {
               CONFIRM DETAILS
             </h2>
             <div className="mt-4">
-              <p className="text-gray-700">
-                Region: <span className="text-gray-900">{formData.region}</span>
+              <p className="text-neutral-600">
+                Region: <span className="text-neutral-900 font-semibold">{formData.region}</span>
               </p>
-              <p className="text-gray-700">
-                Town: <span className="text-gray-900">{formData.city}</span>
+              <p className="text-neutral-600">
+                Town: <span className="text-neutral-900 font-semibold">{formData.city}</span>
               </p>
             </div>
             <div className="flex gap-4 justify-end mt-8">
               <button
                 type="button"
                 onClick={() => setIndex(2)}
-                className="border px-4 py-1 hover:scale-x-105 trans rounded shadow cursor-pointer"
+                className="border px-4 py-2 hover:scale-x-105 trans rounded shadow cursor-pointer"
               >
                 Back
               </button>
               <button
                 onClick={fetchPharmacies}
-                className="bg-black px-4 py-1 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
+                className="bg-black px-4 py-2 hover:scale-x-105 trans text-white rounded shadow cursor-pointer"
               >
                 Confirm
               </button>
