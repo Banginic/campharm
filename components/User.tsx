@@ -13,7 +13,7 @@ function User() {
           <button className="font-semibold">Sign In</button>
         </Link>
       ) : (
-        <div className="relative group size-8 bg-black text-white rounded-full grid place-items-center">
+        <div className="relative group size-8 bg-black text-white rounded-full z-50 grid place-items-center">
           <p className="font-semibold cursor-pointer">B</p>
           <ul className=" border absolute hidden top-8 group-hover:block rounded-xl overflow-hidden border-green-200 bg-black text-neutral-300  text-[16px] ">
             <li className="px-4 py-2 cursor-pointer hover:bg-gray-900 rounded-xl">

@@ -38,7 +38,7 @@ function Login() {
         toast.success(data.message);
         setPharmacyDetails(data.data);
         localStorage.setItem("pharmacyDetails", JSON.stringify(data.data));
-        router.push("/pharmacy");
+       setTimeout(() =>  router.push("/pharmacy"), 200);
       }
 
       setFormState({ ...formState, error: data.error });

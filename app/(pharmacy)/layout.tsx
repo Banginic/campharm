@@ -13,14 +13,7 @@ export default function PharmacyLayout({
   return (
     
       <div 
-        
-        style={{
-          backgroundImage: "url('/bg_image.jpg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-        }}>
+        >
           <Toaster position="top-right" />
      
           <PharmacyProvider>

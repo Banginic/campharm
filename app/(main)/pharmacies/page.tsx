@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PreferedTown, Searchbar, PharmacyGrid } from "@/components/index";
+import { PreferedTown, Searchbar, PharmacyGrid, Title } from "@/components/index";
 import { pharmacyKeywords } from "@/constants/keywords";
 
 export const metadata: Metadata = {
@@ -37,11 +37,10 @@ export const metadata: Metadata = {
 
 async  function Pharmacies() {
   return (
-    <div className="min-h-screen mb-12">
-      <h1 className="font-bold text-xl lg:text-4xl text-center text-green-950 m-8">
-        PHARMACIES
-      </h1>
-      <section className="bg-white shadow-lg p-4 w-[95%] rounded-lg mx-auto max-w-xl">
+    <div className="min-h-screen mb-12 2xl: mt-4">
+      <Title text="PHARMACIES"/>
+      
+      <section className="bg-white shadow-lg p-4 w-[95%] rounded-lg mx-auto max-w-xl mt-8 2xl:mt-12">
         <Searchbar />
         <PreferedTown />
       </section>

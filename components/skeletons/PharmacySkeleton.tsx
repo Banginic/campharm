@@ -9,7 +9,7 @@ function PharmacySkeleton() {
         return (
           <div
             key={index}
-            className="bg-gray-200 rounded-lg  w-[95%] max-w-xl h-12 lg-h-14 mx-auto flex justify-between items-center px-4"
+            className="bg-gray-200 rounded-lg  w-[95%] max-w-xl h-12 lg-h-14 2xl:h-16 mx-auto animate-pulse flex justify-between items-center px-4"
           >
             <p className="size-4 rounded-full bg-gray-300 animate-pulse"></p>
             <p className="h-4 w-22 bg-gray-300 animate-pulse"></p>
