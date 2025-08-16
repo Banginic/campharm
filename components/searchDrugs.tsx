@@ -29,7 +29,7 @@ function Searchbar() {
   }
   return (
     <section className="relative">
-      <div className="border bg-gray-100 backdrop:blur-2xl rounded-md border-white/30  py-2.5 px-4 flex gap-1 items-center mx-auto">
+      <div className="border bg-gray-100 backdrop:blur-2xl rounded-lg shadow-md border-gray-200  py-2.5 px-4 flex gap-1 items-center mx-auto">
         <span className="flex items-center gap-1">
           <Pill className="fill-yellow-400 white" size={20} />
           <Tablets className="text-black" size={25} />
@@ -58,7 +58,7 @@ function Searchbar() {
                   <X size={20} />
                 )}
               </span>
-              Clear
+              
             </button>
           ) : (
             <button
@@ -66,7 +66,7 @@ function Searchbar() {
               className="borde bg-green-950/60 text-white border-black/70  text-sm px-4 py-2 rounded-xl cursor-pointer font-semibold transition-all duration-300 lg:hover:scale-105 hover:shadow-lg flex items-center gap-2"
             >
               <Search size={20} />
-              Search
+              
             </button>
           )}
         </div>

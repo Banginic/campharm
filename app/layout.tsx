@@ -6,7 +6,7 @@ import { rootLayoutKeywords } from "@/constants/keywords";
 import { MY_DATA } from "@/assets/data";
 
 export const metadata: Metadata = {
-  title: "Medyro | Find nearby pharmacies & medications.",
+  title: "Medyro | Find nearby pharmacies & medications in Cameroon",
   description:
     "Medyro helps you find the nearest pharmacy near you, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
   keywords: rootLayoutKeywords,
@@ -19,15 +19,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: MY_DATA.appUrl || "https://medyro.vercel.app",
     siteName: "Medyro",
-    title: "Medyro | Find nearby pharmacies & medications ",
+    title: "Medyro | Find nearby pharmacies & medications in Cameroon ",
     description:
-      "Discover nearby pharmacies, search for available medicines, and manage your pharmacy business with Medyro’s powerful global platform.",
+      "Discover nearby pharmacies, search for available medicines, and manage your pharmacy business with Medyro’s powerful platform.",
     images: [
       {
         url: "https://medyro.vercel.app/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Medyro - Find nearby pharmacies & medications",
+        alt: "Medyro - Find nearby pharmacies & medications in Cameroon",
       },
     ],
   },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@medyro",
     creator: "@medyro",
-    title: "Medyro | Find nearby pharmacies & medications.",
+    title: "Medyro | Find nearby pharmacies & medications in Cameroon.",
     description:
       "Search for pharmacies nearby, buy medication locally, and manage your pharmacy with Medyro’s global directory & tools.",
     images: ["https://medyro.vercel.app/opengraph-image.png"],
