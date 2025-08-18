@@ -5,12 +5,13 @@ import { BadgeAlert, LogOut, UserRound } from 'lucide-react'
 import { useSession } from "next-auth/react";
 
 function User() {
-    const { data: session, status } = useSession();
+     const session = useSession(); // session can be undefined during build
+  const data = session?.data;
 
 
   return (
     <section className="lg:flex">
-      {!session ? (
+      {!data ? (
         <Link href="/pharmacy/sign-up" className="cursor-pointer">
           <button className="font-semibold   px-4 py-2 text-sm cursor-pointer">Create Account</button>
         </Link>

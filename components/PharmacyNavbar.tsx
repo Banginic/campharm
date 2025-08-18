@@ -10,7 +10,8 @@ function PharmacyNavbar() {
   const { isPharmacySidebarOpen, togglePharmacySidebar } =
     useContext(AppContext)!;
 
-  const { data: session, status } = useSession();
+   const session = useSession(); // session can be undefined during build
+  const data = session?.data;
 
   return (
     <header className="h-[13dvh] flex items-center relative">
@@ -18,10 +19,10 @@ function PharmacyNavbar() {
         <Link href="/pharmacy">
           <Logo />
         </Link>
-        {session && <Navlinks navlinks={PHARMACY_NAVLINKS} />}
+        {data && <Navlinks navlinks={PHARMACY_NAVLINKS} />}
         <div className="flex items-center gap-4">
           <Language />
-          {session && (
+          {data && (
             <Hamburger
               isSidebarOpen={isPharmacySidebarOpen}
               toggleSidebar={togglePharmacySidebar}

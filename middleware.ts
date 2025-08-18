@@ -6,7 +6,7 @@ import { withAuth } from 'next-auth/middleware';
 export default withAuth(
   function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    console.log(pathname)
+
 
     // Allow public routes
     if (pathname === '/pharmacy/login' || pathname === '/pharmacy/sign-up') {
