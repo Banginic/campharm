@@ -1,7 +1,6 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
-import type { FormEvent } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { PharmacyContext } from "@/context/PharmacyProvider";
@@ -10,11 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginSchemaType } from "@/schemas/pharmacyAuth";
 import { Mail, Lock, Send } from "lucide-react";
 import { Spiner } from "@/components";
+import { signIn } from "next-auth/react";
 
 function Login() {
+  const router = useRouter()
   const { setPharmacyDetails } = useContext(PharmacyContext)!;
 
-  const router = useRouter();
   const [formState, setFormState] = useState({ isLoading: false, error: "" });
 
   const {
@@ -26,22 +26,17 @@ function Login() {
   const onSubmit = async (formData: LoginSchemaType) => {
     setFormState({ isLoading: true, error: "" });
     try {
-      const res = await fetch("/api/pharmacy-auth/login", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
       });
 
-      const data = await res.json();
-      if (data.success) {
-        toast.success(data.message);
-        setPharmacyDetails(data.data);
-        localStorage.setItem("pharmacyDetails", JSON.stringify(data.data));
-       setTimeout(() =>  router.push("/pharmacy"), 200);
+      if (result?.error) {
+        setFormState({ isLoading: false, error: "Invalid credentials" });
+      } else if (result?.ok) {
+        router.push("/pharmacy");
       }
-
-      setFormState({ ...formState, error: data.error });
     } catch (ex: unknown) {
       if (ex instanceof Error) {
         setFormState({ ...formState, error: ex.message });
@@ -112,13 +107,16 @@ function Login() {
             disabled={formState.isLoading}
             className={`w-full mt-8 cursor-pointer bg-black disabled:bg-gray-800 disabled:animate-pulse hover:bg-black/80 text-white py-2 rounded font-semibold`}
           >
-            {formState.isLoading ? <span className="flex justify-center items-center gap-2 ">
-              <Spiner color="white" height="size-5" /> Logging in....
-            </span> : <span className="flex items-center gap-2 justify-center">
-              <Send size={18} />
-              Login
-            </span>
-            }
+            {formState.isLoading ? (
+              <span className="flex justify-center items-center gap-2 ">
+                <Spiner color="white" height="size-5" /> Logging in....
+              </span>
+            ) : (
+              <span className="flex items-center gap-2 justify-center">
+                <Send size={18} />
+                Login
+              </span>
+            )}
           </button>
           <p className="text-red-400 text-sm h-4 text-center mt-1">
             {formState.error}

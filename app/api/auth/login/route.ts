@@ -7,7 +7,9 @@ import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: Request) {
+
   const body = await req.json();
+
   try {
     const { email, password } = body;
     if (!email || !password) {
@@ -54,7 +56,7 @@ export async function POST(req: Request) {
  })
 
     return NextResponse.json(
-      { success: true, message: "Login successful", token, data: user[0] },
+      { success: true, message: "Login successful", token, data: user },
       { status: 200 }
     );
   } catch (ex: unknown) {

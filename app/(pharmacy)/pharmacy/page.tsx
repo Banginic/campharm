@@ -5,14 +5,14 @@ import { useApiClient } from "@/hooks/useApiPharmacyClient";
 import { PharmacyDetailsTypes } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 export default function PharmacyDashboard() {
   const { pharmacyDetails } = useContext(PharmacyContext)!;
   const { apiFetch } = useApiClient<PharmacyDetailsTypes>();
 
-  useEffect(() => {
-    console.log("pharmacyDetails:", pharmacyDetails);
-  }, [pharmacyDetails]);
+//  const session = await getServerSession(authOptions)
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pharmacy-details"],

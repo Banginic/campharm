@@ -1,0 +1,1 @@
+ALTER TABLE "pharmacy_table" ADD COLUMN "role" varchar DEFAULT 'pharmacy' NOT NULL;

@@ -13,6 +13,7 @@ export const pharmacyTable = pgTable('pharmacy_table', {
   password: varchar('password', { length: 255 }).notNull(),
   isVerified: boolean("is_verified").notNull().default(false),
   photoId: varchar('photo_id').notNull().default(''),
+  role: varchar().notNull().default('pharmacy'),
   licenceNumber: varchar('licence_number', { length: 100 }).notNull().default('N/A'),
   location: jsonb('location').notNull().default({ lat: 0, lng: 0 }),
   isFrozen: boolean('is_frozen').notNull().default(false),
