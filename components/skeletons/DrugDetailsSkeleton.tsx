@@ -1,13 +1,13 @@
 import { Title } from "@/components";
 import React from "react";
 
-function page() {
+function DrugDetailsSkeleton() {
   return (
     <div className="min-h-screen placeholder-yellow-800">
       <Title text="Drug Details" />
       <div className=" mt-8">
         {/* Left side */}
-        <div className="border border-gray-200/80 p-6 bg-gray-200/50 w-[95%] max-w-lg mx-auto ">
+        <div className="border rounded-xl border-gray-200/80 p-6 bg-gray-200/50 w-[95%] max-w-xl mx-auto ">
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
               <p className="size-4 rounded-full animate-pulse bg-gray-300"></p>
@@ -72,4 +72,4 @@ function page() {
   );
 }
 
-export default page;
+export default DrugDetailsSkeleton;

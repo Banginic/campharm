@@ -6,7 +6,7 @@ import { rootLayoutKeywords } from "@/constants/keywords";
 import { MY_DATA } from "@/assets/data";
 
 export const metadata: Metadata = {
-  title: "Medyro | Find nearby pharmacies & medications in Cameroon",
+  title: "Find nearby pharmacies & medications in Cameroon. | Medyro",
   description:
     "Medyro helps you find the nearest pharmacy near you, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
   keywords: rootLayoutKeywords,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: MY_DATA.appUrl || "https://medyro.vercel.app",
     siteName: "Medyro",
-    title: "Medyro | Find nearby pharmacies & medications in Cameroon ",
+    title: "Find nearby pharmacies & medications in Cameroon. | Medyro",
     description:
       "Discover nearby pharmacies, search for available medicines, and manage your pharmacy business with Medyro’s powerful platform.",
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@medyro",
     creator: "@medyro",
-    title: "Medyro | Find nearby pharmacies & medications in Cameroon.",
+    title: "Find nearby pharmacies & medications in Cameroon. | Medyro",
     description:
       "Search for pharmacies nearby, buy medication locally, and manage your pharmacy with Medyro’s global directory & tools.",
     images: ["https://medyro.vercel.app/opengraph-image.png"],

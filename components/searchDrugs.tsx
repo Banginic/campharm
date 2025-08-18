@@ -102,7 +102,7 @@ function Searchbar() {
             <div className="flex flex-col mt-4 gap-2">
               {data?.data.map((item) => (
                 <Link
-                  href={`/pharmacies/drugs/${item.pharmacyId}/${item.id} `}
+                  href={`/pharmacies/drugs/details?drugId=${item.id}&pharmacyId=${item.pharmacyId} `}
                   key={item.id}
                   className="liquid-glass-effect rounded-lg  w-full py-2 px-4 text-sm  flex justify-around items-center"
                 >

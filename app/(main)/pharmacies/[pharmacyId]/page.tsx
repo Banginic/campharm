@@ -95,7 +95,7 @@ function PharmacyDetails({
                     src={verified}
                     alt="./placeholder.png"
                     width={25}
-                    className={`${pharmacy?.data[0].isVerified && "hidden"}`}
+                    className={`${!pharmacy?.data[0].isVerified && "hidden"}`}
                   />
                 )}
               </div>
@@ -134,7 +134,7 @@ function PharmacyDetails({
                 {pharmacy?.data[0].phoneNumber}
               </p>
               <Copy
-                className="-top-1 absolute right-60 lg:right-75 cursor-pointer"
+                className="-top-1 absolute right-43 lg:right-72 cursor-pointer"
                 size={14}
               />
             </div>
@@ -147,10 +147,10 @@ function PharmacyDetails({
             <div className="flex items-center gap-4 mb-2">
               <MapPin size={20} />
               <p className="flex flex-col">
-                <span className="text-sm lg:text-[16px} text-indigo-600">
+                <span className="text-sm lg:text-[18px} text-neutral-700">
                   123. St John's Street
                 </span>
-                <span className="text-xs lg:text-sm text-neutral-600">
+                <span className="text-xs lg:text-sm text-neutral-500">
                   {pharmacy?.data[0].town}, {pharmacy?.data[0].region} Region
                 </span>
               </p>
@@ -163,7 +163,7 @@ function PharmacyDetails({
             </div>
             <div className="flex items-center gap-4 mb-2">
               <Car size={20} />
-              <p className="text-sm lg:text-[16px] text-indigo-600">
+              <p className="text-sm lg:text-[16px] text-pink-400">
                 0.9 Km Away
               </p>
             </div>

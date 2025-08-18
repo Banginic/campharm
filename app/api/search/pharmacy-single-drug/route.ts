@@ -45,6 +45,8 @@ export async function GET(req: Request) {
         address: pharmacyTable.address,
         pharmacyId: pharmacyTable.id,
         phoneNumber: pharmacyTable.phoneNumber,
+        isVerified: pharmacyTable.isVerified,
+        location: pharmacyTable.location,
         //daily schedule
         day: dailySchedule.day,
         isOpen: dailySchedule.isOpen,

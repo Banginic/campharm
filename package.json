@@ -10,11 +10,12 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-      "postinstall": "npm rebuild sharp && npm rebuild lightningcss"
+    "postinstall": "npm rebuild sharp && npm rebuild lightningcss"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@neondatabase/serverless": "^1.0.1",
+    "@supabase/supabase-js": "^2.55.0",
     "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",

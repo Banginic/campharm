@@ -9,6 +9,8 @@ export interface PharmacyDrugSchedule extends APIResponse {
   address: string;
   pharmacyId: number;
   phoneNumber: string;
+  isVerified: boolean;
+  location: { lat: number, lng: number}
 
   // Daily schedule
   day: string | null;

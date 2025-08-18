@@ -1,19 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { 
-  Store, 
-  Search, 
-  Users, 
-  MapPin, 
-  ShoppingBag, 
-  Building2,
-  ArrowRight,
-  CheckCircle,
-  Pill,
-  Heart,
-  Clock,
-  Shield
-} from 'lucide-react';
+import { Store, Search, MapPin, ArrowRight, CheckCircle, Clock, Shield, Heart } from 'lucide-react';
 import Link from 'next/link';
 
 interface UserTypeOption {
@@ -34,205 +21,127 @@ const UserTypeSelection: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const userTypes: UserTypeOption[] = [
-     {
+    {
       id: 'customer',
-      title: 'I Need to Find Medicines',
+      title: 'Find Medicines',
       subtitle: 'Customer / Patient',
       link: '/select-location',
-      description: 'Search for medicines, find nearby pharmacies, and get the healthcare products you need.',
-      icon: <Search className="w-8 h-8" />,
-      features: [
-        'Search for specific medicines',
-        'Find nearby pharmacies',
-        'Check medicine availability',
-        'Compare prices & services',
-        'Get directions & contact info'
-      ],
+      description: 'Search and locate pharmacies, compare services, and access the healthcare products you need.',
+      icon: <Search className="w-6 h-6" />,
+      features: ['Search medicines', 'Nearby pharmacies', 'Check availability', 'Compare services', 'Get directions'],
       buttonText: 'Start Searching',
       buttonColor: 'bg-green-600 hover:bg-green-700',
-      bgGradient: 'from-green-50 to-emerald-100'
+      bgGradient: 'from-green-50 via-white to-emerald-50'
     },
     {
       id: 'pharmacy',
-      title: 'I Own a Pharmacy',
-       link: '/pharmacy/login',
-      subtitle: 'Pharmacy Owner / Manager',
-      description: 'Manage your pharmacy inventory, connect with customers, and grow your business online.',
-      icon: <Store className="w-8 h-8" />,
-      features: [
-        'Manage your pharmacy profile',
-        'Update inventory & stock levels',
-        'Receive customer orders',
-        'Track sales & analytics',
-        'Manage opening hours & services'
-      ],
-      buttonText: 'Set Up My Pharmacy',
+      title: 'Manage My Pharmacy',
+      subtitle: 'Pharmacy Owner',
+      link: '/pharmacy/login',
+      description: 'Update inventory, manage your profile, and connect with customers online.',
+      icon: <Store className="w-6 h-6" />,
+      features: ['Manage profile', 'Update stock', 'Receive orders', 'Track sales', 'Set hours & services'],
+      buttonText: 'Set Up Pharmacy',
       buttonColor: 'bg-blue-600 hover:bg-blue-700',
-      bgGradient: 'from-blue-50 to-indigo-100'
+      bgGradient: 'from-blue-50 via-white to-indigo-50'
     }
-   
   ];
 
   const handleSelection = (type: 'pharmacy' | 'customer') => {
     setSelectedType(type);
     setIsAnimating(true);
-    
-    // Simulate navigation after animation
-    setTimeout(() => {
-      console.log(`Navigating to ${type} flow...`);
-      // Here you would typically navigate to the next page
-      // e.g., router.push(`/${type}/setup`) or similar
-    }, 800);
-  };
-
-  const resetSelection = () => {
-    setSelectedType(null);
-    setIsAnimating(false);
+    setTimeout(() => setIsAnimating(false), 800);
   };
 
   if (selectedType && isAnimating) {
     const selectedOption = userTypes.find(type => type.id === selectedType)!;
-    
     return (
-      <div className="min-h-screen  flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-white">
         <div className="text-center">
-          <div className="w-20 h-20 rounded-full shadow-lg flex items-center justify-center mx-auto mb-6 animate-bounce">
-            <div className="text-blue-600">
-              {selectedOption.icon}
-            </div>
+          <div className="w-14 h-14 rounded-full bg-white/80 backdrop-blur-md shadow-md flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <div className="text-blue-600">{selectedOption.icon}</div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Perfect Choice!</h2>
-          <p className="text-gray-600 mb-4">Setting up your {selectedType} experience...</p>
-          <div className="w-32 h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full animate-pulse"></div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-1">Perfect Choice!</h2>
+          <p className="text-gray-600 text-sm mb-3">Setting up your {selectedType} experience...</p>
+          <div className="w-28 h-1.5 bg-gray-200 rounded-full mx-auto overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-blue-500 to-green-500 animate-pulse"></div>
           </div>
-          <button
-            onClick={resetSelection}
-            className="mt-6 text-sm text-gray-500 hover:text-gray-700 underline"
-          >
-            Go back
-          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Header */}
-      <div className=" pb-6 text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex items-center justify-center mb-4">
-            
-          </div>
-          <p className="text-xl text-green-950 mb-2">Welcome to your healthcare companion</p>
-          <p className="text-green-950/60">Choose how you'd like to get started</p>
-        </div>
+      <div className="text-center py-10">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome to PharmaCare</h1>
+        <p className="text-gray-600 text-sm">Your trusted healthcare companion</p>
       </div>
 
-      {/* Main Selection Cards */}
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-2 gap-8">
-          {userTypes.map((userType) => (
-            <div
-              key={userType.id}
-              className={`relative group cursor-pointer transition-all duration-300 transform lg:hover:scale-105 ${
-                selectedType === userType.id ? 'scale-105' : ''
-              }`}
-              onClick={() => handleSelection(userType.id)}
-            >
-              <div className={`bg-gradient-to-br ${userType.bgGradient} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/50 backdrop-blur-sm`}>
-                {/* Header */}
-                <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-white rounded-2xl shadow-md flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="text-gray-700">
-                      {userType.icon}
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    {userType.title}
-                  </h2>
-                  <p className="text-sm font-medium text-gray-600 bg-white/50 rounded-full px-4 py-1 inline-block">
-                    {userType.subtitle}
-                  </p>
+      {/* Cards */}
+      <div className="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-6">
+        {userTypes.map((userType) => (
+          <div
+            key={userType.id}
+            className="group relative cursor-pointer transition-transform hover:scale-[1.02]"
+            onClick={() => handleSelection(userType.id)}
+          >
+            <div className={`bg-gradient-to-br ${userType.bgGradient} rounded-2xl p-6 shadow-lg border border-gray-100 backdrop-blur-sm`}>
+              {/* Icon */}
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 bg-white rounded-xl shadow flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
+                  {userType.icon}
                 </div>
-
-                {/* Description */}
-                <p className="text-gray-700 text-center mb-6 leading-relaxed">
-                  {userType.description}
-                </p>
-
-                {/* Features */}
-                <div className="space-y-3 mb-8">
-                  {userType.features.map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Action Button */}
-                <Link href={userType.link}
-                  className={`w-full ${userType.buttonColor} text-white py-2.5 rounded-xl font-semibold text-lg transition-all duration-300 transform lg:group-hover:translate-y-1 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl`}
-                >
-                  <span>{userType.buttonText}</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
+                <h2 className="text-lg font-semibold text-gray-900">{userType.title}</h2>
+                <p className="text-xs text-gray-500">{userType.subtitle}</p>
               </div>
 
-              {/* Decorative Elements */}
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-blue-400 to-green-400 rounded-full opacity-70 group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gradient-to-r from-green-400 to-blue-400 rounded-full opacity-70 group-hover:scale-150 transition-transform duration-700"></div>
+              {/* Description */}
+              <p className="text-sm text-gray-700 text-center mb-4 leading-relaxed">{userType.description}</p>
+
+              {/* Features */}
+              <div className="space-y-2 mb-5">
+                {userType.features.map((feature, index) => (
+                  <div key={index} className="flex items-center text-sm text-gray-700">
+                    <CheckCircle className="w-4 h-4 text-green-600 mr-2" />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+
+              {/* Button */}
+              <Link href={userType.link}
+                className={`block w-full ${userType.buttonColor} text-white py-2.5 rounded-lg text-sm font-medium text-center transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2`}
+              >
+                {userType.buttonText}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Features */}
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        <h3 className="text-center text-base font-semibold text-gray-900 mb-8">Why Choose PharmaCare?</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[
+            { icon: <MapPin className="w-5 h-5 text-blue-600" />, title: "Find Nearby", desc: "Locate pharmacies instantly" },
+            { icon: <Clock className="w-5 h-5 text-green-600" />, title: "Real-time Updates", desc: "Live stock & hours" },
+            { icon: <Shield className="w-5 h-5 text-purple-600" />, title: "Trusted Network", desc: "Verified pharmacies" },
+            { icon: <Heart className="w-5 h-5 text-orange-600" />, title: "Healthcare Focus", desc: "Patient-first approach" },
+          ].map((f, i) => (
+            <div key={i} className="p-4 rounded-xl hover:bg-gray-50 transition">
+              <div className="w-10 h-10 bg-white rounded-lg shadow flex items-center justify-center mx-auto mb-3">
+                {f.icon}
+              </div>
+              <h4 className="text-sm font-medium text-gray-900">{f.title}</h4>
+              <p className="text-xs text-gray-600">{f.desc}</p>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Bottom Features Section */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="text-center mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Why Choose PharmaCare?</h3>
-          <p className="text-gray-600">Connecting healthcare providers and patients seamlessly</p>
-        </div>
-        
-        <div className="grid md:grid-cols-4 gap-6">
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <MapPin className="w-6 h-6 text-blue-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Find Nearby</h4>
-            <p className="text-sm text-gray-600">Locate pharmacies in your area quickly</p>
-          </div>
-          
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <Clock className="w-6 h-6 text-green-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Real-time Updates</h4>
-            <p className="text-sm text-gray-600">Live inventory and opening hours</p>
-          </div>
-          
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <Shield className="w-6 h-6 text-purple-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Trusted Network</h4>
-            <p className="text-sm text-gray-600">Verified pharmacies and medicines</p>
-          </div>
-          
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <Heart className="w-6 h-6 text-orange-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Healthcare Focus</h4>
-            <p className="text-sm text-gray-600">Dedicated to your health needs</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-     
     </div>
   );
 };
