@@ -1,34 +1,39 @@
+// app/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from './libs/jwt-edge';
+import { withAuth } from 'next-auth/middleware';
 
+export default withAuth(
+  function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+    console.log(pathname)
 
-export async function middleware(request: NextRequest) {
-//   const { pathname } = request.nextUrl;
-//   const token = request.cookies.get('token')?.value
- 
+    // Allow public routes
+    if (pathname === '/pharmacy/login' || pathname === '/pharmacy/sign-up') {
+      return NextResponse.next();
+    }
 
-//   const validToken = await verifyToken(token || 'none')
-//    if (!token || !validToken) {
-//     return NextResponse.redirect(new URL('/pharmacy/login', request.url))
-//   }
+    // All other routes require authentication
+    return NextResponse.next();
+  },
+  {
+    pages: {
+      signIn: '/pharmacy/login', // redirect here if not authenticated
+    },
+  }
+);
 
-
-//   const isPharmacyRoute = pathname.startsWith('/pharmacy')
-
-//   if (isPharmacyRoute) {
-  
-//   }
-//   if( pathname.startsWith('/pharmacy') && !validToken){
-//      return NextResponse.redirect(new URL('/pharmacy/login', request.url));
-//   }
-
-//  const response = NextResponse.next()
-//  response.headers.set('user-email', String(validToken.email))
-
-  return NextResponse.next();
-}
-
+// Protect these routes
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*', '/pharmacy/:path*'], // protect pharmacy and admin
+  matcher: [
+    '/admin/:path*',
+    '/pharmacy/drugs',
+    '/pharmacy/on-call',
+    '/pharmacy/verify-account',
+    '/pharmacy/working-days',
+    '/pharmacy/profile',
+    '/pharmacy/update-location',
+    '/pharmacy/staff-schedule',
+    '/pharmacy/view-orders',
+  ],
 };

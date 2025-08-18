@@ -23,8 +23,9 @@ const authOptions = {
           });
 
           const data = await res.json();
-        
-          if (data?.data?.[0]) {
+   
+
+          if (res.ok && data?.data?.[0]) {
             return {
                 id: data.data[0].id,
                 name: data.data[0].pharmacyName,

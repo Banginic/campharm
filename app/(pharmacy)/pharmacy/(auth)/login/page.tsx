@@ -1,7 +1,6 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { PharmacyContext } from "@/context/PharmacyProvider";
 import { useForm } from "react-hook-form";
