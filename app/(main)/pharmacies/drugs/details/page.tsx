@@ -1,26 +1,18 @@
 
-
-import React from "react";
-import MainDrugDetails from "@/pages/MainDrugDetails";
 import { notFound } from "next/navigation";
+import MainDrugDetails from "@/pages/MainDrugDetails";
+import { use } from "react";
 
 interface DrugDetailsProps {
-  searchParams: {
+  searchParams: Promise<{
     drugId?: string;
     pharmacyId?: string;
-  };
+  }>;
 }
 
-export default async function DrugDetailsPage({ searchParams }: DrugDetailsProps) {
-  const { drugId, pharmacyId } = await searchParams;
+export default function DrugDetailsPage({ searchParams }: DrugDetailsProps) {
+  const { drugId, pharmacyId } = use(searchParams);
 
-  if (!drugId || !pharmacyId) {
-    return notFound();
-  }
+  if (!drugId || !pharmacyId) return notFound();
 
-  return (
-    <div>
-      <MainDrugDetails pharmacyId={pharmacyId} drugId={drugId} />
-    </div>
-  );
-}
+  return <MainDrugDetails pharmacyId={pharmacyId} drugId={drugId} />;}

@@ -1,15 +1,10 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import {
-  Back,
-  NoData,
-  ErrorFetching,
-  Title,
-} from "@/components/index";
+import { Back, NoData, ErrorFetching, Title } from "@/components/index";
 import { useApiClient } from "@/hooks/useApiClient";
 import { PharmacyDrugSchedule } from "@/models/searchTypes";
 import {
@@ -36,20 +31,42 @@ export default function MainDrugDetails({
   drugId,
 }: MainDrugDetailsProps) {
   const { apiFetch } = useApiClient<PharmacyDrugSchedule>();
-
-  const { isLoading, isError, data, refetch } = useQuery({
-    queryKey: [`drugs-${drugId}`],
-    queryFn: () =>
-      apiFetch(
-        `/api/search/pharmacy-single-drug?pharmacyId=${pharmacyId}&drugId=${drugId}`,
-        {
-          method: "GET",
-        }
-      ),
+  const [data, setData] = useState<PharmacyDrugSchedule | null>(null);
+  const [formState, setFormState] = useState({
+    isLoading: false,
+    isError: false,
   });
 
-  if (isLoading) return <DrugDetailsSkeleton />;
-  if (isError) return <ErrorFetching message="Drugs" refetch={refetch} />;
+  async function fetchDrug() {
+    setFormState({ isLoading: true, isError: false });
+    const data = await apiFetch(
+      `/api/search/pharmacy-single-drug?pharmacyId=${pharmacyId}&drugId=${drugId}`,
+      {
+        method: "GET",
+      }
+    );
+    if (data.success) {
+      setData(data);
+      setFormState({ isLoading: false, isError: false });
+      return;
+    }
+    setFormState({ isLoading: false, isError: true });
+    return;
+  }
+  function reloadPage() {
+    window.location.href = window.location.href;
+  }
+
+  useEffect(() => {
+    fetchDrug();
+    return () => {};
+  }, []);
+
+
+  
+  if (formState.isLoading) return <DrugDetailsSkeleton />;
+  if (formState.isError)
+    return <ErrorFetching message="Drugs" refetch={reloadPage} />;
   if (!data?.data || data.data.length === 0)
     return <NoData message="Drug" photo={no_drug} />;
 
@@ -167,7 +184,7 @@ export default function MainDrugDetails({
                   Visit Pharmacy
                 </Link>
                 <a
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${drug.location.lat },${drug.location.lng }`}
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${drug.location.lat},${drug.location.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex gap-2 items-center bg-black/80 hover:bg-black cursor-pointer text-white px-6 py-2 rounded"
