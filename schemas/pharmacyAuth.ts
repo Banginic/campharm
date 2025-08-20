@@ -22,20 +22,20 @@ export const SignUpSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
-    .max(25, { message: "Email should be at most 25 characters." })
+    .max(50, { message: "Email should be at most 50 characters." })
     .email(),
     
   pharmacyName: z
     .string()
     .min(1, { message: "Pharmacy name is required." })
     .min(8, { message: "Pharmacy name should be at least 8 letters." })
-    .max(25, { message: "Pharmacy name should be at most 25 letters." })
+    .max(50, { message: "Pharmacy name should be at most 50 letters." })
     ,
   pharmacistName: z
     .string()
     .min(1, { message: "Pharmacist name is required." })
     .min(8, { message: "Pharmacist name should be at least 8 letters." })
-    .max(25, { message: "Pharmacist should name be at most 25 letters." })
+    .max(30, { message: "Pharmacist should name be at most 30 letters." })
     ,
   phoneNumber: z
     .string()
