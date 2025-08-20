@@ -1,26 +1,30 @@
-import type { MetadataRoute } from "next";
 import { db } from "@/drizzle/index";
 import { pharmacyTable, drugTable } from "@/drizzle/schema";
-import { desc } from "drizzle-orm";
 import { CAMEROON } from "@/assets/data";
+import { desc } from "drizzle-orm";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://medyro.vercel.app' ;
+function generateSitemapXml(urls: { url: string; lastModified: Date }[]) {
+  const xmlUrls = urls
+    .map(
+      ({ url, lastModified }) =>
+        `<url><loc>${url}</loc><lastmod>${lastModified.toISOString()}</lastmod></url>`
+    )
+    .join("");
 
-  // 1️⃣ Static pages
-  const staticRoutes: MetadataRoute.Sitemap = [
-    "/blogs",
-    "/help",
-    "/pharmacies",
-    "/updates",
-  ].map((path) => ({
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${xmlUrls}
+</urlset>`;
+}
+
+export default async function sitemap() {
+  const baseUrl = "https://medyro.vercel.app";
+
+  const staticRoutes = ["/blogs", "/help", "/pharmacies", "/updates"].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.4,
   }));
 
-  // 2️⃣ Dynamic pharmacy pages
   const pharmacies = await db
     .select({
       id: pharmacyTable.id,
@@ -29,14 +33,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .from(pharmacyTable)
     .orderBy(desc(pharmacyTable.createdAt));
 
-  const pharmacyRoutes: MetadataRoute.Sitemap = pharmacies.map((ph) => ({
+  const pharmacyRoutes = pharmacies.map((ph) => ({
     url: `${baseUrl}/pharmacy/${ph.id}`,
     lastModified: ph.updatedAt || new Date(),
-    changeFrequency: "weekly",
-    priority: 0.7,
   }));
 
-  // 3️⃣ Dynamic drug pages
   const drugs = await db
     .select({
       id: drugTable.id,
@@ -45,34 +46,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .from(drugTable)
     .orderBy(desc(drugTable.createdAt));
 
-  const drugRoutes: MetadataRoute.Sitemap = drugs.map((drug) => ({
+  const drugRoutes = drugs.map((drug) => ({
     url: `${baseUrl}/drug/${drug.id}`,
     lastModified: drug.updatedAt || new Date(),
-    changeFrequency: "weekly",
-    priority: 0.6,
   }));
 
-  // 4️⃣ Region/Town pages (user-facing)
-  const regionTownRoutes: MetadataRoute.Sitemap = CAMEROON.flatMap(({ region, towns }) =>
+  const regionTownRoutes = CAMEROON.flatMap(({ region, towns }) =>
     towns.map((town) => ({
       url: `${baseUrl}/pharmacies/lang/en/region/${encodeURIComponent(region)}/city/${encodeURIComponent(town)}`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.5,
     }))
   );
 
-  // 5️⃣ Combine all routes
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
+  const allRoutes = [
+    { url: baseUrl, lastModified: new Date() },
     ...staticRoutes,
     ...pharmacyRoutes,
     ...drugRoutes,
     ...regionTownRoutes,
   ];
+
+  return new Response(generateSitemapXml(allRoutes), {
+    headers: {
+      "Content-Type": "application/xml",
+    },
+  });
 }
