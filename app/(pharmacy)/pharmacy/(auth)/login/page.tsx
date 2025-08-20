@@ -35,6 +35,7 @@ function Login() {
         setFormState({ isLoading: false, error: "Invalid credentials" });
       } else if (result?.ok) {
         router.push("/pharmacy");
+        
       }
     } catch (ex: unknown) {
       if (ex instanceof Error) {
@@ -43,7 +44,7 @@ function Login() {
       console.log(ex);
       setFormState({ ...formState, error: "Error occoured logging in" });
     } finally {
-      // setFormState({...formState, isLoading: false})
+     setFormState({ isLoading: false, error: "" });
       reset();
     }
   };

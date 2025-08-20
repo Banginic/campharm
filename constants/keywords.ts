@@ -1,4 +1,4 @@
-export const rootLayoutKeywords = [
+export const englishRootLayoutKeywords = [
   "pharmacy locator",
   "nearest pharmacy",
   "find medication online",
@@ -49,7 +49,64 @@ export const rootLayoutKeywords = [
   "24/7 drug store locator",
   "pharmacy dashboard software"
 ]
-export const pharmacyKeywords = [
+export const frenchRootLayoutKeywords = [
+  "localisateur de pharmacie",
+  "pharmacie la plus proche",
+  "trouver des médicaments en ligne",
+  "recherche de pharmacie en ligne",
+  "acheter des médicaments près de chez moi",
+  "logiciel de gestion de pharmacie",
+  "annuaire mondial des pharmacies",
+  "outil de planification des pharmacies",
+  "service de pharmacie de garde",
+  "Medyro",
+  "pharmacie près de moi maintenant",
+  "pharmacie ouverte 24h/24 près de chez moi",
+  "localisateur de pharmacie d'urgence",
+  "localisateur de pharmacie / parapharmacie",
+  "magasin de médicaments près de chez moi",
+  "recherche de pharmacie locale",
+  "annuaire des pharmacies en ligne",
+  "localisateur de pharmacie hospitalière",
+  "gestion d'entreprise pharmaceutique",
+  "système de gestion d'inventaire pharmaceutique",
+  "horaires d'ouverture de pharmacie",
+  "contact pharmacien de garde",
+  "service de livraison de pharmacie",
+  "application carte des pharmacies",
+  "vérificateur de disponibilité de médicaments",
+  "trouver des médicaments sur ordonnance près de chez moi",
+  "annuaire mondial des pharmacies / parapharmacies",
+  "comparaison des prix des médicaments",
+  "système de réservation en pharmacie",
+  "gestion des stocks de pharmacie",
+  "horaires d'ouverture de la pharmacie",
+  "annuaire santé et médicaments",
+  "recherche internationale de pharmacie",
+  "disponibilité locale des médicaments",
+  "acheter des médicaments en vente libre près de chez moi",
+  "localisateur de magasin de médicaments",
+  "pharmacien de garde",
+  "service de pharmacie de nuit",
+  "plateforme API pharmacie",
+  "trouver des médicaments par localisation",
+  "annuaire des pharmacies et parapharmacies",
+  "pharmacie pour voyageurs",
+  "pharmacie dans ma ville",
+  "application magasin de médicaments le plus proche",
+  "trouver des pharmacies dans le monde entier",
+  "magasin de médicaments ouvert maintenant",
+  "outil de recherche de pharmacie en ligne",
+  "localisateur de pharmacie ouverte 24/7",
+  "logiciel tableau de bord pharmacie"
+]
+
+
+export const rootLayoutKeywords = [
+ ...englishRootLayoutKeywords, ...frenchRootLayoutKeywords
+ 
+]
+export const englishPharmacyKeywords = [
   // General
   "pharmacy Cameroon",
   "pharmacies in Cameroon",
@@ -191,4 +248,152 @@ export const pharmacyKeywords = [
   "pharmacy Sangmélima Cameroon",
   "best pharmacy Ebolowa",
   "nearest pharmacy Ebolowa"
+];
+export const frenchPharmacyKeywords = [
+  // Général
+  "pharmacie Cameroun",
+  "pharmacies au Cameroun",
+  "pharmacie près de moi Cameroun",
+  "pharmacie la plus proche Cameroun",
+  "trouver une pharmacie Cameroun",
+  "médicaments Cameroun",
+  "acheter des médicaments au Cameroun",
+  "pharmacie ouverte 24h/24 Cameroun",
+  "pharmacie ouverte Cameroun",
+  "recherche de pharmacie Cameroun",
+  "meilleure pharmacie Cameroun",
+  "pharmacie pas chère Cameroun",
+  "services de pharmacie Cameroun",
+  "pharmacie en ligne Cameroun",
+  "numéros de téléphone pharmacie Cameroun",
+  "emplacements des pharmacies Cameroun",
+  "magasins de médicaments Cameroun",
+  "horaires d'ouverture pharmacie Cameroun",
+  "pharmacie d'urgence Cameroun",
+  "pharmacie de nuit Cameroun",
+
+  // Région du Littoral
+  "pharmacie Littoral Cameroun",
+  "pharmacies à Douala",
+  "pharmacie Douala Cameroun",
+  "pharmacie ouverte 24h/24 Douala",
+  "pharmacies à Nkongsamba",
+  "pharmacie Nkongsamba",
+  "pharmacies à Manjo",
+  "pharmacie Manjo Cameroun",
+  "meilleure pharmacie Douala",
+  "pharmacie la plus proche Douala",
+
+  // Région du Centre
+  "pharmacie Centre Cameroun",
+  "pharmacies à Yaoundé",
+  "pharmacie Yaoundé Cameroun",
+  "pharmacie ouverte 24h/24 Yaoundé",
+  "pharmacies à Mfou",
+  "pharmacie Mfou Cameroun",
+  "pharmacies à Obala",
+  "pharmacie Obala Cameroun",
+  "meilleure pharmacie Yaoundé",
+  "pharmacie la plus proche Yaoundé",
+
+  // Région du Sud-Ouest
+  "pharmacie Sud-Ouest Cameroun",
+  "pharmacies à Buéa",
+  "pharmacie Buéa Cameroun",
+  "pharmacie ouverte 24h/24 Buéa",
+  "pharmacies à Limbé",
+  "pharmacie Limbé Cameroun",
+  "pharmacies à Tiko",
+  "pharmacie Tiko Cameroun",
+  "meilleure pharmacie Buéa",
+  "pharmacie la plus proche Buéa",
+
+  // Région du Nord-Ouest
+  "pharmacie Nord-Ouest Cameroun",
+  "pharmacies à Bamenda",
+  "pharmacie Bamenda Cameroun",
+  "pharmacie ouverte 24h/24 Bamenda",
+  "pharmacies à Kumbo",
+  "pharmacie Kumbo Cameroun",
+  "pharmacies à Wum",
+  "pharmacie Wum Cameroun",
+  "meilleure pharmacie Bamenda",
+  "pharmacie la plus proche Bamenda",
+
+  // Région de l’Ouest
+  "pharmacie Ouest Cameroun",
+  "pharmacies à Bafoussam",
+  "pharmacie Bafoussam Cameroun",
+  "pharmacie ouverte 24h/24 Bafoussam",
+  "pharmacies à Dschang",
+  "pharmacie Dschang Cameroun",
+  "pharmacies à Foumban",
+  "pharmacie Foumban Cameroun",
+  "meilleure pharmacie Bafoussam",
+  "pharmacie la plus proche Bafoussam",
+
+  // Région du Nord
+  "pharmacie Nord Cameroun",
+  "pharmacies à Garoua",
+  "pharmacie Garoua Cameroun",
+  "pharmacie ouverte 24h/24 Garoua",
+  "pharmacies à Guider",
+  "pharmacie Guider Cameroun",
+  "pharmacies à Poli",
+  "pharmacie Poli Cameroun",
+  "meilleure pharmacie Garoua",
+  "pharmacie la plus proche Garoua",
+
+  // Région de l’Extrême-Nord
+  "pharmacie Extrême-Nord Cameroun",
+  "pharmacies à Maroua",
+  "pharmacie Maroua Cameroun",
+  "pharmacie ouverte 24h/24 Maroua",
+  "pharmacies à Mokolo",
+  "pharmacie Mokolo Cameroun",
+  "pharmacies à Kousséri",
+  "pharmacie Kousséri Cameroun",
+  "meilleure pharmacie Maroua",
+  "pharmacie la plus proche Maroua",
+
+  // Région de l’Adamaoua
+  "pharmacie Adamaoua Cameroun",
+  "pharmacies à Ngaoundéré",
+  "pharmacie Ngaoundéré Cameroun",
+  "pharmacie ouverte 24h/24 Ngaoundéré",
+  "pharmacies à Meiganga",
+  "pharmacie Meiganga Cameroun",
+  "pharmacies à Tibati",
+  "pharmacie Tibati Cameroun",
+  "meilleure pharmacie Ngaoundéré",
+  "pharmacie la plus proche Ngaoundéré",
+
+  // Région de l’Est
+  "pharmacie Est Cameroun",
+  "pharmacies à Bertoua",
+  "pharmacie Bertoua Cameroun",
+  "pharmacie ouverte 24h/24 Bertoua",
+  "pharmacies à Batouri",
+  "pharmacie Batouri Cameroun",
+  "pharmacies à Abong-Mbang",
+  "pharmacie Abong-Mbang Cameroun",
+  "meilleure pharmacie Bertoua",
+  "pharmacie la plus proche Bertoua",
+
+  // Région du Sud
+  "pharmacie Sud Cameroun",
+  "pharmacies à Ebolowa",
+  "pharmacie Ebolowa Cameroun",
+  "pharmacie ouverte 24h/24 Ebolowa",
+  "pharmacies à Kribi",
+  "pharmacie Kribi Cameroun",
+  "pharmacies à Sangmélima",
+  "pharmacie Sangmélima Cameroun",
+  "meilleure pharmacie Ebolowa",
+  "pharmacie la plus proche Ebolowa"
+];
+
+
+export const pharmacyKeywords = [
+...englishPharmacyKeywords, frenchPharmacyKeywords
 ];
