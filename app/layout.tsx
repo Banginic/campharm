@@ -5,12 +5,15 @@ import AppLayout from "@/pages/AppLayout";
 import { rootLayoutKeywords } from "@/constants/keywords";
 import { MY_DATA } from "@/assets/data";
 
+
 export const metadata: Metadata = {
   title: "Find nearby pharmacies & medications in Cameroon. | Medyro",
   description:
     "Medyro helps you find the nearest pharmacy near you, search and purchase medications locally, and enables pharmacy owners to manage schedules, inventory, and on-call services.",
   keywords: rootLayoutKeywords,
-  authors: [{ name: "Banginic", url: MY_DATA.appUrl || "https://medyro.vercel.app" }],
+  authors: [
+    { name: "Banginic", url: MY_DATA.appUrl || "https://medyro.vercel.app" },
+  ],
   creator: "Banginic",
   publisher: "Banginic",
   metadataBase: new URL(MY_DATA.appUrl || "https://medyro.vercel.app"),
@@ -70,7 +73,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="theme-color" content="#0D6EFD" />
-        <meta name="google-site-verification" content="5M61_D2oFK-LEPEBEv-eb196Y4xZK3A3ZmI13gE2qiE" />
+        <meta
+          name="google-site-verification"
+          content="5M61_D2oFK-LEPEBEv-eb196Y4xZK3A3ZmI13gE2qiE"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-gradient-to-br from-pink-100/20 via-purple-200/20 to-green-200/70`}
