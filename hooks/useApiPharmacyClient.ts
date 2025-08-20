@@ -1,10 +1,20 @@
-"use client"; // important! ensures this hook runs in the browser
+"use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PharmacyContext } from "@/context/PharmacyProvider";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function useApiClient<T>() {
   const pharmacyContext = useContext(PharmacyContext);
+  const router = useRouter();
+  const { data, status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/pharmacy/login");
+    }
+  }, [status, router]);
 
   if (!pharmacyContext) {
     throw new Error("useApiClient must be used within PharmacyProvider");
@@ -16,9 +26,10 @@ export function useApiClient<T>() {
 
     // ✅ Attach global params automatically
     url.searchParams.set("lang", pharmacyContext?.lang || "en");
-    url.searchParams.set("region", pharmacyContext?.pharmacyDetails?.region || "");
-    url.searchParams.set("city", pharmacyContext?.pharmacyDetails?.town || "");
-    url.searchParams.set("pharmacyId", pharmacyContext?.pharmacyDetails?.id?.toString() || "");
+
+    if (data?.user?.region) url.searchParams.set("region", data.user.region);
+    if (data?.user?.town) url.searchParams.set("city", data.user.town);
+    if (data?.user?.id) url.searchParams.set("pharmacyId", data.user.id.toString());
 
     const res = await fetch(url.toString(), {
       ...options,
@@ -28,8 +39,11 @@ export function useApiClient<T>() {
       },
     });
 
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status}`);
+    }
 
-    return await res.json();
+    return res.json();
   }
 
   return { apiFetch };

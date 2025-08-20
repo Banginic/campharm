@@ -9,29 +9,38 @@ const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "example@email.com" },
-        password: { label: "Password", type: "password", placeholder: "********" },
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "example@email.com",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "********",
+        },
       },
       authorize: async (credentials) => {
         try {
           const { email, password } = await LoginSchema.parseAsync(credentials);
-
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          });
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            }
+          );
 
           const data = await res.json();
-   
 
           if (res.ok && data?.data?.[0]) {
             return {
-                id: data.data[0].id,
-                name: data.data[0].pharmacyName,
-                email: data.data[0].email,
-                role: data.data[0].role || 'pharmary-admin'
-            }; // must return an object {id, name, email, role}
+              id: data.data[0].id,
+              region: data.data[0].region,
+              town: data.data[0].town,
+              role: data.data[0].role || "pharmary-admin",
+            };
           }
 
           return null;
@@ -46,13 +55,34 @@ const authOptions = {
   ],
 
   pages: {
-    signIn: "/pharmacy/login", // custom login page
+    signIn: "/pharmacy/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  
+
+  // 👇 Add this
+  callbacks: {
+    async jwt({ token, user }: { token: any; user?: any }) {
+      // First login → attach custom fields
+      if (user) {
+        token.id = user.id;
+        token.region = user.region;
+        token.town = user.town;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      // Attach fields from token to session.user
+      session.user = {
+        id: token.id,
+        region: token.region,
+        town: token.town,
+        role: token.role,
+      };
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
-
-// 🔹 App Router requires named exports for HTTP methods
 export { handler as GET, handler as POST };

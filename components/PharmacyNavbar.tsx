@@ -7,11 +7,12 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 function PharmacyNavbar() {
-  const { isPharmacySidebarOpen, togglePharmacySidebar } =
+  const { isPharmacySidebarOpen, togglePharmacySidebar, } =
     useContext(AppContext)!;
 
    const session = useSession(); // session can be undefined during build
   const data = session?.data;
+  
 
   return (
     <header className="h-[13dvh] flex items-center relative">
